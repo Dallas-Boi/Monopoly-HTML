@@ -1,0 +1,36 @@
+1. Make board - Complete
+2. Make Player class - Complete
+3. Make Roll feature - Complete
+4. Update propData with property locations - Complete
+5. Make Player Cash Labels - Complete
+6. Make property check feature - Complete
+7. Make Buyable properties with housing - Complete
+8. Make Change Turn feature with Rolling Doubles - Complete
+9. Make the paying function when the player lands on someone elses property or income/luxury tax - Complete
+10. Make Players Jailable - Complete
+11. Make Mortgaging properties and make a line through mortgage properties - Complete
+12. Make Chance/Chest Cards - Complete
+13. Make Trading System - Complete
+14. Make Managing Property Button - Complete
+15. Make Auction - Complete
+16. Make Bankrupt System - Complete
+17. Make Main Menu to select amount of players and change logs - Complete
+
+// Ideas \\
+Shoud I make the mortgage price of new owners 20%
+When hovering over a property it will show the property card
+Make the names on the trading menu always center no matter what
+Make it show how many houses the player has in the manage property menu
+Make a brick wall in the auction house. Make the Auction house main area into a house. Make the Player money into buildboards
+Add all the trading/auction/manage on the gameboard screen ( Basically Recode all interactables )
+Make a Win screen when all players have bankrupt except 1
+
+// BREAK THROUGH \\
+multiplay maybe possible with using window.postMessage() | This was found out when trying to make a Kahoot Answer Bot ( Which returns the answer to the player)
+
+git init
+git add README.md
+git commit -m "Monopoly V1.0 (Check Change Logs for Updates)"
+git branch -M main
+git remote add origin https://github.com/MonkeyRetard/Monopoly-HTML
+git push -u origin main
