@@ -1048,7 +1048,7 @@ function open_auction_house(items, type) {
                 }
                 change_turn() // Goes to the next players turn
             }
-            after_roll()
+            after_roll(null, null, true)
         }
         
         turn_txt.innerHTML = "Current Turn:<br>"+player_list[parseInt(players_in[0])].get_player_name()
@@ -1223,7 +1223,7 @@ function fix_all_positions() {
 }
 
 // The last part of a players' turn
-function after_roll(end_jail, player) {
+function after_roll(end_jail, player, auctioned) {
     if (end_jail == "out") { // If the player got out so it will disable all buttons except roll
         buy_btn.removeEventListener("click", buy_funct); buy_btn.className = "action_btn_disabled"
         sell_btn.removeEventListener("click", sell_funct); sell_btn.className = "action_btn_disabled"
@@ -1244,6 +1244,14 @@ function after_roll(end_jail, player) {
         trade_btn.removeEventListener("click", trade_funct)
         pay_btn.removeEventListener("click", pay_funct); pay_btn.className = "action_btn_disabled"
         any_btn.removeEventListener("click", any_funct);
+        // This will get rid of the buy/auction button feature if the player auctioned the property
+        if (auctioned !== null) {
+            buy_btn.removeEventListener("click", buy_funct)
+            sell_btn.removeEventListener("click", sell_funct)
+            buy_btn.className = "action_btn_disabled"
+            sell_btn.className = "action_btn_disabled"
+        }
+
         roll_funct = function() {
             change_turn()
         }
@@ -1738,7 +1746,6 @@ function check_landed_property() {
                 pay_btn.className = "action_btn"
                 pay_btn.textContent = "Pay $"+amount.toString()
                 pay_btn.addEventListener("click", pay_funct)
-                console.log("Bank")
                 bankrupt_btn.className = "bankrupt_btn"
                 bankrupt_btn.onclick = function() {
                     bankrupt_player("by_player", location, owned_id)

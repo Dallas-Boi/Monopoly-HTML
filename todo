@@ -28,9 +28,5 @@ Make a Win screen when all players have bankrupt except 1
 // BREAK THROUGH \\
 multiplay maybe possible with using window.postMessage() | This was found out when trying to make a Kahoot Answer Bot ( Which returns the answer to the player)
 
-git init
-git add README.md
-git commit -m "Monopoly V1.0 (Check Change Logs for Updates)"
-git branch -M main
-git remote add origin https://github.com/MonkeyRetard/Monopoly-HTML
-git push -u origin main
+// Issues \\ 
+Auctioning 
