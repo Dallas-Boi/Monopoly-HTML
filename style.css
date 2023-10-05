@@ -1,0 +1,663 @@
+body {
+    background-color: grey;
+}
+
+table {
+    border-collapse: collapse;
+    display: none;
+	border: 2px solid black;
+	border-spacing: 3px;
+	margin: 25px;
+	float: left;
+}
+/* All Winning Screen style */
+.winningScreen_txt {
+	font-size: 30px;
+	top: 50%;
+	left: 50%;
+	width: 30em;
+	height: 18em;
+	margin-top: -9em;
+	margin-left: -15em;
+	border: 1px solid #666;
+	display: flex;
+	position: absolute;
+}
+/* All main menu styles */
+.player_select {
+	border: 1px solid black;
+	width: 450px;
+	height:250px;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.start_action {
+	display: flex;
+	place-items: center;
+	position: absolute;
+	justify-content: center;
+	width: 450px;
+	height:10px;
+	top:140px;
+}
+
+.start_btn {
+	position: absolute;
+}
+
+.error {
+	position: absolute;
+	border: 1px solid black;
+	width: 450px;
+	height:75px;
+	top:183px;
+}
+
+.action_txt_main_container {
+	position: absolute;
+	border: 1px solid black;
+	top: 350px;
+	width:450px;
+	height: 300px;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.change_title {
+	position: absolute;
+	left:140px;
+	font-size: 30px
+}
+
+.version_drop {
+	position: absolute;
+	left:160px;
+	top: 50px;
+}
+
+#changeLog_main {
+	position: absolute;
+	top:100px
+}
+
+.links {
+	border: 1px solid black;
+	position: absolute;
+	left: 600px;
+	top:7px;
+	width: 300px;
+	height: 100px;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.link_btn {
+	position: absolute;
+	left:70px;
+}
+
+/* All auction styles */
+.auction_title {
+	position: absolute;
+	font-size: 25px;
+	left:125px;
+	top:10px;
+}
+
+.auction_actions {
+	border: 1px solid black;
+	position: absolute;
+	width: 400px;
+	height: 600px;
+	max-width: 100%;
+	max-height: 100%;
+	left:500px;
+}
+
+.auction_text {
+	position: absolute;
+	max-width: 275px;
+	width: 100%;
+	max-height: 200px;
+	height: 100%;
+    top: 50px; /* Adjust the top position as needed to overlay the button where you want it */
+	left: 65px;
+    z-index: 2; /* Ensure the button is above the table (higher z-index) */
+	border: 1px solid black;
+	background-color: white;
+	display: flex;
+  	flex-direction: column;
+	overflow: auto;
+}
+
+.auction_btn {
+	position: absolute;
+	border: 1px solid black;
+	top:275px;
+	left:35px
+}
+
+.auction_info_txt {
+	position: absolute;
+	top: 305px;
+	left:130px;
+	text-align: center;
+	font-size: 25px;
+}
+
+.auction_player_cash_container {
+	font-size: 20px;
+	text-align: center;
+}
+
+.auct_player_money1 {
+	border: 1px solid black;
+	background-color: white;
+	position: absolute;
+	width: 200px;
+	height: 115px;
+	max-width: 100%;
+	max-height: 100%;
+	left: 135px;
+	top: 10px;
+}
+
+.auct_player_money2 {
+	border: 1px solid black;
+	background-color: white;
+	position: absolute;
+	width: 200px;
+	height: 115px;
+	max-width: 100%;
+	max-height: 100%;
+	left: 1050px;
+	top: 10px;
+}
+
+.auct_player_money3 {
+	border: 1px solid black;
+	background-color: white;
+	position: absolute;
+	width: 200px;
+	height: 115px;
+	max-width: 100%;
+	max-height: 100%;
+	left: 135px;
+	top: 230px;
+}
+
+.auct_player_money4 {
+	border: 1px solid black;
+	background-color: white;
+	position: absolute;
+	width: 200px;
+	height: 115px;
+	max-width: 100%;
+	max-height: 100%;
+	left: 1050px;
+	top: 230px;
+}
+/* All management styles */
+.action {
+	position: absolute;
+	left: 500px;
+	top:10px;
+	width: 400px;
+	height: 93px;
+	max-width: 100%;
+	max-height: 100%;
+}
+.prop_container {
+	border: 1px solid black;
+	position: absolute;
+	width: 400px;
+	height: 93px;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.prop_container .prop_color {
+	border: 1px solid black;
+	position: absolute;
+	margin-top: 5px;
+	margin-left: 5px;
+}
+.prop_container .prop_name {
+	position: absolute;
+	margin-top: 4px;
+	margin-left: 30px;
+	font-size: 20px;
+}
+
+/* All trading styles */
+.menu_left {
+	border: 1px solid black;
+	position: absolute;
+	left: 10px;
+	top: 20px;
+	width: 750px;
+	height: 500px;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.menu_right {
+	border: 1px solid black;
+	position: absolute;
+	left: 775px;
+	top: 20px;
+	width: 750px;
+	height: 500px;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.player_name_container {
+	display: flex;
+	place-items: center;
+	position: absolute;
+	justify-content: center;
+	border:1px solid black;
+	font-size: 30px;
+	width: 750px;
+	height:50px;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.player_props_container {
+	display: flex;
+	place-items: center;
+	position: absolute;
+	justify-content: center;
+	border: 1px solid black;
+	font-size: 20px;
+	top: 50px;
+	width: 750px;
+	height:50px;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.player_cash_container {
+	display: flex;
+	place-items: center;
+	position: absolute;
+	justify-content: center;
+	border: 1px solid black;
+	font-size: 20px;
+	top: 100px;
+	width: 750px;
+	height:50px;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.player_ooj_container {
+	display: flex;
+	place-items: center;
+	position: absolute;
+	justify-content: center;
+	border: 1px solid black;
+	font-size: 20px;
+	top: 150px;
+	width: 750px;
+	height:50px;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.player_info_container {
+	position: absolute;
+	border: 1px solid black;
+	font-size: 20px;
+	top: 200px;
+	width: 750px;
+	height:300px;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.giving_props {
+	border: 1px solid black;
+	position: absolute;
+	background-color: white;
+	display: flex;
+  	flex-direction: row;
+	overflow: auto;
+	top: 20px;
+	left: 50px;
+	width: 300px;
+	height: 250px;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.info_prop .prop_color {
+	position: absolute;
+	border: 1px solid black;
+	left:5px;
+	margin-top: 3px;
+}
+
+.info_prop .prop_name {
+	position: absolute;
+	left: 30px;
+	margin-top: 3px;
+}
+
+.player_info_container .total_value {
+	position: absolute;
+	top: 50px;
+	left: 450px;
+	font-size: 30px;
+}
+
+.ooj_container {
+	position: absolute;
+	top: 150px;
+	left: 445px;
+	width: 267px;
+	height: 75px;
+	max-width: 100%;
+	max-height: 100%;
+	font-size: 30px;
+}
+
+.trade_action_container {
+	border: 1px solid black;
+	position: absolute;
+	top:522px;
+	left: 10px;
+	width: 1518px;
+	height:50px;
+	max-width: 100%;
+	max-height: 100% ;
+}
+
+.left_confirm {
+	position: absolute;
+	display:flex;
+	font-size: 30px;
+	left: 320px;
+	margin-left: 10px;
+}
+
+.cancel_confirm {
+	position: absolute;
+	display:flex;
+	font-size: 30px;
+	left: 695px;
+	margin-left: 10px;
+}
+
+.right_confirm {
+	position: absolute;
+	display:flex;
+	font-size: 30px;
+	left: 1100px;
+	margin-left: 10px;
+}
+
+/* All gameboard styles */
+.cell_name {
+	position: relative;
+	left: 0px;
+	top: 25px;
+	text-align: center;
+	width: 100%;
+	font-size: 15px;
+}
+
+.spot_mid  {
+    border: 1px solid black;
+    width: 75px;
+}
+
+.spot_side {
+    border: 1px solid black;
+    height: 80px;
+}
+
+.corner {
+    border: 1px solid black;
+    height: 95px;
+    width: 95px;
+}
+
+.cell_tag_mid {
+	position: absolute;
+	width: 70px;
+	height: 20px;
+	max-width: 100%;
+	max-height: 100%;
+	background-color: grey;
+	border: 1px solid black;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.cell_tag_side {
+	position: absolute;
+	width: 20px;
+	height: 70px;
+	max-width: 100%;
+	max-height: 100%;
+	background-color: grey;
+	border: 1px solid black;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.control {
+	width: 100%;
+	max-height: 800px;
+}
+
+.menu_btn {
+	border: 1px solid black;
+	display: flex;
+	place-items: center;
+	position: absolute;
+	justify-content: center;
+	max-width: 100%;
+	width: 600px;
+	max-height: 100%;
+	height: 400px;
+    top: 400px; /* Adjust the top position as needed to overlay the button where you want it */
+    left: 190px; /* Adjust the left position as needed to overlay the button where you want it */
+    z-index: 2; /* Ensure the button is above the table (higher z-index) */
+}
+
+.center {
+	margin: 0;
+	position: absolute;
+	top: 25px;
+	left: 40%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+.bankrupt_btn {
+	background-color: lightblue; /* Green */
+	position: absolute;
+	border: none;
+	color: black;
+	padding: 15px 29px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 16px;
+	border-radius: 5px;
+	top:750px;
+	left:430px;
+	z-index: 3;
+}
+
+.bankrupt_btn:hover  {
+	background-color: black;
+	color: white;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.action_btn_disabled {
+	display: none;
+	opacity: 0.6;
+	cursor: not-allowed;
+	margin-right: 5px;
+	background-color: lightblue; /* Green */
+	border: none;
+	color: black;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 16px;
+	border-radius: 5px;
+}
+
+.menu_btn .action_btn {
+	background-color: lightblue; /* Green */
+	border: none;
+	color: black;
+	padding: 15px 29px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 16px;
+	border-radius: 5px;
+	margin-bottom: auto;
+}
+
+.menu_btn .action_btn:hover  {
+	background-color: black;
+	color: white;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.action_txt {
+	position: absolute;
+	max-width: 600px;
+	width: 100%;
+	max-height: 200px;
+	height: 100%;
+    top: 50px; /* Adjust the top position as needed to overlay the button where you want it */
+    z-index: 2; /* Ensure the button is above the table (higher z-index) */
+	border: 1px solid black;
+	background-color: white;
+	display: flex;
+  	flex-direction: column;
+	overflow: auto;
+}
+
+.current_turn_text {
+	position: absolute;
+	color: black;
+	text-align: center;
+	font-size: 25px;
+	top:280px;
+}
+
+.cell_mortgage_side {
+	position: absolute;
+	background-color: red;
+	border: 1px solid black;
+	height: 70px;
+	width: 10px;
+}
+
+.cell_mortgage_mid {
+	position: absolute;
+	background-color: red;
+	border: 1px solid black;
+	height: 10px;
+	width: 70px;
+}
+
+.money_container {
+	position: absolute;
+	left: 133px;
+	top: 132px;
+	width: 710px;
+	max-width: 100%;
+	height: 248px;
+	max-height: 100%;
+}
+
+.game_data_container {
+	position: absolute;
+	left: 230px;
+	top: 810px;
+	max-width: 500px;
+	width: 100%;
+	font-size: 20px;
+	text-align: center;
+}
+
+.jail_icon {
+	background-color:orange;
+	border: 1px solid black;
+	position: absolute;
+	top: 878px;
+	left: 66px;
+}
+
+.player {
+	border: 1px solid black;
+	z-index: 2;
+	position: absolute;
+}
+
+.player_money1 {
+	position: absolute;
+	width: 200px;
+	height: 100px;
+	max-width: 100%;
+	max-height: 100%;
+	left: 100px;
+	top: 10px;
+}
+
+.player_money2 {
+	position: absolute;
+	width: 200px;
+	height: 100px;
+	max-width: 100%;
+	max-height: 100%;
+	left: 400px;
+	top: 10px;
+}
+
+.player_money3 {
+	position: absolute;
+	width: 200px;
+	height: 100px;
+	max-width: 100%;
+	max-height: 100%;
+	left: 100px;
+	top: 130px;
+}
+
+.player_money4 {
+	position: absolute;
+	width: 200px;
+	height: 100px;
+	max-width: 100%;
+	max-height: 100%;
+	left: 400px;
+	top: 130px;
+}
+/* This is for the Houses of properties */
+.house {
+	background-color: lime;
+	position: absolute;
+	z-index: 2;
+	width: 12px;
+	height: 12px;
+	border: 1px solid black;
+}
+/* This is for the Hotel of properties */
+.hotel {
+	background-color: red;
+	position: absolute;
+	z-index: 2;
+	width: 12px;
+	height: 12px;
+	border: 1px solid black;
+}
