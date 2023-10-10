@@ -10,6 +10,40 @@ table {
 	margin: 25px;
 	float: left;
 }
+
+.menu {
+	z-index: 2;
+}
+
+/* Background design */
+.background-design {
+	position: absolute;
+	z-index: -10;
+    width: 100%;
+    height: 100%;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.bgLine {
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	position: absolute;
+	margin: 0;
+    width: 100%;
+	height: 100px;
+	max-width: 100%;
+	max-height: 100%;
+	background-color: rgba(58, 92, 84, 10);
+	transform: rotate(15deg);
+	top:300px;
+	left:-30px
+}
+
+/* Universal Styles */
+.pointer {
+	cursor: pointer;
+}
+
 /* All Winning Screen style */
 .winningScreen_txt {
 	font-size: 30px;
@@ -23,13 +57,34 @@ table {
 	display: flex;
 	position: absolute;
 }
+
 /* All main menu styles */
+.center_main {
+	display: flex;
+	position: absolute;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	max-width: 99%;
+	max-height: 98%;
+}
+
 .player_select {
+	position: absolute;
 	border: 1px solid black;
+	background-color: gray;
+	left: 293.5px;
 	width: 450px;
 	height:250px;
 	max-width: 100%;
 	max-height: 100%;
+	z-index: 2;
+}
+
+.player_input_container {
+	position: absolute;
+	left: 18.5px;
+	top: 5px;
 }
 
 .start_action {
@@ -37,13 +92,9 @@ table {
 	place-items: center;
 	position: absolute;
 	justify-content: center;
-	width: 450px;
+	width: 450.5px;
 	height:10px;
 	top:140px;
-}
-
-.start_btn {
-	position: absolute;
 }
 
 .error {
@@ -51,61 +102,91 @@ table {
 	border: 1px solid black;
 	width: 450px;
 	height:75px;
-	top:183px;
+	top:173.5px;
 }
 
 .action_txt_main_container {
 	position: absolute;
 	border: 1px solid black;
+	left: 293.5px;
 	top: 350px;
-	width:450px;
+	width: 892px;
 	height: 300px;
 	max-width: 100%;
 	max-height: 100%;
+	background-color: gray;
 }
 
 .change_title {
 	position: absolute;
-	left:140px;
+	left: 41%;
 	font-size: 30px
 }
 
 .version_drop {
 	position: absolute;
-	left:160px;
+	left: 43.125%;
 	top: 50px;
 }
 
 #changeLog_main {
 	position: absolute;
-	top:100px
+	top:100px;
+	width: 100%;
+	max-width: 100%;
+}
+
+.links_container {
+	border: 1px solid black;
+	position: absolute;
+	left: 885.5px;
+	width: 300px;
+	height: 125px;
+	max-width: 100%;
+	max-height: 100%;
+	background-color: gray;
+}
+
+.links_title {
+	position: absolute;
+	font-size: 25px;
+	left:121px;
+	top:10px;
+	
 }
 
 .links {
-	border: 1px solid black;
 	position: absolute;
-	left: 600px;
-	top:7px;
+	top:50px;
 	width: 300px;
-	height: 100px;
+	height: 75px;
 	max-width: 100%;
 	max-height: 100%;
+	border-top: 1px dotted black;
 }
 
 .link_btn {
 	position: absolute;
 	left:70px;
+	margin-top: 10px;
 }
 
 .other_info {
 	border: 1px solid black;
+	background-color: gray;
 	position: absolute;
-	left: 600px;
-	top:400px;
+	left: 885.5px;
+	top: 150px;
 	width: 300px;
 	height: 100px;
 	max-width: 100%;
 	max-height: 100%;
+	text-align: center;
+}
+
+.other_info_text {
+	margin-top: 20px;
+	text-align: center;
 }
 
 /* All auction styles */
@@ -459,6 +540,73 @@ table {
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
+.cell_tip_bottom  {
+	width: 100px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	z-index: 3;
+	bottom: 150%;
+	left: 50%;
+	margin-left: -50px;
+	z-index: 10;
+}
+
+.cell_tip_left {
+	width: 100px;
+	height: 20px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	z-index: 3;
+	bottom: 150%;
+	left: 80%;
+	top: 50%;
+	margin-left: 15px;
+	z-index: 10;
+}
+
+.cell_tip_top  {
+	width: 100px;
+	height: 20px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	z-index: 3;
+	bottom: 150%;
+	left: 50%;
+	top:1%;
+	margin-left: -50px;
+	margin-top: 80px;
+	z-index: 10;
+}
+
+.cell_tip_right {
+	width: 100px;
+	height: 20px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	z-index: 3;
+	bottom: 150%;
+	left: -80%;
+	top: 50%;
+	margin-left: -95px;
+	z-index: 10;
+}
+
 .control {
 	width: 100%;
 	max-height: 800px;
@@ -477,15 +625,6 @@ table {
     top: 400px; /* Adjust the top position as needed to overlay the button where you want it */
     left: 190px; /* Adjust the left position as needed to overlay the button where you want it */
     z-index: 2; /* Ensure the button is above the table (higher z-index) */
-}
-
-.center {
-	margin: 0;
-	position: absolute;
-	top: 25px;
-	left: 40%;
-	-ms-transform: translateY(-50%);
-	transform: translateY(-50%);
 }
 
 .bankrupt_btn {
@@ -594,18 +733,38 @@ table {
 .game_data_container {
 	position: absolute;
 	left: 230px;
-	top: 810px;
+	top: 610px;
 	max-width: 500px;
 	width: 100%;
 	font-size: 20px;
 	text-align: center;
 }
 
+.dice_container {
+	border:1px solid blue;
+	position: absolute;
+	left: 190px;
+	top: 650px;
+	width: 600px;
+	height: 150px;
+	max-width: 100%;
+	max-height: 100%;
+	z-index: 3;
+}
+
+.dice {
+	position: absolute;
+	width:100px;
+	height:100px;
+	border-radius: 10%;
+	top: 20px;
+}
+
 .jail_icon {
 	background-color:orange;
 	border: 1px solid black;
 	position: absolute;
-	top: 878px;
+	top: 877px;
 	left: 66px;
 }
 
@@ -613,6 +772,26 @@ table {
 	border: 1px solid black;
 	z-index: 2;
 	position: absolute;
+	width: 20px;
+	height: 20px;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+/* The tool tip for the player */
+.player .playerTip {
+	width: 120px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	z-index: 3;
+	bottom: 150%;
+	left: 50%;
+	margin-left: -60px;
+	z-index: 10;
 }
 
 .player_money1 {

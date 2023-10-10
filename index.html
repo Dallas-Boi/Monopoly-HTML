@@ -3,49 +3,60 @@
     <head>
         <title>Monopoly 2.0</title>
         <link href='style.css' rel='stylesheet'>
+        <link rel="icon" href="favicon.png">
     </head>
     <body>
-        <div id="main_menu">
-            <div class="player_select">
-                <label for="player1_name">Player 1's Name:</label>
-                <input id="player1_name">
-                <input type="color" id="player1_color">
-                <br>
-                <label for="player2_name">Player 2's Name:</label>
-                <input id="player2_name">
-                <input type="color" id="player2_color">
-                <br>
-                <label for="player3_name">Player 3's Name:</label>
-                <input id="player3_name" disabled="disabled">
-                <input type="color" id="player3_color" disabled="disabled">
-                <label for="player3_enable">| Enable</label>
-                <input type="checkbox" id="player3_enable" class="player_enable">
-                <br>
-                <label for="player4_name">Player 4's Name:</label>
-                <input id="player4_name" disabled="disabled">
-                <input type="color" id="player4_color" disabled="disabled">
-                <label for="player4_enable">| Enable</label>
-                <input type="checkbox" id="player4_enable" class="player_enable">
-                <div class="start_action">
-                    <button id="start_game" class="start_btn">Start the game</button>
+        <div class="background-design" style="display: none">
+            <div id="diagLineRight" class="bgLine"></div>
+        </div>
+        <div id="main_menu" class="menu">
+            <div class="center_main">
+                <div class="player_select">
+                    <div class="player_input_container">
+                        <label for="player1_name">Player 1's Name:</label>
+                        <input id="player1_name">
+                        <input type="color" id="player1_color" class="pointer">
+                        <br>
+                        <label for="player2_name">Player 2's Name:</label>
+                        <input id="player2_name">
+                        <input type="color" id="player2_color" class="pointer">
+                        <br>
+                        <label for="player3_name">Player 3's Name:</label>
+                        <input id="player3_name" disabled="disabled">
+                        <input type="color" id="player3_color" class="pointer" disabled="disabled">
+                        <label for="player3_enable">| Enable</label>
+                        <input type="checkbox" id="player3_enable" class="pointer">
+                        <br>
+                        <label for="player4_name">Player 4's Name:</label>
+                        <input id="player4_name" disabled="disabled">
+                        <input type="color" id="player4_color" class="pointer" disabled="disabled">
+                        <label for="player4_enable">| Enable</label>
+                        <input type="checkbox" id="player4_enable" class="pointer">
+                    </div>
+                    <div class="start_action">
+                        <button id="start_game" class="start_btn">Start the game</button>
+                    </div>
+                    <div id="error_box" class="error">
+                        <div id="error_txt"></div>
+                    </div>
                 </div>
-                <div id="error_box" class="error">
-                    <div id="error_txt"></div>
+                <div class="action_txt_main_container">
+                    <div class="change_title">Change Logs</div>
+                    <select id="version_menu" class="version_drop">
+                        <option value="null">Select A Version</option>
+                    </select>
+                    <div id="changeLog_main" class="action_txt" cols="40"></div>
                 </div>
-            </div>
-            <div class="action_txt_main_container">
-                <div class="change_title">Change Logs</div>
-                <select id="version_menu" class="version_drop">
-                    <option value="null">Select A Version</option>
-                </select>
-                <div id="changeLog_main" class="action_txt" cols="40"></div>
-            </div>
-            <div class="links">
-                <a id="form_btn" class="link_btn" href="https://forms.gle/BGBEGbTtoxS6UuD56">Bugs / Suggestions Form</a><br>
-                <a class="link_btn" href="https://docs.google.com/spreadsheets/d/1Y5pnSpefnasH63OGQZ_V2f6KiQOwFQ9aWfIfutHvNRE/edit?usp=sharing">Bugs / Suggestions Sheet</a>
-            </div>
-            <div class="other_info">
-                <div id="refresh_warning" class="other_info_text"><b>WARING:</b><br>Refreshing the page will reset your DATA.<br>Saving will be added later on</div>
+                <div class="links_container">
+                    <div class="links_title">Links</div>
+                    <div class="links">
+                        <a id="form_btn" class="link_btn" href="https://forms.gle/BGBEGbTtoxS6UuD56">Bugs / Suggestions Form</a><br>
+                        <a class="link_btn" href="https://docs.google.com/spreadsheets/d/1Y5pnSpefnasH63OGQZ_V2f6KiQOwFQ9aWfIfutHvNRE/edit?usp=sharing">Bugs / Suggestions Sheet</a>
+                    </div>
+                </div>
+                <div class="other_info">
+                    <div id="refresh_warning" class="other_info_text"><b style="color: red">WARING:</b><br>Refreshing the page will reset your DATA.<br>Saving will be added later on</div>
+                </div>
             </div>
         </div>
         <div id="gameboard" class="control" style="display:none;">
@@ -57,7 +68,11 @@
                 <button id="sell_action" class="action_btn_disabled">Sell</button>
                 <button id="pay_action" class="action_btn_disabled">Pay</button>
                 <div id="action_txt" class="action_txt" cols="40"></div>
-                <div id="player_turn" class="current_turn_text">Your Seeing Stuff</div>
+                <div id="player_turn" class="current_turn_text">Its Not Good If you can see this</div>
+            </div>
+            <div id="diceImg" class="dice_container">
+                <img id="dice1" class="dice" src="./diceImg/roll_1.png" style="left:50.5px;display:none">
+                <img id="dice2" class="dice" src="./diceImg/roll_2.png" style="left:450px;display:none">
             </div>
             <div id="game_data" class="game_data_container">
                 <div id="house_text" class="house_text" style="position: absolute;left:25px;color:darkgreen">Houses Left:<br>32</div>
@@ -72,39 +87,37 @@
             </div>
             <div id="cell_tags" class="cell_tag_container">
                 <div id="cell_houses"></div>
-                <canvas id="cell_2_tag" class="cell_tag_mid" style="top: 985px;	left: 763px;"></canvas>
-                <canvas id="cell_4_tag" class="cell_tag_mid" style="top: 985px;	left: 601px;"></canvas>
-                <canvas id="cell_6_tag" class="cell_tag_mid" style="top: 985px;	left: 446px;"></canvas>
-                <canvas id="cell_7_tag" class="cell_tag_mid" style="top: 985px;	left: 368px;"></canvas>
-                <canvas id="cell_8_tag" class="cell_tag_mid" style="top: 985px;	left: 290px;"></canvas>
-                <canvas id="cell_10_tag" class="cell_tag_mid" style="top: 985px;left: 135px;"></canvas>
-                <canvas id="cell_12_tag" class="cell_tag_side" style="top: 801px;left: 0px;"></canvas>
-                <canvas id="cell_13_tag" class="cell_tag_side" style="top: 718px;left: 0px;"></canvas>
-                <canvas id="cell_14_tag" class="cell_tag_side" style="top: 635px;left: 0px;"></canvas>
-                <canvas id="cell_15_tag" class="cell_tag_side" style="top: 552px;left: 0px;"></canvas>
-                <canvas id="cell_16_tag" class="cell_tag_side" style="top: 469px;left: 0px;"></canvas>
-                <canvas id="cell_17_tag" class="cell_tag_side" style="top: 386px;left: 0px;"></canvas>
-                <canvas id="cell_19_tag" class="cell_tag_side" style="top: 220px;left: 0px;"></canvas>
-                <canvas id="cell_20_tag" class="cell_tag_side" style="top: 137px;left: 0px;"></canvas>
-                <canvas id="cell_22_tag" class="cell_tag_mid" style="top: 0px;left: 135px;"></canvas>
-                <canvas id="cell_24_tag" class="cell_tag_mid" style="top: 0px;left: 290px;"></canvas>
-                <canvas id="cell_25_tag" class="cell_tag_mid" style="top: 0px;left: 368px;"></canvas>
-                <canvas id="cell_26_tag" class="cell_tag_mid" style="top: 0px;left: 446px;"></canvas>
-                <canvas id="cell_27_tag" class="cell_tag_mid" style="top: 0px;left: 523.5px;"></canvas>
-                <canvas id="cell_28_tag" class="cell_tag_mid" style="top: 0px;left: 601px;"></canvas>
-                <canvas id="cell_29_tag" class="cell_tag_mid" style="top: 0px;left: 680px;"></canvas>
-                <canvas id="cell_30_tag" class="cell_tag_mid" style="top: 0px;left: 763px;"></canvas>
-                <canvas id="cell_32_tag" class="cell_tag_side" style="top: 137px;left: 955px;"></canvas>
-                <canvas id="cell_33_tag" class="cell_tag_side" style="top: 220px;left: 955px;"></canvas>
-                <canvas id="cell_35_tag" class="cell_tag_side" style="top: 386px;left: 955px;"></canvas>
-                <canvas id="cell_36_tag" class="cell_tag_side" style="top: 469px;left: 955px;"></canvas>
-                <canvas id="cell_38_tag" class="cell_tag_side" style="top: 635px;left: 955px;"></canvas>
-                <canvas id="cell_40_tag" class="cell_tag_side" style="top: 801px;left: 955px;"></canvas>
-                
+                <div id="cell_2_tag" class="cell_tag_mid" style="top: 985px;left: 763px;"><div id="testing" class="cell_tip_bottom" style="display: none;">Testing</div></div>
+                <div id="cell_4_tag" class="cell_tag_mid" style="top: 985px;left: 601px;"></div>
+                <div id="cell_6_tag" class="cell_tag_mid" style="top: 985px;left: 446px;"></div>
+                <div id="cell_7_tag" class="cell_tag_mid" style="top: 985px;left: 368px;"></div>
+                <div id="cell_8_tag" class="cell_tag_mid" style="top: 985px;left: 290px;"></div>
+                <div id="cell_10_tag" class="cell_tag_mid" style="top: 985px;left: 135px;"></div>
+                <div id="cell_12_tag" class="cell_tag_side" style="top: 801px;left: 0px;"></div>
+                <div id="cell_13_tag" class="cell_tag_side" style="top: 718px;left: 0px;"></div>
+                <div id="cell_14_tag" class="cell_tag_side" style="top: 635px;left: 0px;"></div>
+                <div id="cell_15_tag" class="cell_tag_side" style="top: 552px;left: 0px;"></div>
+                <div id="cell_16_tag" class="cell_tag_side" style="top: 469px;left: 0px;"></div>
+                <div id="cell_17_tag" class="cell_tag_side" style="top: 386px;left: 0px;"></div>
+                <div id="cell_19_tag" class="cell_tag_side" style="top: 220px;left: 0px;"></div>
+                <div id="cell_20_tag" class="cell_tag_side" style="top: 137px;left: 0px;"></div>
+                <div id="cell_22_tag" class="cell_tag_mid" style="top: 0px;left: 135px;"></div>
+                <div id="cell_24_tag" class="cell_tag_mid" style="top: 0px;left: 290px;"><div id="testing1" class="cell_tip_top" style="display: none;">Testing</div></div>
+                <div id="cell_25_tag" class="cell_tag_mid" style="top: 0px;left: 368px;"></div>
+                <div id="cell_26_tag" class="cell_tag_mid" style="top: 0px;left: 446px;"></div>
+                <div id="cell_27_tag" class="cell_tag_mid" style="top: 0px;left: 523.5px;"></div>
+                <div id="cell_28_tag" class="cell_tag_mid" style="top: 0px;left: 601px;"></div>
+                <div id="cell_29_tag" class="cell_tag_mid" style="top: 0px;left: 680px;"></div>
+                <div id="cell_30_tag" class="cell_tag_mid" style="top: 0px;left: 763px;"></div>
+                <div id="cell_32_tag" class="cell_tag_side" style="top: 137px;left: 955px;"></div>
+                <div id="cell_33_tag" class="cell_tag_side" style="top: 220px;left: 955px;"></div>
+                <div id="cell_35_tag" class="cell_tag_side" style="top: 386px;left: 955px;"></div>
+                <div id="cell_36_tag" class="cell_tag_side" style="top: 469px;left: 955px;"></div>
+                <div id="cell_38_tag" class="cell_tag_side" style="top: 635px;left: 955px;"></div>
+                <div id="cell_40_tag" class="cell_tag_side" style="top: 801px;left: 955px;"></div>
             </div>
             <div id="Players" class="player_container">
             </div>
-            <canvas id="jail_icon" class="jail_icon" width="65" height="55"></canvas>
             <button id="bankrupt_btn" class="action_btn_disabled">Bankrupt</button>
             <table id="board" style="display:table;">  
                 <tr id="row1">
@@ -172,7 +185,6 @@
                     <td></td>
                     <td class="spot_side"><div id="cell_35" class="cell_name">Pennsylvania Avenue</div></td>
                 </tr>
-
                 <tr id="row6">
                     <td class="spot_side"><div id="cell_16" class="cell_name">Pennsylvania Railroad</div></td>
                     <td></td>
@@ -239,8 +251,8 @@
                     <td class="spot_side"><div id="cell_40" class="cell_name">Boardwalk</div></td>
                 </tr>
                 <tr id="row11">
-                    <td class="corner"><div id="cell_11" class="cell_name">Just Visting</div></td>
-                    <td class="spot_mid" style="background-color: aqua;"><div id="cell_10" class="cell_name" >Connecticut Avenue</div></td>
+                    <td class="corner"><div id="cell_11" class="cell_name">Just Visting</div><canvas id="jail_icon" class="jail_icon" width="65" height="55"></canvas></td>
+                    <td class="spot_mid"><div id="cell_10" class="cell_name" >Connecticut Avenue</div></td>
                     <td class="spot_mid"><div id="cell_9" class="cell_name">Chance</div></td>
                     <td class="spot_mid"><div id="cell_8" class="cell_name">Vermont Avenue</div></td>
                     <td class="spot_mid"><div id="cell_7" class="cell_name">Oriental Avenue</div></td>

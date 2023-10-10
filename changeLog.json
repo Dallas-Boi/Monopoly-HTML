@@ -1,11 +1,56 @@
 {
+    "Future Updates": [
+        "Add different version that will change the name of the locations. Using window.postMessage()",
+        "Multiplayer (This will be a maybe depending on how stable it will be and if it is even possible)",
+        "3D houses / hotels",
+        "Chooseable Player Pieces",
+        "Changing the Name of the game and the properties to comply with legal terms (Trademark and Copyright by Hasbro Entertainmemt",
+        "Adding a Real Time Poll for Ideas on the Main Menu",
+        "Making the other tabs on the side of the board instead of opening a different tab",
+        "Making the auction house have a brick background and a house shape with all the text inside",
+        "Error System so that players know if something breaks and they can either report it or it will automatically report it",
+        "Remake the rolling dice animation using a 3D object using Three.js"
+    ],
     "V 1.0": {
         "date": "October 5th, 2023",
         "title": "Monopoly 2.0 BETA Release",
         "added": [
             "Made all basic Monopoly functions"
         ],
-        "removed": ["Nothing"],
-        "changed": ["Nothing"]
+        "bug_fix": [],
+        "removed": [],
+        "changed": []
+    }, 
+    "V 1.1": {
+        "date": "October 13th, 2023",
+        "title": "Quality Of Life Improvements",
+        "added": [
+            "Added | When hovering over some elements it will change the pointer",
+            "Added | Each property will be colored to the propertys' color", 
+            "Added | When the players mouse is over a player it will show the name of that player",
+            "Added | When a message is sent to the output box with a players name it will send the name in bold",
+            "Added | See the future plans that you can see coming to the game",
+            "Added | Different Web Title's and Icon Depending on What the Player is Doing",
+            "Added | A title to the links box",
+            "Added | When a player is any Railroads it will change their border to \"white\"",
+            "Added | Bug Fixes to the change logs ( Since I there is a lot )",
+            "Added | Animated Dice Rolling ( 2D Images only )"
+        ],
+        "bug_fix": [
+            "Fixed | When an auction ends the player who started the auction can buy or auction the property again",
+            "Fixed | A Way to Have Players have the same name",
+            "Fixed | If there is nothing that the change log can get it will return \"undefined\"",
+            "Fixed | The Placement of the jail since it was off by a 1 pixel",
+            "Fixed | When railroads are owned and someone lands on railroad the rent will be all the owned railroads on the board",
+            "Fixed | When entering the property management without any properties it won't allow the player to go back to the game", 
+            "Fixed | When a player rolls 3 doubles or land on \"Go to Jail\"it will send them to jail but does not show any buttons afterwards"
+        ],
+        "removed": [],
+        "changed": [
+            "Changed | The Player Element",
+            "Changed | The Main Menu",
+            "Changed | The Change Log and how it displays to the user",
+            "Changed | How button interactions are ( This does not affect gameplay at all )" 
+        ]
     }
 }

@@ -1,7 +1,7 @@
 // Made September 13th, Wednesday, 2023
 // Data Variables
 var propData = { // Placement is "left" px, "top" px
-    "0": {"property_data": {"by": null, "players_on": []},"placement": [[75, 884], [100, 884], [75, 907], [100, 907]]}, // When the player is sent to jail this is their location
+    "0": {"property_data": {"by": null, "players_on": [], "color": null},"placement": [[75, 884], [100, 884], [75, 907], [100, 907]]}, // When the player is sent to jail this is their location
     "1": {"buyable":false, "property_data": {"by": null, "players_on": [0,1,2,3], "color": null}, "placement": [[849, 884],[872, 884],[895, 884],[918, 884]]},
     "2": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "brown"}, "name": "Mediterranean Avenue", "property_cost": 60, "house_price": 50, "house_placement": {"axis": 988, "left":[770, 785, 800, 814, 792]}, "rent": [2, 10, 30, 90, 160, 250], "placement": [[775, 884],[798, 884],[775, 907],[918, 907]]},
     "3": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [693, 884], "1": [715, 884], "2":[693, 907], "3": [715, 907]}},
@@ -53,13 +53,14 @@ const cardsData = {
         "out_of_jail_Community Chest": {"description": " Allows the player to get out of jail for free", "gamemode": "normal"}
     },
     "Chance": {
-        "advance_railroad_4": {"location_id":36, "description": " Advance's to Short Line Railroad", "gamemode": "normal"},
+        "advance_railroad_4": {"location_id": 36, "description": " Advance's to Short Line Railroad", "gamemode": "normal"},
         "out_of_jail_Chance": {"description": " Allows the player to get out of jail for free", "gamemode": "normal"},
         "pay_tax": {"tax_amount": 100, "description": " Has to pay $100 in tax", "gamemode": "normal"},
-        "pay_prop_tax": {"house": 15, "hotels": 115, "description": " has to Pay for each house ($15 per) and hotel ($115 per)", "gamemode": "normal"}
+        "pay_prop_tax": {"house": 15, "hotels": 115, "description": " has to Pay for each house ($15 per) and hotel ($115 per)", "gamemode": "normal"},
+        
     }
 }
-
+// "pay_to_all": {"amount": 50, "description": " Has to Pay all players $50", "gamemode": "normal"}
 // This will get the change log 
 fetch('changeLog.json')
     .then(response => response.json())
@@ -106,26 +107,9 @@ const pay_btn = document.getElementById("pay_action")
 const cell_house = document.getElementById("cell_houses")
 const turn_text = document.getElementById("player_turn")
 const bankrupt_btn = document.getElementById("bankrupt_btn")
-// Default Functions
-var roll_funct = function() {
-    console.log("placeholder")
-}
-var any_funct = function() {
-    console.log("placeholder")
-}
-var buy_funct = function() {
-    console.log('placeholder')
-}
-var sell_funct = function() {
-    console.log('placeholder')
-}
-var pay_funct = function() {
-    console.log("placeholder")
-}
-var trade_funct = function() {
-    console.log("placeholder")
-}
-
+// Dice Img
+const dice1_img = document.getElementById("dice1")
+const dice2_img = document.getElementById("dice2")
 // The player class
 class Player {
     constructor(name, color, spot, id, money, jailed, props, ooj, bankrupt) {
@@ -293,7 +277,7 @@ class Player {
 
 // Main Game Functions \\
 // Shuffles given arrays
-// Link: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+// Link: https://stackoveflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 function shuffle(array) {
     let currentIndex = array.length,  randomIndex;
   
@@ -348,6 +332,7 @@ function update_all_prop_tags() {
         if (propData[i]["property_data"]["by"] !== null) { // Checks if the property is buyable
             var cell_tag = document.getElementById("cell_"+i.toString()+"_tag")
             cell_tag.style.backgroundColor = player_list[propData[i]["property_data"]["by"]].get_player_color()
+            cell_tag.firstChild.innerHTML = "Owner: "+player_list[propData[i]["property_data"]["by"]].get_player_name()
         }
     }
 }
@@ -458,7 +443,6 @@ function open_trade(player) {
             document.getElementById("prop_"+trader_prop_input.value).remove()
             left_items["prop_cash"] -= propData[trader_prop_input.value]["property_cost"]
             left_items["properties"].splice(left_items["properties"].indexOf(trader_prop_input.value), 1) // Removes the 
-            console.log(left_items["properties"])
             // Updates the list
             for (var i=0; i < left_items["properties"].length; i++) {
                 var canvas_elm = document.getElementById("prop_color_"+left_items["properties"][i])
@@ -486,7 +470,6 @@ function open_trade(player) {
         update_totals()
     }
     var trader_ooj_add_funct = function() { // ooj Adding btn
-        console.log(left_items["ooj"])
         if (left_items["ooj"].includes(trader_ooj_input.value) == false) { // Checks if the player hasn't added the chance/chest cards
             left_ooj.splice(left_ooj.indexOf(trader_ooj_input.value), 1)
             left_items["ooj"].push(trader_ooj_input.value)
@@ -587,7 +570,6 @@ function open_trade(player) {
             document.getElementById("prop_"+other_prop_input.value).remove()
             right_items["prop_cash"] -= propData[other_prop_input.value]["property_cost"]
             right_items["properties"].splice(right_items["properties"].indexOf(other_prop_input.value), 1) // Removes the 
-            console.log(right_items["properties"])
             // Updates the list
             for (var i=0; i < right_items["properties"].length; i++) {
                 var canvas_elm = document.getElementById("prop_color_"+right_items["properties"][i])
@@ -615,7 +597,6 @@ function open_trade(player) {
         update_totals()
     }
     var other_ooj_add_funct = function() { // ooj Adding btn
-        console.log(right_items["ooj"])
         if (right_items["ooj"].includes(other_ooj_input.value) == false) { // Checks if the player hasn't added the chance/chest cards
             right_ooj.splice(right_ooj.indexOf(other_ooj_input.value), 1)
             right_items["ooj"].push(other_ooj_input.value)
@@ -682,8 +663,6 @@ function open_trade(player) {
     cancel_btn.addEventListener("click", cancel_funct)
     // Checks if both players confirmed the trade when called
     var check_confirm_bool = function() {
-        console.log("Left: "+left_confirm_bool)
-        console.log("right: "+right_confirm_bool)
         if ((left_confirm_bool == true) && (right_confirm_bool == true)) { // If both players did confirm
             for (var i=0; i < left_items["properties"].length; i++) { // Adds the properties from the left player to the right player
                 player_list[player].remove_player_properties(left_items["properties"][i])
@@ -898,31 +877,26 @@ function open_manager(player) {
                 let new_buy = document.getElementById("buy_"+id)
                 let new_sell = document.getElementById("sell_"+id)
                 if (player_list[player].get_player_properties()[id]["mortgage"] == true) { // if the property is mortgage
-                    console.log("mortgage")
                     new_buy.textContent = "Un-mortgage"
                     new_sell.textContent = "Mortgaged"
                     new_buy.disabled = ""
                     new_sell.disabled = "disable"
                 } else if ([6,16,26,36].includes(id)) {
-                    console.log("Railroad")
                     new_buy.textContent = "Nope"
                     new_sell.textContent = "Mortgage"
                     new_buy.disabled = "disabled"
                     new_sell.disabled = ""
                 } else if (player_list[player].get_player_properties()[id]["houses"] == 5) { // If the amount of houses is 5
-                    console.log("has Hotel")
                     new_buy.textContent = "Has Hotel"
                     new_sell.textContent = "Sell Hotel"
                     new_buy.disabled = "disable"
                     new_sell.disabled = ""
                 } else if (player_list[player].get_player_properties()[id]["houses"] == 4) { // If the amount of houses is 4 / if the player is buying a hotel
-                    console.log("Getting Hotel")
                     new_buy.textContent = "Buy Hotel"
                     new_sell.textContent = "Sell House"
                     new_buy.disabled = ""
                     new_sell.disabled = ""
                 } else if (player_list[player].get_player_properties()[id]["houses"] >= 0) { // Checks how many houses they have
-                    console.log("House")
                     new_buy.textContent = "Buy House"
                     new_sell.textContent = "Mortgage"
                     new_buy.disabled = ""
@@ -931,9 +905,7 @@ function open_manager(player) {
             }
             // This will add interaction and puts the elements on screen
             let prop_id = prop_keys[i]
-            console.log(player)
             new_buy.onclick = function() {
-                console.log(player)
                 buy_item(prop_id, "house", player)
                 update_text(prop_id)
             }
@@ -1017,7 +989,6 @@ function open_auction_house(items, type) {
         }
         if (remove == true) { // If the player clicked "im_out"
             players_in.splice(players_in.length-1, 1)
-            console.log(players_in)
         }
         if (players_in.length == 1) { // if everyone is out
             game_board.style.display = "block" // Shows the Game board
@@ -1025,7 +996,7 @@ function open_auction_house(items, type) {
             
             player_list[parseInt(players_in[0])].remove_player_money(auction_value)
             update_money_display()
-            message_text_box(player_list[parseInt(players_in[0])].get_player_name()+" Aquired "+propData[items[0]]["name"]+" for $"+auction_value.toString()) 
+            message_text_box("<b>"+player_list[parseInt(players_in[0])].get_player_name()+"</b> Aquired "+propData[items[0]]["name"]+" for $"+auction_value.toString()) 
             // Sets up the new property for the player
             propData[items[0]]["property_data"]["by"] = parseInt(players_in[0])
             var cell_tag = document.getElementById("cell_"+items[0].toString()+"_tag")
@@ -1043,7 +1014,6 @@ function open_auction_house(items, type) {
                 auction_list.splice(0, 1) // Removes the current auction property
                 if (auction_list.length > 0) { // If the auction_list still has items
                     open_auction_house(auction_list, "bank") // Goes to the next property in the list
-                    console.log("Going again")
                     return
                 }
                 change_turn() // Goes to the next players turn
@@ -1123,6 +1093,8 @@ function open_auction_house(items, type) {
 // Game Functions \\
 // Changes the current turn
 function change_turn() {
+    dice1_img.style.display = "none"
+    dice2_img.style.display = "none"
     current_turn += 1; // Adds 1 to the turn
     try {
         player_list[current_turn].get_player_id()
@@ -1144,10 +1116,8 @@ function change_turn() {
     // Sets the Player turn text to the new player
     turn_text.innerHTML = "Current Turn:<br>"+player_list[current_turn].get_player_name()
     doubles = 0 // This sets rolled doubles to 0
-    roll_btn.removeEventListener("click", roll_funct)
+    roll_btn.onclick = ""
     set_roll()
-    // Allows the roll btn to be interacted
-    roll_btn.addEventListener("click", roll_funct)
 }
 
 // When the player is bankrupt
@@ -1176,7 +1146,6 @@ function bankrupt_player(type, data, to_player) {
         for (var i=0; i < player_props.length; i++) { // Goes through every property and give the other player the properties
             // Sells all houses
             var player_house = parseInt(player_list[current_turn].get_player_properties()[parseInt(player_props[i])]["houses"])
-            console.log(player_house)
             for (var j=0; j < player_house; j++) {
                 sell_item(parseInt(player_props[i]),"house", current_turn)
             }
@@ -1193,7 +1162,7 @@ function bankrupt_player(type, data, to_player) {
         player_list[current_turn].remove_player_money(player_list[current_turn].get_player_money())
         update_money_display()
         // Sends the message
-        message_text_box(player_list[current_turn].get_player_name()+" has bankrupt to "+player_list[to_player].get_player_name())
+        message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> has bankrupt to "+player_list[to_player].get_player_name())
         var player_txt = document.getElementById("player"+(current_turn+1)+"_money")
         player_txt.style.backgroundColor = "black"
         // Removes the player marker
@@ -1220,15 +1189,23 @@ function fix_all_positions() {
             player_elm.style.top = propData[player_list[i].get_player_spot_id()]["placement"][propData[player_list[i].get_player_spot_id()]["property_data"]["players_on"].indexOf(id_raw)][1].toString()+"px"
         }
     }
+    // Changes the players border
+    if ([6,16,26,36].includes(player_list[current_turn].get_player_spot_id())) { // If the player is on railroads
+        document.getElementById(player_list[current_turn].get_player_id()).style.border = "1px solid white" // Changes the border to white
+        return
+    }
+    document.getElementById(player_list[current_turn].get_player_id()).style.border = "1px solid black" // Changes the border to white
+    
 }
 
 // The last part of a players' turn
 function after_roll(end_jail, player, auctioned) {
+    update_all_prop_tags()
     if (end_jail == "out") { // If the player got out so it will disable all buttons except roll
-        buy_btn.removeEventListener("click", buy_funct); buy_btn.className = "action_btn_disabled"
-        sell_btn.removeEventListener("click", sell_funct); sell_btn.className = "action_btn_disabled"
-        pay_btn.removeEventListener("click", pay_funct); pay_btn.className = "action_btn_disabled"
-        any_btn.removeEventListener("click", any_funct); any_btn.className = "action_btn_disabled"
+        buy_btn.onclick = "";buy_btn.className = "action_btn_disabled"
+        sell_btn.onclick = "";sell_btn.className = "action_btn_disabled"
+        pay_btn.onclick = "";pay_btn.className = "action_btn_disabled"
+        any_btn.onclick = "";any_btn.className = "action_btn_disabled"
         player_list[player].set_player_spot_id(11)
         propData["11"]["property_data"]["players_on"].push(player)
         fix_all_positions()
@@ -1240,31 +1217,28 @@ function after_roll(end_jail, player, auctioned) {
     } else { // If the player did not roll a double
         roll_btn.className = "action_btn"
         roll_btn.textContent = "End Turn"
-        roll_btn.removeEventListener("click", roll_funct)
-        trade_btn.removeEventListener("click", trade_funct)
-        pay_btn.removeEventListener("click", pay_funct); pay_btn.className = "action_btn_disabled"
-        any_btn.removeEventListener("click", any_funct);
+        roll_btn.onclick = ""
+        trade_btn.onclick = ""
+        pay_btn.onclick = ""; pay_btn.className = "action_btn_disabled"
+        any_btn.onclick = ""
         // This will get rid of the buy/auction button feature if the player auctioned the property
-        if (auctioned !== null) {
-            buy_btn.removeEventListener("click", buy_funct)
-            sell_btn.removeEventListener("click", sell_funct)
+        if (auctioned !== undefined) {
             buy_btn.className = "action_btn_disabled"
             sell_btn.className = "action_btn_disabled"
         }
 
-        roll_funct = function() {
+        roll_btn.onclick = function() {
             change_turn()
         }
-        trade_funct = function() {
+        trade_btn.onclick = function() {
             open_trade(current_turn)
         }
-        any_funct = function() {
+        any_btn.onclick = function() {
             open_manager(current_turn)
         }
         any_btn.textContent="Manage"
-        roll_btn.addEventListener("click", roll_funct)
-        trade_btn.addEventListener("click", trade_funct); trade_btn.className = "action_btn"
-        any_btn.addEventListener("click", any_funct); any_btn.className = "action_btn"
+        trade_btn.className = "action_btn"
+        if (Object.keys(player_list[current_turn].get_player_properties()) > 0) {any_btn.className = "action_btn"} // If the player has any properties it will open the management menu
         bankrupt_btn.onclick = function() { // if the player decides to bankrupt themselfs
             bankrupt_player("by_bank", Object.keys(player_list[current_turn].get_player_properties()))
         }; bankrupt_btn.className = "bankrupt_btn"
@@ -1274,7 +1248,7 @@ function after_roll(end_jail, player, auctioned) {
 // When the player passes go
 function passed_go() {
     player_list[current_turn].add_player_money(200)
-    message_text_box(player_list[current_turn].get_player_name()+" has passed/landed on Go, They are awarded $200")
+    message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> has passed/landed on Go, They are awarded $200")
     update_money_display()
 }
 
@@ -1287,13 +1261,13 @@ function buy_item(location, type, player) {
             player_list[player].add_player_properties(location)
             player_list[player].remove_player_money(propData[location]['property_cost'])
             // Lets the players know
-            message_text_box(player_list[player].get_player_name()+" bought "+propData[location]['name'])
+            message_text_box("<b>"+player_list[player].get_player_name()+"</b> bought "+propData[location]['name'])
             // Updates the cell tag to be the color of the player
             var cell_tag = document.getElementById("cell_"+location.toString()+"_tag")
             cell_tag.style.backgroundColor = player_list[player].get_player_color()
             update_money_display()
         } else {
-            message_text_box(player_list[player].get_player_name()+" does not have enough money")
+            message_text_box("<b>"+player_list[player].get_player_name()+"</b> does not have enough money")
         }
     // if the player is buying a house/hotel
     } else if (type == "house") {
@@ -1327,26 +1301,26 @@ function buy_item(location, type, player) {
                 // Checks if the prop color is blue / brown
                 if ((location_color == "blue") || (location_color == "brown")) {
                     if (count_location_color != 2) {
-                        message_text_box(player_list[player].get_player_name()+" needs the whole property set to start buying houses")
+                        message_text_box("<b>"+player_list[player].get_player_name()+"</b> needs the whole property set to start buying houses")
                         return
                     }
                 } else if (location_color == "black") { // Makes sure that housing on railroad properties is impossible
                     return            
                 } else if (count_location_color != 3) { // Checks if the players have the whole set
-                    message_text_box(player_list[player].get_player_name()+" needs the whole property set to start buying houses")
+                    message_text_box("<b>"+player_list[player].get_player_name()+"</b> needs the whole property set to start buying houses")
                     return
                 }
 
                 // The User buying the house
                 if (player_list[player].get_player_properties()[location]['houses'] == 5) {
-                    message_text_box("Can not buy a house on a property that has a hotel already")
+                    message_text_box("<b>"+player_list[player].get_player_name()+"</b> Can not buy a house on a property that has a hotel already")
                     return
                 } else if (player_list[player].get_player_properties()[location]['houses'] == 4) {
-                    message_text_box(player_list[player].get_player_name()+" bought a Hotel on "+propData[location]['name'])
+                    message_text_box("<b>"+player_list[player].get_player_name()+"</b> bought a Hotel on "+propData[location]['name'])
                     hotels -= 1
                     houses += 4
                 } else {
-                    message_text_box(player_list[player].get_player_name()+" bought a House on "+propData[location]['name'])
+                    message_text_box("<b>"+player_list[player].get_player_name()+"</b> bought a House on "+propData[location]['name'])
                     houses -= 1
                 }
                 player_list[player].remove_player_money(propData[location]['house_price'])
@@ -1354,7 +1328,7 @@ function buy_item(location, type, player) {
                 update_money_display()
                 update_game_text()
             } else {
-                message_text_box(player_list[player].get_player_name()+" can not afford to buy a house/hotel on "+propData[location]['name'])
+                message_text_box("<b>"+player_list[player].get_player_name()+"</b> can not afford to buy a house/hotel on "+propData[location]['name'])
             }
         } else {
             // Checks if the player has the mortgage price 
@@ -1368,7 +1342,7 @@ function buy_item(location, type, player) {
                 player_list[player].set_property_mortgage(location, false) // Sets the property mortgage to false
                 update_money_display()
                 // Sends the Message
-                message_text_box(player_list[player].get_player_name()+" Un-mortgage "+propData[location]['name']+" for $"+amount.toString())
+                message_text_box("<b>"+player_list[player].get_player_name()+"</b> Un-mortgage "+propData[location]['name']+" for $"+amount.toString())
             }
         }        
     }
@@ -1378,13 +1352,12 @@ function buy_item(location, type, player) {
 function sell_item(location, type, player) {
     if (type == "house") {
         if (player_list[player].get_player_properties()[location]['mortgage'] == true) { // Checks if the property has been mortgage yet
-            message_text_box("This property is already mortgage")
+            message_text_box("<b>"+player_list[player].get_player_name()+"</b> This property is already mortgage")
             return
         } else if (player_list[player].get_player_properties()[location]['houses'] == 0) {// Mortgaging the property
-            console.log(location)
             player_list[player].set_property_mortgage(location, true) // Sets the mortgage to true
             player_list[player].add_player_money(propData[location]['property_cost']/2)
-            message_text_box(player_list[player].get_player_name()+" has mortgage "+propData[location]['name']+" and recived $"+(propData[location]['property_cost']/2).toString())
+            message_text_box("<b>"+player_list[player].get_player_name()+"</b> has mortgage "+propData[location]['name']+" and recived $"+(propData[location]['property_cost']/2).toString())
             // This will create the mortgage line
             var red_line = document.createElement("canvas")
             var cells = document.getElementById("cell_tags")
@@ -1414,7 +1387,7 @@ function sell_item(location, type, player) {
                 houses += 1
             }
             // Sends a message and does all player handling stuff
-            message_text_box(player_list[player].get_player_name()+" Sold a house/hotel and gained $"+(propData[location]['house_price']/2).toString())
+            message_text_box("<b>"+player_list[player].get_player_name()+"</b> Sold a house/hotel and gained $"+(propData[location]['house_price']/2).toString())
             player_list[player].add_player_money(propData[location]['house_price']/2)
             player_list[player].remove_player_prop_house(location) // Removes the house icon and from the players properties
             update_money_display()
@@ -1431,7 +1404,7 @@ function player_pays(amount, to_who) {
         update_money_display()
         update_game_text()
     } else if ([0, 1, 2, 3].includes(to_who)) { // If the player pays another player
-        message_text_box(player_list[current_turn].get_player_name()+" paid "+player_list[to_who].get_player_name()+" $"+amount.toString())
+        message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> paid <b>"+player_list[to_who].get_player_name()+"</b> $"+amount.toString())
         player_list[current_turn].remove_player_money(amount)
         player_list[to_who].add_player_money(amount)
         update_money_display()
@@ -1442,7 +1415,7 @@ function player_pays(amount, to_who) {
 // Sends the player to jail
 function player_jailed(player, type) {
     if (type == "new") { // When the player is sent to jail
-        message_text_box(player_list[player].get_player_name()+" has been sent to jail.")
+        message_text_box("<b>"+player_list[player].get_player_name()+"</b> has been sent to jail.")
         // Adds all the players that are jailed
         var amountJailed = 0
         for (var i=0; i < player_list.length; i++) {
@@ -1462,52 +1435,47 @@ function player_jailed(player, type) {
         // Rolling the player doubles
         roll_btn.className = "action_btn"
         roll_btn.textContent = "Roll Doubles"
-        roll_btn.removeEventListener("click", roll_funct)
-        roll_funct = function() {
+        roll_btn.onclick = function() {
             dice1 = Math.floor(Math.random()*6)+1; // Rolls "dice1" Between 1-6
             dice2 = Math.floor(Math.random()*6)+1; // Rolls "dice2" Beteen 1-6
             if (dice1 == dice2) { // If the player rolls a double
-                message_text_box(player_list[player].get_player_name()+" Has rolled Doubles | "+dice1.toString()+" and a "+dice2.toString())
+                message_text_box("<b>"+player_list[player].get_player_name()+"</b> Has rolled Doubles | "+dice1.toString()+" and a "+dice2.toString())
                 player_list[player].set_player_isJailed(false)
                 after_roll("out", player)
             } else {
-                message_text_box(player_list[player].get_player_name()+" Did not roll Doubles | "+dice1.toString()+" and a "+dice2.toString())
-                pay_btn.removeEventListener("click", pay_funct); pay_btn.className = "action_btn_disabled"
+                message_text_box("<b>"+player_list[player].get_player_name()+"</b> Did not roll Doubles | "+dice1.toString()+" and a "+dice2.toString())
+                pay_btn.className = "action_btn_disabled"
                 after_roll("in")
             }
         }
         // Pay Button
         pay_btn.className = "action_btn"
         pay_btn.textContent = "Pay $50"
-        pay_btn.removeEventListener("click", pay_funct)
-        pay_funct = function() {
+        pay_btn.onclick = function() {
             if (player_list[player].get_player_money() >= 50) {
-                message_text_box(player_list[player].get_player_name()+" Paid $50 to get out of jail")
+                message_text_box("<b>"+player_list[player].get_player_name()+"</b> Paid $50 to get out of jail")
                 player_list[player].set_player_isJailed(false)
                 player_list[player].remove_player_money(50)
                 dice1 = 0; dice2 = 0; // This is so that they can roll
                 after_roll("out", player)
             } else {
-                message_text_box(player_list[player].get_player_name()+" Does not have enough money")
+                message_text_box("<b>"+player_list[player].get_player_name()+"</b> Does not have enough money")
                 return
             }
         }
-        pay_btn.addEventListener("click", pay_funct)
         // Player uses card
         any_btn.className = "action_btn"
         any_btn.textContent = "Use Get Out Jail card"
-        any_btn.removeEventListener("click", any_funct)
-        any_funct = function() { // When the player clicks the button
+        any_btn.onclick = function() { // When the player clicks the button
             if (player_list[player].get_player_ooj().length > 0) { // if the player has any ooj cards
-                message_text_box(player_list[player].get_player_name()+" Used a get out of jail free card")
+                message_text_box("<b>"+player_list[player].get_player_name()+"</b> Used a get out of jail free card")
                 player_list[player].remove_player_ooj()
                 player_list[player].set_player_isJailed(false)
                 after_roll("out", player)
             } else {
-                message_text_box(player_list[player].get_player_name()+" does not have a get out of jail free card")
+                message_text_box("<b>"+player_list[player].get_player_name()+"</b> does not have a get out of jail free card")
             }
         }
-        any_btn.addEventListener("click", any_funct)
     }
 }
 
@@ -1515,18 +1483,17 @@ function player_jailed(player, type) {
 function c_cards(card_type) {
     // Checks what card to pull 
     if (card_type == "Community Chest") { // If the Player Lands on Community Chest
-        var played_card = chance_deck[0] // Gets the first card from the deck
-        var played_card = chest_deck[0] // The first card in the deck
+        var played_card = chest_deck[0] // Gets the first card from the deck
         if (played_card.includes("out_of_jail") == false) {chest_deck[chest_deck.length] = played_card} // This will put the picked card at the end of the deck if its not a ooj card
         chest_deck.splice(0, 1) // This will delete the first card since it was put at the end of the deck
     } else if (card_type == "Chance") { // If the Player Lands on Chance
-        var played_card = chance_deck[0];console.log(played_card.includes("out_of_jail") == false)// Gets the first card from the deck
+        var played_card = chance_deck[0];// Gets the first card from the deck
         if (played_card.includes("out_of_jail") == false) {chance_deck[chance_deck.length] = played_card} // This will put the picked card at the end of the deck if its not a ooj card
         chance_deck.splice(0, 1) // This will delete the first card since it was put at the end of the deck
     }
     player = document.getElementById(player_list[current_turn].get_player_id())
     // Sends message
-    message_text_box(player_list[current_turn].get_player_name()+cardsData[card_type][played_card]["description"])
+    message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b>"+cardsData[card_type][played_card]["description"])
     // Sees what card was pick
     if (played_card.includes("advance")) { // If the player advance to another place
         // Removes the player from the old property
@@ -1559,28 +1526,24 @@ function c_cards(card_type) {
             }, 250);
         }, 1500)
     } else if (played_card.includes("pay_tax")) { // If the player pays a tax
-        pay_btn.removeEventListener("click", pay_funct)
         pay_btn.className = "action_btn"
         pay_btn.textContent = "Pay $"+cardsData[card_type][played_card]["tax_amount"].toString()
-        pay_funct = function() {
+        pay_btn.onclick = function() {
             if (player_list[current_turn].get_player_money() >= cardsData[card_type][played_card]["tax_amount"]) {
                 player_pays(cardsData[card_type][played_card]["tax_amount"], "parking")
                 after_roll()
             } else {
-                message_text_box(player_list[current_turn].get_player_name()+" does not have enough money")
+                message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> does not have enough money")
             }
         }
-        pay_btn.addEventListener("click", pay_funct)
     } else if (played_card.includes("pay_prop_tax")) { // If the player has to pay property tax
         var total_houses = 0
         var total_hotels = 0
         var amount = 0
         var prop_keys = Object.keys(player_list[current_turn].get_player_properties())
-        console.log(prop_keys.length)
         // Adds all the houses / hotels
         for (var i=0; i < prop_keys.length; i++) {
             // Checks if the player has houses on the property
-            console.log(prop_keys[i])
             if (player_list[current_turn].get_player_properties()[prop_keys[i]]['houses'] == 5) {
                 total_hotels += 1
             } else if (player_list[current_turn].get_player_properties()[prop_keys[i]]['houses'] > 0) { // Checks if the player has a hotel on the property
@@ -1589,7 +1552,7 @@ function c_cards(card_type) {
         }
         // If there are no owned house/hotels then it will not make the player pay
         if (total_hotels+total_houses == 0) {
-            message_text_box(player_list[current_turn].get_player_name()+" does not have any houses or hotels")
+            message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> does not have any houses or hotels")
             after_roll()
             return
         }
@@ -1598,25 +1561,37 @@ function c_cards(card_type) {
         // pay_btn Actions
         pay_btn.className = "action_btn"
         pay_btn.textContent = "$"+amount.toString()
-        pay_btn.removeEventListener("click", pay_funct)
 
-        pay_funct = function() {
+        pay_btn.onclick = function() {
             if (player_list[current_turn].get_player_money() >= amount) { // Checks if the player has enough money
-                message_text_box(player_list[current_turn].get_player_name()+" Paid $"+amount.toString())
+                message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> Paid $"+amount.toString())
                 player_list[current_turn].remove_player_money(amount)
                 update_money_display()
                 after_roll()
             } else { // If the player does not have enough money
-                message_text_box(player_list[current_turn].get_player_name()+" Does not have enough money")
+                message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> Does not have enough money")
             }
         }
-        pay_btn.addEventListener("click", pay_funct)
 
-    } else if (played_card.includes("out_of_jail")) {
+    } else if (played_card.includes("out_of_jail")) { // If the player gets a ooj
         player_list[current_turn].add_player_ooj(played_card)
         after_roll()
+    } else if (played_card.includes("pay_to_all")) { // player pays all players the amount
+        pay_btn.className = "action_btn"
+        pay_btn.textContent = "Pay All Players "+cardsData[card_type][played_card]["amount"].toString()
+        var amount = 0
+        // Occurs when the player clicks the pay_btn
+        pay_funct.onclick = function() {
+            for (var i=0; i < player_list.length; i++) {
+                if (player_list[i].get_player_bankrupt() == false) { // Checks if they are bankrupt
+                    if (player_list[i].get_player_id() !== player_list[current_turn].get_player_id()) { // Checks if the player is not the current player
+                        player_pays(cardsData[card_type][played_card]["amount"], i)
+                    }
+                }
+            }
+
+        }
     }
-    
 }
 
 // When the player lands on a property this will check to see what to do
@@ -1624,9 +1599,9 @@ function check_landed_property() {
     var location = player_list[current_turn].get_player_spot_id(); // Location of the player
     var owned_id = propData[location]["property_data"]['by'] // The ID of the player who owns the property
     // Removes the event listener
-    buy_btn.removeEventListener("click", buy_funct)
-    sell_btn.removeEventListener("click", sell_funct)
-    pay_btn.removeEventListener("click", pay_funct)
+    buy_btn.onclick = ""
+    sell_btn.onclick = ""
+    pay_btn.onclick = ""
 
     // If the location is buyable and if the property is unowned
     if ((propData[location]['buyable'] == true) && (owned_id == null)) {
@@ -1639,25 +1614,24 @@ function check_landed_property() {
         sell_btn.disabled = false
         sell_btn.textContent = "Auction"
         // Sends the message for the property
-        message_text_box("Would you like to buy "+propData[location]['name']+" for $"+propData[location]['property_cost'].toString())
+        message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> Would you like to buy "+propData[location]['name']+" for $"+propData[location]['property_cost'].toString())
         // Allows the buy to be interacted with
-        buy_funct = function() { // Buys the property
+        buy_btn.onclick = function() { // Buys the property
             if (player_list[current_turn].get_player_money() >= propData[location]['property_cost']) {
                 buy_item(location, 'prop', current_turn)
                 check_landed_property()
                 after_roll()
             } else {
-                message_text_box(player_list[current_turn].get_player_name()+" can not afford this Property")
+                message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> can not afford this Property")
             }
         }
-        sell_funct = function() { // Starts the auction house
+        sell_btn.onclick = function() { // Starts the auction house
             open_auction_house(location)
         }
-        buy_btn.addEventListener("click", buy_funct)
-        sell_btn.addEventListener("click", sell_funct)
         bankrupt_btn.className = "action_btn_disabled"
     
     } else if ((propData[location]['buyable'] == true) && (owned_id == current_turn)) {// If the property is buyable and if owned by the player
+        var railroad_ids = [6,16,26,36]
         // Enables the buy action 
         if (propData[location]['property_data']['color'] != "black") {
             buy_btn.className = "action_btn"
@@ -1684,20 +1658,22 @@ function check_landed_property() {
         } else if (player_list[current_turn].get_player_properties()[location]['houses'] < 5) {
             sell_btn.textContent = "Sell House"
         }
-        // Enables the buttons to be interacted with
-        buy_funct = function() {
-            buy_item(location, 'house', current_turn)
-            check_landed_property()
-        }
         if (player_list[current_turn].get_player_properties()[location]['houses'] < 5) { // Checks to see if the player has 5 houses already
-            buy_btn.addEventListener("click", buy_funct)
+            buy_btn.onclick = function() {
+                buy_item(location, 'house', current_turn)
+                check_landed_property()
+            }
         }
         // Sell button
-        sell_funct = function() {
+        sell_btn.onclick = function() {
             sell_item(location, 'house', current_turn)
             check_landed_property()
         }
-        sell_btn.addEventListener("click", sell_funct)
+        if ((railroad_ids.includes(location)) && (player_list[current_turn].get_player_properties()[location]["mortgage"] == false)) { // If the player landed on a railroad they own this will disable the buy button if it not mortgage
+            buy_btn.className = "action_btn_disabled"
+        } else if ((railroad_ids.includes(location)) && (player_list[current_turn].get_player_properties()[location]["mortgage"] == true)) {
+            sell_btn.className = "action_btn_disabled"
+        }
         after_roll()
     } else if ((propData[location]['buyable'] == true) && (owned_id != current_turn) && (propData[location]["property_data"]['color'] == "black")) { // This is if the player lands on a railroad they do not own
         if (player_list[owned_id].get_player_properties()[location]['mortgage'] == false) {
@@ -1705,47 +1681,45 @@ function check_landed_property() {
             var railroad_ids = [6,16,26,36]
             var amount = 0
             for (var i=0; i < railroad_ids.length; i++) {
-                if (Object.keys(player_list[owned_id].get_player_properties()).includes(railroad_ids[i].toString())) {
+                if (propData[railroad_ids[i].toString()]["property_data"]["by"] == owned_id) {
                     amount = propData[location]['rent'][i]
                 }
             }
             // Sends message
-            message_text_box(player_list[current_turn].get_player_name()+" owes "+player_list[owned_id].get_player_name()+" $"+amount.toString())
-            pay_funct = function() {
+            message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> owes "+player_list[owned_id].get_player_name()+" $"+amount.toString())
+            pay_btn.onclick = function() {
                 // Checks if the player has enough to pay
                 if (player_list[current_turn].get_player_money() >= amount) {
                     player_pays(amount, owned_id)
                     after_roll()
                 } else {
-                    message_text_box(player_list[current_turn].get_player_name()+" does not have $"+amount.toString())
+                    message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> does not have $"+amount.toString())
                 }
             }
             // pay_btn setup
             pay_btn.className = "action_btn"
             pay_btn.textContent = "Pay $"+amount.toString()
-            pay_btn.addEventListener("click", pay_funct)
         } else {
-            message_text_box(player_list[current_turn].get_player_name()+" does not have to pay since this property is mortgage")
+            message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> does not have to pay since this property is mortgage")
             after_roll()
         }
     } else if ((propData[location]['buyable'] == true) && (owned_id != current_turn)) { // If the property is buyable and if the property is owned by another player
         if (player_list[owned_id].get_player_properties()[location]["mortgage"] == false) { // Checks if the property is mortgage
             if (([13,29].includes(location) == false)) { // If the property is not Electric Company or Water Works
                 var amount = propData[location]['rent'][player_list[owned_id].get_player_properties()[location]['houses']] // Amount the player owes
-                message_text_box(player_list[current_turn].get_player_name()+" owes "+player_list[owned_id].get_player_name()+" $"+amount.toString())
+                message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> owes "+player_list[owned_id].get_player_name()+" $"+amount.toString())
                 // Checks if the player has enough to pay if so then it will pay the next player
-                pay_funct = function() {
+                pay_btn.onclick = function() {
                     if (player_list[current_turn].get_player_money() >= amount) {
                         player_pays(amount, owned_id)
                         after_roll()
                     } else {
-                        message_text_box(player_list[current_turn].get_player_name()+" does not have $"+amount.toString())
+                        message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> does not have $"+amount.toString())
                     }
                 }
                 // pay_btn setup
                 pay_btn.className = "action_btn"
                 pay_btn.textContent = "Pay $"+amount.toString()
-                pay_btn.addEventListener("click", pay_funct)
                 bankrupt_btn.className = "bankrupt_btn"
                 bankrupt_btn.onclick = function() {
                     bankrupt_player("by_player", location, owned_id)
@@ -1760,28 +1734,26 @@ function check_landed_property() {
                     }
                 }
                 // Does the messaging and math
-                var amount = (dice1+dice)*times
-                message_text_box(player_list[current_turn].get_player_name()+" owes "+player_list[owned_id].get_player_name()+" $"+amount.toString())
-                pay_funct = function() {
+                var amount = (dice1+dice2)*times
+                message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> owes "+player_list[owned_id].get_player_name()+" $"+amount.toString())
+                pay_btn.onclick = function() {
                     if (player_list[current_turn].get_player_money() >= amount) {
                         player_pays(amount, owned_id)
                         after_roll()
                     } else {
-                        message_text_box(player_list[current_turn].get_player_name()+" does not have $"+amount.toString())
+                        message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> does not have $"+amount.toString())
                     }
                 }
                 // pay_btn setup
                 pay_btn.className = "action_btn"
                 pay_btn.textContent = "Pay $"+amount.toString()
-                pay_btn.addEventListener("click", pay_funct)
-                console.log("Bank")
                 bankrupt_btn.className = "bankrupt_btn"
                 bankrupt_btn.onclick = function() {
                     bankrupt_player("by_player", location, owned_id)
                 }
             }
         } else { // If the property is mortgage
-            message_text_box(player_list[current_turn].get_player_name()+" does not have to pay since this property is mortgage")
+            message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> does not have to pay since this property is mortgage")
             after_roll()
         }
     } else if (propData[location]['buyable'] == false) { // if the location is not buyable
@@ -1794,38 +1766,36 @@ function check_landed_property() {
         } else if (location == 1) { // If player lands on go
             after_roll()
         } else if (location == 5) { // If the player lands on Income Tax
-            message_text_box(player_list[current_turn].get_player_name()+" Pay $200")
+            message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> Pay $200")
             pay_btn.className = "action_btn"
             pay_btn.textContent = "Pay $200"
             // Allows the player to pay the amount
-            pay_funct = function() {
+            pay_btn.onclick = function() {
                 if (player_list[current_turn].get_player_money() >= 200) {
                     player_pays(200, "parking")
                     after_roll()
                 } else {
-                    message_text_box(player_list[current_turn].get_player_name()+" does not have $200")
+                    message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> does not have $200")
                 }
-            }
-            pay_btn.addEventListener("click", pay_funct)   
+            } 
         } else if (location == 39) { // If the player lands on Luxury Tax
-            message_text_box(player_list[current_turn].get_player_name()+" Pay $100")
+            message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> Pay $100")
             pay_btn.className = "action_btn"
             pay_btn.textContent = "Pay $100"
             // Allows the player to pay
-            pay_funct = function() {
+            pay_btn.onclick = function() {
                 if (player_list[current_turn].get_player_money() >= 100) {
                     player_pays(100, "parking")
                     after_roll()
                 } else {
-                    message_text_box(player_list[current_turn].get_player_name()+" does not have $100")
+                    message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> does not have $100")
                 }
             }
-            pay_btn.addEventListener("click", pay_funct) 
         } else if (location == 11) {
-            message_text_box(player_list[current_turn].get_player_name()+" is Just Visiting")
+            message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> is Just Visiting")
             after_roll()
         } else if (location == 21) { // If the player lands on Free parking
-            message_text_box(player_list[current_turn].get_player_name()+" gained $"+freeParking_cash.toString()+" for landing on Free Parking")
+            message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> gained $"+freeParking_cash.toString()+" for landing on Free Parking")
             player_list[current_turn].add_player_money(freeParking_cash)
             freeParking_cash = 200
             update_money_display()
@@ -1833,13 +1803,15 @@ function check_landed_property() {
             after_roll()
         } else if (location == 31) { // If the player lands on Go to Jail
             player_jailed(current_turn, "new")
+            dice1 = -1; dice2 = -2
+            after_roll("no", current_turn)
+            return
         }
     }
 }
 
 // Sets the roll btn
 function set_roll() {
-    roll_btn.removeEventListener("click", roll_funct)
     // Checks if the player is in jail
     if (player_list[current_turn].get_player_isJailed() == true) {
         player_jailed(current_turn, "old")
@@ -1855,58 +1827,75 @@ function set_roll() {
     }
 
     // Removes and disables all other buttons
-    buy_btn.removeEventListener("click", buy_funct); buy_btn.className = "action_btn_disabled"
-    sell_btn.removeEventListener("click", sell_funct); sell_btn.className = "action_btn_disabled"
-    pay_btn.removeEventListener("click", pay_funct); pay_btn.className = "action_btn_disabled"
-    trade_btn.removeEventListener("click", trade_funct); trade_btn.className = "action_btn_disabled"
+    buy_btn.onclick = ""; buy_btn.className = "action_btn_disabled"
+    sell_btn.onclick = ""; sell_btn.className = "action_btn_disabled"
+    pay_btn.onclick = ""; pay_btn.className = "action_btn_disabled"
+    trade_btn.onclick = ""; trade_btn.className = "action_btn_disabled"
 
     // Makes the roll function
-    roll_funct = function() {
-        dice1 = Math.floor(Math.random()*6)+1; // Rolls "dice1" Between 1-6
-        dice2 = Math.floor(Math.random()*6)+1; // Rolls "dice2" Beteen 1-6
-        
-        movement = dice1 + dice2; // Adds both dice to see how far the player moves
-        message_text_box(player_list[current_turn].get_player_name()+" has rolled a "+dice1.toString()+" and a "+dice2.toString())
-        // Disables the roll Button
-        roll_btn.className = "action_btn_disabled"
-        // If the player rolls a double
-        if (dice1 == dice2) { 
-            doubles += 1
-            if (doubles == 3) {
-                player_list[current_turn].set_player_isJailed(true)
-                message_text_box(player_list[current_turn].get_player_name()+" Rolled 3 Doubles and is now being sent to jail")
-                player_jailed(current_turn, "new")
-                return
+    roll_btn.onclick = function() {
+        // Variables for dice animation
+        var roll_speed = 250 // The speed the dice rolls
+        // Shows the dice
+        dice1_img.style.display = "block" // Shows dice1
+        dice2_img.style.display = "block" // Shows dice2
+        // Animates the dice roll
+        var animate_dice_roll = setInterval(() => { 
+            dice1 = Math.floor(Math.random()*6)+1; // Rolls "dice1" Between 1-6
+            dice2 = Math.floor(Math.random()*6)+1; // Rolls "dice2" Beteen 1-6
+            console.log(dice1)
+            // Sets the images for dice1 and dice 2
+            dice1_img.src = "./diceImg/roll_"+dice1.toString()+".png" // Sets image for dice1
+            dice2_img.src = "./diceImg/roll_"+dice2.toString()+".png" // Sets image for dice2
+            roll_speed += 250
+            // Stops the animation once the roll_speed hits 2500
+            if (roll_speed >= 2500) {
+                clearInterval(animate_dice_roll)
+                console.log(dice1)
+                movement = dice1 + dice2; // Adds both dice to see how far the player moves
+                message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> has rolled a "+dice1.toString()+" and a "+dice2.toString())
+                // Disables the roll Button
+                roll_btn.className = "action_btn_disabled"
+                // If the player rolls a double
+                if (dice1 == dice2) { 
+                    doubles += 1
+                    if (doubles == 3) {
+                        player_list[current_turn].set_player_isJailed(true)
+                        message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> Rolled 3 Doubles and is now being sent to jail")
+                        player_jailed(current_turn, "new")
+                        dice1 = -1; dice2 = -2
+                        after_roll("no", current_turn)
+                        return
+                    }
+                }
+                // Moves the player spot to spot
+                var i = 0
+                var spot_by_spot = setInterval(() => {
+                    player_list[current_turn].add_player_spot_id(1) // Every 250 milliseconds the player will move
+                    // Checks if the player is passing go ( if so then sets there spot to 1)
+                    if (player_list[current_turn].get_player_spot_id() > 40) {
+                        player_list[current_turn].set_player_spot_id(1)
+                        passed_go()
+                    }
+                    current_spot = player_list[current_turn].get_player_spot_id()
+                    var spot_placement = propData[current_spot]['property_data']['players_on'].length
+                    // Gets the player and sets their position
+                    player = document.getElementById("player"+(current_turn+1).toString())
+                    player.style.top = propData[current_spot]['placement'][spot_placement][1].toString()+"px"
+                    player.style.left = propData[current_spot]['placement'][spot_placement][0].toString()+"px"
+                    fix_all_positions() // This will fix any positioning issues
+                    // Stops the interval if the player moved the correct amount of times
+                    i++
+                    // Stops the loop if the player lands on the spot they rolled to
+                    if (i > movement-1) {
+                        clearInterval(spot_by_spot)
+                        propData[current_spot]['property_data']['players_on'].push(current_turn)
+                        check_landed_property()
+                    }
+                }, 250);
             }
-        }
-        // Moves the player spot to spot
-        var i = 0
-        var spot_by_spot = setInterval(() => {
-            player_list[current_turn].add_player_spot_id(1) // Every 250 milliseconds the player will move
-            // Checks if the player is passing go ( if so then sets there spot to 1)
-            if (player_list[current_turn].get_player_spot_id() > 40) {
-                player_list[current_turn].set_player_spot_id(1)
-                passed_go()
-            }
-            current_spot = player_list[current_turn].get_player_spot_id()
-            var spot_placement = propData[current_spot]['property_data']['players_on'].length
-            // Gets the player and sets their position
-            player = document.getElementById("player"+(current_turn+1).toString())
-            player.style.top = propData[current_spot]['placement'][spot_placement][1].toString()+"px"
-            player.style.left = propData[current_spot]['placement'][spot_placement][0].toString()+"px"
-            fix_all_positions() // This will fix any positioning issues
-            // Stops the interval if the player moved the correct amount of times
-            i++
-            // Stops the loop if the player lands on the spot they rolled to
-            if (i > movement-1) {
-                clearInterval(spot_by_spot)
-                propData[current_spot]['property_data']['players_on'].push(current_turn)
-                check_landed_property()
-            }
-        }, 250);
-        
-    }    
-    roll_btn.addEventListener("click", roll_funct)
+        }, roll_speed);
+    }
 }
 
 // Sets up everything that will be used in the game
@@ -1916,14 +1905,24 @@ function set_up_game(player_names, player_colors, starting_cash, bankrupt) {
     // Spawns the players
     var playerContainer = document.getElementById('Players')
     for (var i = 0; i < player_names.length; i++) {
+        // Creates the Players' tool tip
+        let playerToolTip = document.createElement("div")
+        playerToolTip.textContent = player_names[i]
+        playerToolTip.className = "playerTip"
+        playerToolTip.style.display = "none"
         // Creates the Player
-        var newPlayer = document.createElement('canvas')
+        const newPlayer = document.createElement("div")
         newPlayer.id = "player"+(i+1).toString()
         newPlayer.className = "player"
-        newPlayer.width="20"
-        newPlayer.height="20"
         newPlayer.style = "background-color: "+player_colors[i]+";top:884px;left:"+(849+(23*(i))).toString()+"px;"
-        // Adds the player to the board
+        newPlayer.onmouseover = function() { // When the players mouse is over a player it will show the name of that player
+            playerToolTip.style.display = "block"
+        }
+        newPlayer.onmouseout = function() { // When the players mouse is not over a player it will hide that players name
+            playerToolTip.style.display = "none"
+        }
+        newPlayer.appendChild(playerToolTip) // Adds the tool tip to the player
+        // Adds the player tooltip to the board
         playerContainer.appendChild(newPlayer)
         // Adds the player to the player list
         player_list.push(new Player(player_names[i], player_colors[i], 1, "player"+(i+1).toString(), starting_cash, false, {}, [], bankrupt))
@@ -1937,8 +1936,50 @@ function set_up_game(player_names, player_colors, starting_cash, bankrupt) {
     set_roll()
     // Sets the Player turn text to the new player
     turn_text.innerHTML = "Current Turn:<br>"+player_list[current_turn].get_player_name()
-    // Allows the roll btn to be interacted
-    roll_btn.addEventListener("click", roll_funct)
+
+    // This will Add the color to each property
+    var propData_keys = Object.keys(propData)
+    for (var i=0; i < propData_keys.length; i++) { // Goes through each property
+        if (propData[propData_keys[i]]["property_data"]["color"] !== null) { // Checks if that property has a color
+            let propCell = document.getElementById("cell_"+i.toString()) // The Property
+            let propPar = document.getElementById("cell_"+i.toString()).parentElement // The propertys' parent element
+            let textColor = "black" // The property cell text color
+            if (["blue", "black", "brown"].includes(propData[propData_keys[i]]["property_data"]["color"])) { // If the prop Color is in the list it will set the text color to white
+                textColor = "white" // Sets text color to white
+            }
+            propCell.style = "color:"+textColor+";" // Sets the cell text color
+            propPar.style = "background-color:"+propData[propData_keys[i]]["property_data"]["color"]+";" // Sets the propertys' color
+        }
+    }
+    // This will allow the player to hover over the property tag to sell who owns it
+    for (var i=0; i < propData_keys.length; i++) {
+        let cellTag = document.getElementById("cell_"+i.toString()+"_tag")
+        let cellTag_tip = document.createElement("div")
+        
+        if (cellTag == null) { // If the cellTag is not a element
+            continue
+        }
+        cellTag_tip.style.display = "none"
+        // Checks the tag location
+        if ([2,4,6,7,8,10].includes(i)) { // if the prop is on the bottom
+            cellTag_tip.className = "cell_tip_bottom"
+        } else if ([12,13,14,15,16,17,19,20].includes(i)) { // if the prop is on the left
+            cellTag_tip.className = "cell_tip_left"
+        } else if ([22,24,25,26,27,28,29,30].includes(i)) {
+            cellTag_tip.className = "cell_tip_top"
+        } else if ([32,33,35,36,38,40].includes(i)) {
+            cellTag_tip.className = "cell_tip_right"
+        }
+        cellTag_tip.textContent = "Owner: Bank"
+        // Makes the hover part
+        cellTag.onmouseover = function() { // Mouse is over
+            cellTag_tip.style.display = "block"
+        }
+        cellTag.onmouseout = function() { // Mouse is not over
+            cellTag_tip.style.display = "none"
+        }
+        cellTag.appendChild(cellTag_tip) // Appends the tag to the cell
+    }
     // Randomizes the chance/chest cards
     chest_deck = shuffle(Object.keys(cardsData["Community Chest"])) // Randomize Chest
     chance_deck = shuffle(Object.keys(cardsData["Chance"])) // Randomize Chest
@@ -1996,7 +2037,7 @@ function set_menu(changeLog) {
             }
             // Checks the length of the name
             if ((name_input.value).length >= 3) { // Only allow names over the length of 3
-                if (input_names.includes(name_input.value) == false) { // Checks if the name is taken // Checks if the color is taken
+                if (input_names.includes((name_input.value).replace(" ", "")) == false) { // Checks if the name is taken // Checks if the color is taken
                     input_names.push(name_input.value)
                     input_colors.push(color_input.value)
                     error_count = false
@@ -2036,49 +2077,96 @@ function set_menu(changeLog) {
             divider.textContent = "--------------------------------------------------------------------------------"
             changeLog_txt.appendChild(divider)
         }
-        // Makes the Date and title Text
-        let ver_date = document.createElement("div")
-        ver_date.innerHTML = "&#x2022; Release Date: "+changeLog[select_version.value]["date"]
-        changeLog_txt.appendChild(ver_date)
-        let ver_title = document.createElement("div")
-        ver_title.innerHTML = "&#x2022; Update Name: "+changeLog[select_version.value]["title"]
-        changeLog_txt.appendChild(ver_title)
-        make_divider()
-        // Makes the Added title
-        let add_title = document.createElement("div")
-        add_title.innerHTML = "&#x2022; Additions:"
-        changeLog_txt.appendChild(add_title)
-        // Makes the Added items
-        var add_items = changeLog[select_version.value]["added"]
-        for (var i=0; i < add_items.length; i++) {
-            let ver_add = document.createElement("div")
-            ver_add.innerHTML = "&#x2022; "+add_items[i]
-            changeLog_txt.appendChild(ver_add)
+        // Sees what value was selected
+        if (select_version.value == "Future Updates") { // If future updates was selected
+            // Adds the Future Updates to the output
+            let ver_title = document.createElement("div")
+            ver_title.innerHTML = "&#x2022; "+select_version.value
+            changeLog_txt.appendChild(ver_title)
+            // Divides the Title and the content
+            make_divider()
+            // Adds all the items from the list of "future updates"
+            for (var i=0; i < changeLog[select_version.value].length; i++) {
+                let futUpd = document.createElement("div") // futUpd = Future Update
+                futUpd.innerHTML = "&#x2022; "+changeLog[select_version.value][i]
+                changeLog_txt.appendChild(futUpd)
+            }
+        } else if (select_version.value !== "null") { // If anything else except "null" was selected
+            // Makes the Date and title Text
+            let ver_date = document.createElement("div")
+            ver_date.innerHTML = "&#x2022; Release Date: "+changeLog[select_version.value]["date"]
+            changeLog_txt.appendChild(ver_date)
+            let ver_title = document.createElement("div")
+            ver_title.innerHTML = "&#x2022; Update Name: "+changeLog[select_version.value]["title"]
+            changeLog_txt.appendChild(ver_title)
+            // Makes the Added items
+            var add_items = changeLog[select_version.value]["added"]
+            if (add_items.length > 0) { // Checks if there was any add_items ( If not then nothing will display under "added")
+                make_divider()
+                // Makes the Added title
+                let add_title = document.createElement("div")
+                add_title.innerHTML = "&#x2022; Additions:"
+                changeLog_txt.appendChild(add_title)
+                for (var i=0; i < add_items.length; i++) {
+                    let ver_add = document.createElement("div")
+                    ver_add.innerHTML = "&#x2022; "+add_items[i]
+                    changeLog_txt.appendChild(ver_add)
+                }
+            }
+            // Makes the Bug Fixes items
+            var bug_items = changeLog[select_version.value]["bug_fix"]
+            if (bug_items.length > 0) { // Checks if there was any add_items ( If not then nothing will display under "added")
+                make_divider()
+                // Makes the Added title
+                let bug_title = document.createElement("div")
+                bug_title.innerHTML = "&#x2022; Bug Fixes:"
+                changeLog_txt.appendChild(bug_title)
+                for (var i=0; i < bug_items.length; i++) {
+                    let ver_bug = document.createElement("div")
+                    ver_bug.innerHTML = "&#x2022; "+bug_items[i]
+                    changeLog_txt.appendChild(ver_bug)
+                }
+            }
+            // Makes the Removed items
+            var sub_items = changeLog[select_version.value]["removed"]
+            if (sub_items.length > 0) { // Checks if there was any sub_items ( If not then nothing will display under "removed")
+                make_divider()
+                // Makes the Removed title
+                let sub_title = document.createElement("div")
+                sub_title.innerHTML = "&#x2022; Removals:"
+                changeLog_txt.appendChild(sub_title)
+                for (var i=0; i < sub_items.length; i++) {
+                    let ver_sub = document.createElement("div")
+                    ver_sub.innerHTML = "&#x2022; "+sub_items[i]
+                    changeLog_txt.appendChild(ver_sub)
+                }
+            }
+            // Makes the Changed items
+            var change_items = changeLog[select_version.value]["changed"]
+            if (change_items.length > 0) { // Checks if there was any Change_items ( If not then nothing will display under "changed")
+                make_divider()
+                // Makes the Changed title
+                let change_title = document.createElement("div")
+                change_title.innerHTML = "&#x2022; Changes:"
+                changeLog_txt.appendChild(change_title)
+                for (var i=0; i < change_items.length; i++) {
+                    let ver_change = document.createElement("div")
+                    ver_change.innerHTML = "&#x2022; "+change_items[i]
+                    changeLog_txt.appendChild(ver_change)
+                }
+            }
         }
-        make_divider()
-        // Makes the Removed title
-        let sub_title = document.createElement("div")
-        sub_title.innerHTML = "&#x2022; Removals:"
-        changeLog_txt.appendChild(sub_title)
-        // Makes the Removed items
-        var sub_items = changeLog[select_version.value]["removed"]
-        for (var i=0; i < add_items.length; i++) {
-            let ver_sub = document.createElement("div")
-            ver_sub.innerHTML = "&#x2022; "+sub_items[i]
-            changeLog_txt.appendChild(ver_sub)
-        }
-        make_divider()
-        // Makes the Changed title
-        let change_title = document.createElement("div")
-        change_title.innerHTML = "&#x2022; Changes:"
-        changeLog_txt.appendChild(change_title)
-        // Makes the Changed items
-        var change_items = changeLog[select_version.value]["changed"]
-        for (var i=0; i < add_items.length; i++) {
-            let ver_change = document.createElement("div")
-            ver_change.innerHTML = "&#x2022; "+change_items[i]
-            changeLog_txt.appendChild(ver_change)
-        }
-        make_divider()
     }
 }
+
+// If the client selected another tab or minimized the tab
+document.addEventListener("visibilitychange", () => {
+    var webicon = document.querySelector("head > link:nth-child(3)")
+    if (document.hidden) { // if document is hidden, change the title and icon
+        webicon.href = "https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico"
+        document.title = "Dashboard"
+        return
+    }
+    document.title = "Monopoly 2.0" // If the document is not hidden (hidden meaning if the client is looking at the page or not)
+    webicon.href = "favicon.png"
+});
