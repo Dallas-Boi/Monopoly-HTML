@@ -283,7 +283,6 @@ class Player {
 }
 // This will load the google sheets API
 gapi.load('client', initClient);
-
   function initClient() {
     gapi.client.init({
       apiKey: 'AIzaSyCc1rCgGDo-tSNlYNcSCfVtKH95opWPrxc',
