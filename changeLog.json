@@ -1,7 +1,7 @@
 {
     "Future Updates": [
-        "Add different version that will change the name of the locations. Using window.postMessage()",
-        "Multiplayer (This will be a maybe depending on how stable it will be and if it is even possible)",
+        "Add different version that will change the name of the locations.",
+        "Multiplayer (This will be a maybe depending on how stable it will be and if it is even possible) Using window.postMessage()",
         "3D houses / hotels",
         "Chooseable Player Pieces",
         "Changing the Name of the game and the properties to comply with legal terms (Trademark and Copyright by Hasbro Entertainmemt",
@@ -34,7 +34,10 @@
             "Added | A title to the links box",
             "Added | When a player is any Railroads it will change their border to \"white\"",
             "Added | Bug Fixes to the change logs ( Since I there is a lot )",
-            "Added | Animated Dice Rolling ( 2D Images only )"
+            "Added | Animated Dice Rolling ( 2D Images only )",
+            "Added | Python Scripting for Anti-Cheat (won't be completed for a bit)",
+            "Added | Data logging for collecting anti cheat data and for debugging issues",
+            "Added | Google API ( This will allow for saving later on plus debug data)"
         ],
         "bug_fix": [
             "Fixed | When an auction ends the player who started the auction can buy or auction the property again",
@@ -43,14 +46,16 @@
             "Fixed | The Placement of the jail since it was off by a 1 pixel",
             "Fixed | When railroads are owned and someone lands on railroad the rent will be all the owned railroads on the board",
             "Fixed | When entering the property management without any properties it won't allow the player to go back to the game", 
-            "Fixed | When a player rolls 3 doubles or land on \"Go to Jail\"it will send them to jail but does not show any buttons afterwards"
+            "Fixed | When a player rolls 3 doubles or land on \"Go to Jail\"it will send them to jail but does not show any buttons afterwards",
+            "Fixed | The property text for the side properties being to low" 
         ],
         "removed": [],
         "changed": [
             "Changed | The Player Element",
             "Changed | The Main Menu",
             "Changed | The Change Log and how it displays to the user",
-            "Changed | How button interactions are ( This does not affect gameplay at all )" 
+            "Changed | How button interactions are ( This does not affect gameplay at all )",
+            "Changed | Warning Text"
         ]
     }
 }

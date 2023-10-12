@@ -13,10 +13,10 @@ var propData = { // Placement is "left" px, "top" px
     "9": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [226, 884], "1": [250, 884], "2":[226, 907], "3": [250, 907]}},
     "10": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "aqua"}, "name": "Connecticut Avenue", "property_cost": 120, "house_price":50, "house_placement": {"axis": 988, "left":[142, 157, 171, 186, 164]}, "rent":[8, 40, 100, 300, 450, 600], "placement": {"0": [149, 884], "1": [173, 884], "2":[149, 907], "3": [173, 907]}},
     "11": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": [[40, 882],[40, 904],[40, 927],[63, 927]]}, // Just Visting
-    "12": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "pink"}, "name": "St. Charles Place", "property_cost": 140, "house_price":100, "house_placement": {"axis": 3, "left":[808, 822, 837, 852, 829]}, "rent":[10, 50, 150, 450, 625, 750], "placement": {"0": [60, 802], "1": [83, 802], "2":[60, 825], "3": [83, 825]}},
+    "12": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "magenta"}, "name": "St. Charles Place", "property_cost": 140, "house_price":100, "house_placement": {"axis": 3, "left":[808, 822, 837, 852, 829]}, "rent":[10, 50, 150, 450, 625, 750], "placement": {"0": [60, 802], "1": [83, 802], "2":[60, 825], "3": [83, 825]}},
     "13": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "white"}, "name": "Electric Company", "property_cost": 150, "rent": [4,10], "placement": {"0": [60, 719], "1": [83, 719], "2":[60, 742], "3": [83, 742]}},
-    "14": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "pink"}, "name": "States Avenue", "property_cost": 140, "house_price":100, "house_placement": {"axis": 3, "left":[642, 656, 671, 686, 661]}, "rent":[10, 50, 150, 450, 625, 750], "placement": {"0": [60, 637], "1": [83, 637], "2":[60, 660], "3": [83, 660]}},
-    "15": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "pink"}, "name": "Virginia Avenue", "property_cost": 160, "house_price":100, "house_placement": {"axis": 3, "left":[559, 573, 588, 603, 580]}, "rent":[12,60,180,500,700,900], "placement": {"0": [60, 555], "1": [83, 555], "2":[60, 578], "3": [83, 578]}},
+    "14": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "magenta"}, "name": "States Avenue", "property_cost": 140, "house_price":100, "house_placement": {"axis": 3, "left":[642, 656, 671, 686, 661]}, "rent":[10, 50, 150, 450, 625, 750], "placement": {"0": [60, 637], "1": [83, 637], "2":[60, 660], "3": [83, 660]}},
+    "15": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "magenta"}, "name": "Virginia Avenue", "property_cost": 160, "house_price":100, "house_placement": {"axis": 3, "left":[559, 573, 588, 603, 580]}, "rent":[12,60,180,500,700,900], "placement": {"0": [60, 555], "1": [83, 555], "2":[60, 578], "3": [83, 578]}},
     "16": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "black"}, "name": "Pennsylvania Railroad", "property_cost": 200, "rent": [25, 50, 100, 200], "placement": {"0": [60, 473], "1": [83, 473], "2":[60, 496], "3": [83, 496]}},
     "17": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "orange"}, "name": "St. James Place", "property_cost": 180, "house_price": 100, "house_placement": {"axis": 3, "left":[393, 407, 422, 437, 414]}, "rent": [14, 70, 200, 550, 750, 950], "placement": {"0": [60, 388], "1": [83, 388], "2":[60, 411], "3": [83, 411]}},
     "18": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [60, 305], "1": [83, 305], "2":[60, 328], "3": [83, 328]}},
@@ -60,6 +60,13 @@ const cardsData = {
         
     }
 }
+// This will allow python Code to be executed
+async function main(){
+    pyodide = await loadPyodide();
+    console.log("Loaded Pyodide")    
+}
+main()
+
 // "pay_to_all": {"amount": 50, "description": " Has to Pay all players $50", "gamemode": "normal"}
 // This will get the change log 
 fetch('changeLog.json')
@@ -73,7 +80,7 @@ fetch('changeLog.json')
 
 // Game Variables
 var playerAmount = 4;
-var player_list = []
+var player_list = []; const logger = {}
 var current_turn = 0
 var freeParking_cash = 200
 var houses = 32
@@ -296,7 +303,7 @@ function shuffle(array) {
     return array;
 }
 
-// This will add what is happening on the board through the on screen text
+// This will add what is happening on the board through the on screen textbox
 function message_text_box(message, classType) {
     var actionBox = document.getElementById("action_txt")
     var text = document.createElement("div")
@@ -1238,7 +1245,7 @@ function after_roll(end_jail, player, auctioned) {
         }
         any_btn.textContent="Manage"
         trade_btn.className = "action_btn"
-        if (Object.keys(player_list[current_turn].get_player_properties()) > 0) {any_btn.className = "action_btn"} // If the player has any properties it will open the management menu
+        if (Object.keys(player_list[current_turn].get_player_properties()).length > 0) {any_btn.className = "action_btn"} // If the player has any properties it will open the management menu
         bankrupt_btn.onclick = function() { // if the player decides to bankrupt themselfs
             bankrupt_player("by_bank", Object.keys(player_list[current_turn].get_player_properties()))
         }; bankrupt_btn.className = "bankrupt_btn"
@@ -1686,7 +1693,7 @@ function check_landed_property() {
                 }
             }
             // Sends message
-            message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> owes "+player_list[owned_id].get_player_name()+" $"+amount.toString())
+            message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> owes <b>"+player_list[owned_id].get_player_name()+"</b> $"+amount.toString())
             pay_btn.onclick = function() {
                 // Checks if the player has enough to pay
                 if (player_list[current_turn].get_player_money() >= amount) {
@@ -1839,11 +1846,12 @@ function set_roll() {
         // Shows the dice
         dice1_img.style.display = "block" // Shows dice1
         dice2_img.style.display = "block" // Shows dice2
+        // Disables the roll Button
+        roll_btn.className = "action_btn_disabled"
         // Animates the dice roll
         var animate_dice_roll = setInterval(() => { 
             dice1 = Math.floor(Math.random()*6)+1; // Rolls "dice1" Between 1-6
             dice2 = Math.floor(Math.random()*6)+1; // Rolls "dice2" Beteen 1-6
-            console.log(dice1)
             // Sets the images for dice1 and dice 2
             dice1_img.src = "./diceImg/roll_"+dice1.toString()+".png" // Sets image for dice1
             dice2_img.src = "./diceImg/roll_"+dice2.toString()+".png" // Sets image for dice2
@@ -1854,8 +1862,6 @@ function set_roll() {
                 console.log(dice1)
                 movement = dice1 + dice2; // Adds both dice to see how far the player moves
                 message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> has rolled a "+dice1.toString()+" and a "+dice2.toString())
-                // Disables the roll Button
-                roll_btn.className = "action_btn_disabled"
                 // If the player rolls a double
                 if (dice1 == dice2) { 
                     doubles += 1
@@ -1900,6 +1906,15 @@ function set_roll() {
 
 // Sets up everything that will be used in the game
 function set_up_game(player_names, player_colors, starting_cash, bankrupt) {
+    if (true) { // Set this to true to enable python scripting
+        pyodide.runPython(`
+            import os
+            def do_something():
+                return 'AIzaSyCc1rCgGDo-tSNlYNcSCfVtKH95opWPrxc'
+            
+            print(do_something())
+        `);
+    }
     main_menu.style.display = "none" // Hides the main menu
     game_board.style.display = "block" // Shows the game
     // Spawns the players
@@ -2062,11 +2077,24 @@ function set_menu(changeLog) {
         let add_ver = document.createElement("option")
         add_ver.value = version_keys[i]
         add_ver.textContent = version_keys[i]
+        add_ver.id = version_keys[i]
         select_version.appendChild(add_ver)
     }
-
+    // Hides the first element
+    let curSelect = document.getElementById(select_version.value)
+    curSelect.style.display = "none"
     // This will update the text box for the change logs when the version is changed
     select_version.onchange = function() {
+        // Shows all the elements
+        var children = select_version.children;
+        for (var i = 0; i < children.length; i++) {
+            if (children[i].value !== "nothing") {
+                children[i].style.display = "block"
+            }
+        }
+        // Hide the selected element
+        let curSelect = document.getElementById(select_version.value)
+        curSelect.style.display = "none"
         // Removes the old text
         while(changeLog_txt.firstChild) {
             changeLog_txt.removeChild(changeLog_txt.firstChild)
@@ -2081,7 +2109,7 @@ function set_menu(changeLog) {
         if (select_version.value == "Future Updates") { // If future updates was selected
             // Adds the Future Updates to the output
             let ver_title = document.createElement("div")
-            ver_title.innerHTML = "&#x2022; "+select_version.value
+            ver_title.innerHTML = `&#x2022; <b>${select_version.value}</b>`
             changeLog_txt.appendChild(ver_title)
             // Divides the Title and the content
             make_divider()
@@ -2091,13 +2119,13 @@ function set_menu(changeLog) {
                 futUpd.innerHTML = "&#x2022; "+changeLog[select_version.value][i]
                 changeLog_txt.appendChild(futUpd)
             }
-        } else if (select_version.value !== "null") { // If anything else except "null" was selected
+        } else if (select_version.value !== "nothing") { // If anything else except "null" was selected
             // Makes the Date and title Text
             let ver_date = document.createElement("div")
-            ver_date.innerHTML = "&#x2022; Release Date: "+changeLog[select_version.value]["date"]
+            ver_date.innerHTML = "&#x2022; <b>Release Date:</b> "+changeLog[select_version.value]["date"]
             changeLog_txt.appendChild(ver_date)
             let ver_title = document.createElement("div")
-            ver_title.innerHTML = "&#x2022; Update Name: "+changeLog[select_version.value]["title"]
+            ver_title.innerHTML = "&#x2022; <b>Update Name:</b> "+changeLog[select_version.value]["title"]
             changeLog_txt.appendChild(ver_title)
             // Makes the Added items
             var add_items = changeLog[select_version.value]["added"]
@@ -2105,7 +2133,7 @@ function set_menu(changeLog) {
                 make_divider()
                 // Makes the Added title
                 let add_title = document.createElement("div")
-                add_title.innerHTML = "&#x2022; Additions:"
+                add_title.innerHTML = "&#x2022; <b>Additions:</b>"
                 changeLog_txt.appendChild(add_title)
                 for (var i=0; i < add_items.length; i++) {
                     let ver_add = document.createElement("div")
@@ -2119,7 +2147,7 @@ function set_menu(changeLog) {
                 make_divider()
                 // Makes the Added title
                 let bug_title = document.createElement("div")
-                bug_title.innerHTML = "&#x2022; Bug Fixes:"
+                bug_title.innerHTML = "&#x2022; <b>Bug Fixes:</b>"
                 changeLog_txt.appendChild(bug_title)
                 for (var i=0; i < bug_items.length; i++) {
                     let ver_bug = document.createElement("div")
@@ -2133,7 +2161,7 @@ function set_menu(changeLog) {
                 make_divider()
                 // Makes the Removed title
                 let sub_title = document.createElement("div")
-                sub_title.innerHTML = "&#x2022; Removals:"
+                sub_title.innerHTML = "&#x2022; <b>Removals:</b>"
                 changeLog_txt.appendChild(sub_title)
                 for (var i=0; i < sub_items.length; i++) {
                     let ver_sub = document.createElement("div")
@@ -2147,7 +2175,7 @@ function set_menu(changeLog) {
                 make_divider()
                 // Makes the Changed title
                 let change_title = document.createElement("div")
-                change_title.innerHTML = "&#x2022; Changes:"
+                change_title.innerHTML = "&#x2022; <b>Changes:</b>"
                 changeLog_txt.appendChild(change_title)
                 for (var i=0; i < change_items.length; i++) {
                     let ver_change = document.createElement("div")
@@ -2168,5 +2196,5 @@ document.addEventListener("visibilitychange", () => {
         return
     }
     document.title = "Monopoly 2.0" // If the document is not hidden (hidden meaning if the client is looking at the page or not)
-    webicon.href = "favicon.png"
+    webicon.href = "./favicon.png"
 });

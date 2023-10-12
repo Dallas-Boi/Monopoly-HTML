@@ -4,6 +4,8 @@
         <title>Monopoly 2.0</title>
         <link href='style.css' rel='stylesheet'>
         <link rel="icon" href="favicon.png">
+        <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+        <script src="https://apis.google.com/js/api.js"></script>
     </head>
     <body>
         <div class="background-design" style="display: none">
@@ -40,10 +42,10 @@
                         <div id="error_txt"></div>
                     </div>
                 </div>
-                <div class="action_txt_main_container">
-                    <div class="change_title">Change Logs</div>
+                <div class="changeLog_container">
+                    <div class="change_title"><div style="margin-top:7px">Change Logs</div></div>
                     <select id="version_menu" class="version_drop">
-                        <option value="null">Select A Version</option>
+                        <option id="nothing" value="nothing">Select A Version</option>
                     </select>
                     <div id="changeLog_main" class="action_txt" cols="40"></div>
                 </div>
@@ -55,7 +57,7 @@
                     </div>
                 </div>
                 <div class="other_info">
-                    <div id="refresh_warning" class="other_info_text"><b style="color: red">WARING:</b><br>Refreshing the page will reset your DATA.<br>Saving will be added later on</div>
+                    <div id="refresh_warning" class="other_info_text"><b style="color: red">WARING:</b><br>Refreshing the page will reset your DATA.<br>Saving is being wokred on</div>
                 </div>
             </div>
         </div>
@@ -75,9 +77,9 @@
                 <img id="dice2" class="dice" src="./diceImg/roll_2.png" style="left:450px;display:none">
             </div>
             <div id="game_data" class="game_data_container">
-                <div id="house_text" class="house_text" style="position: absolute;left:25px;color:darkgreen">Houses Left:<br>32</div>
-                <div id="hotel_text" class="hotel_text" style="position: absolute;left:175px;color:darkred">Hotels Left:<br>12</div>
-                <div id="freeParking_text" class="freeParking_text" style="position: absolute;left:300px">Cash In Free Parking: $200</div>
+                <div id="house_text" class="house_text" style="position: absolute;top:200px;left:25px;color:darkgreen">Houses Left:<br>32</div>
+                <div id="hotel_text" class="hotel_text" style="position: absolute;top:200px;left:175px;color:darkred">Hotels Left:<br>12</div>
+                <div id="freeParking_text" class="freeParking_text" style="position: absolute;top:200px;left:300px">Cash In Free Parking: $200</div>
             </div>
             <div id="player_money_container" class="money_container">
                 <div id="player1_money" class="player_money1"></div>
@@ -380,5 +382,8 @@
             <div id="winningText" class="winningScreen_txt"><div>How are you seeing this</div></div>
         </div>
         <script src="index.js"></script>
+        <script>
+            
+        </script>
     </body>
 </html
