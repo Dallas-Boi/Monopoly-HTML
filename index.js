@@ -281,6 +281,43 @@ class Player {
         this.bankrupt = status
     }
 }
+// This will load the google sheets API
+gapi.load('client', initClient);
+
+  function initClient() {
+    gapi.client.init({
+      apiKey: 'AIzaSyCc1rCgGDo-tSNlYNcSCfVtKH95opWPrxc',
+      clientId: '509853566509-ni4ai4rl0qj4ogdcvk5lv5pteia5f8m1.apps.googleusercontent.com',
+      discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+      scope: 'https://www.googleapis.com/auth/spreadsheets',
+    }).then(function () {
+      // Handle successful initialization.
+    });
+  }
+
+// Define the spreadsheet ID and range
+const spreadsheetId = '18VB76xchUiTxlHybLEsIiZ1c_I1Lb6ZXh0hyPpuxyK8';
+const range = 'Sheet1';
+
+// Data to write
+const data = [
+  ["Data 1", "Data 2", "Data 3"],
+  ["More data 1", "More data 2", "More data 3"]
+];
+
+// Call the Google Sheets API to update the data
+gapi.client.sheets.spreadsheets.values.update({
+  spreadsheetId: spreadsheetId,
+  range: range,
+  valueInputOption: 'RAW',
+  resource: {
+    values: data
+  }
+}).then(function (response) {
+  console.log("Data written to Google Sheets:", response);
+}, function (error) {
+  console.error("Error writing data:", error);
+});
 
 // Main Game Functions \\
 // Shuffles given arrays
@@ -1906,11 +1943,11 @@ function set_roll() {
 
 // Sets up everything that will be used in the game
 function set_up_game(player_names, player_colors, starting_cash, bankrupt) {
-    if (true) { // Set this to true to enable python scripting
+    if (false) { // Set this to true to enable python scripting
         pyodide.runPython(`
             import os
             def do_something():
-                return 'AIzaSyCc1rCgGDo-tSNlYNcSCfVtKH95opWPrxc'
+                return 'Developement'
             
             print(do_something())
         `);
@@ -2186,6 +2223,8 @@ function set_menu(changeLog) {
         }
     }
 }
+
+
 
 // If the client selected another tab or minimized the tab
 document.addEventListener("visibilitychange", () => {
