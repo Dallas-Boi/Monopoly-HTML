@@ -291,7 +291,7 @@ gapi.load('client', initClient);
       discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
       scope: 'https://www.googleapis.com/auth/spreadsheets',
     }).then(function () {
-      // Handle successful initialization.
+      console.log("Loaded The Sheet")
     });
   }
 
