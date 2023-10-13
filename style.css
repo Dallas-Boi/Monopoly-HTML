@@ -15,6 +15,14 @@ table {
 	z-index: 2;
 }
 
+/* Cookie Warning Menu Styles */
+#cookie_warning {
+	width:800px; 
+    height: 200px;
+    font-size: 30px;
+    color: black;
+}
+
 /* Background design */
 .background-design {
 	position: absolute;
@@ -42,6 +50,32 @@ table {
 /* Universal Styles */
 .pointer {
 	cursor: pointer;
+}
+
+.myBtn {
+	font-size: 20px;
+	margin-top: 10px;
+	margin-left: 20px;
+	width: 100px;
+	max-width: 100%;
+	height:50px;
+	max-height: 100%;
+	border-radius: 15%;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	color: black;
+	font-weight: 400;
+}
+
+.selector {
+	font-size: 15px;
+}
+
+.center {
+    position: absolute;
+    top: 50%; margin-top:-100px;
+    left: 50%; margin-left:-400px;
+	text-align:center; vertical-align:middle;
+    font-weight: bold;
 }
 
 /* All Winning Screen style */
@@ -74,7 +108,7 @@ table {
 	border: 1px solid black;
 	background-color: gray;
 	left: 293.5px;
-	width: 450px;
+	width: 550px;
 	height:250px;
 	max-width: 100%;
 	max-height: 100%;
@@ -93,16 +127,64 @@ table {
 	position: absolute;
 	justify-content: center;
 	width: 450.5px;
-	height:10px;
+	height:30px;
 	top:140px;
 }
 
+#start_game {
+	width: 150px;
+	height:35px;
+	max-height: 100%;
+	max-width: 100%;
+	margin-top:-15px;
+}
+
 .error {
-	position: absolute;
 	border: 1px solid black;
-	width: 450px;
+	width: 430px;
 	height:75px;
-	top:173.5px;
+	margin-top:65px;
+}
+
+#error_txt {
+	align-self: center;
+	text-align: center;
+	vertical-align: center;
+	margin-top:6%;
+}
+
+.divider {
+	position: absolute;
+	top: -0px;
+	left: 430px;
+	background-color: black;
+	width: 5px;
+	max-width: 100%;
+	height: 252px;
+	max-height: 100%;
+}
+
+.saveContainer {
+	margin-left: 440px;
+	margin-top: 10px;
+}
+
+#loadSave_btn {
+	margin-left: 12px;
+	width: 80px;
+	max-width: 100%;
+	height:30px;
+	max-height: 100%;
+	font-size: 15px;
+}
+
+#deleteSave_btn {
+	margin-left: 12px;
+	width: 80px;
+	max-width: 100%;
+	height:30px;
+	max-height: 100%;
+	font-size: 15px;
 }
 
 .changeLog_container {
@@ -196,7 +278,6 @@ table {
 	margin-top: 20px;
 	text-align: center;
 }
-
 /* All auction styles */
 .auction_title {
 	position: absolute;
@@ -651,6 +732,27 @@ table {
 }
 
 .bankrupt_btn:hover  {
+	background-color: black;
+	color: white;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.save_btn {
+	background-color: lightblue; /* Green */
+	position: absolute;
+	border: none;
+	color: black;
+	padding: 15px 29px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 16px;
+	border-radius: 5px;
+	top:750px;
+	left:444px;
+	z-index: 3;
+}
+
+.save_btn:hover  {
 	background-color: black;
 	color: white;
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);

@@ -61,18 +61,34 @@ const cardsData = {
     }
 }
 // This will allow python Code to be executed
-async function main(){
-    pyodide = await loadPyodide();
-    console.log("Loaded Pyodide")    
+if (false) {
+    async function main(){
+        pyodide = await loadPyodide();
+        console.log("Loaded Pyodide") 
+    }
+    // This will load the google sheets API
+    gapi.load('client', initClient);
+    function initClient() {
+        gapi.client.init({
+        apiKey: 'AIzaSyCc1rCgGDo-tSNlYNcSCfVtKH95opWPrxc',
+        clientId: '509853566509-ni4ai4rl0qj4ogdcvk5lv5pteia5f8m1.apps.googleusercontent.com',
+        discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+        scope: 'https://www.googleapis.com/auth/spreadsheets',
+        }).then(function () {
+        console.log("Loaded The Sheet")
+        });
+    }
 }
-main()
+// Define the spreadsheet ID and range
+const spreadsheetId = '18VB76xchUiTxlHybLEsIiZ1c_I1Lb6ZXh0hyPpuxyK8';
+const range = 'Sheet1';
 
 // "pay_to_all": {"amount": 50, "description": " Has to Pay all players $50", "gamemode": "normal"}
 // This will get the change log 
 fetch('changeLog.json')
     .then(response => response.json())
     .then(data => {
-        set_menu(data)
+        set_cookie_menu(data)
     })
     .catch(error => {
         console.error('Error:', error);
@@ -88,9 +104,12 @@ var hotels = 12
 var doubles = 0
 var dice1, dice2, player, movement
 var chest_deck, chance_deck
+var saveSlot
+var savingStatus = false
 
 // Elements
 // Menus
+const cookie_menu = document.getElementById("cookie_menu")
 const main_menu = document.getElementById("main_menu")
 const game_board = document.getElementById("gameboard")
 const trade_menu = document.getElementById("trading_menu")
@@ -114,6 +133,7 @@ const pay_btn = document.getElementById("pay_action")
 const cell_house = document.getElementById("cell_houses")
 const turn_text = document.getElementById("player_turn")
 const bankrupt_btn = document.getElementById("bankrupt_btn")
+const saveGame_btn = document.getElementById("saveGame_btn")
 // Dice Img
 const dice1_img = document.getElementById("dice1")
 const dice2_img = document.getElementById("dice2")
@@ -126,7 +146,7 @@ class Player {
         this.player_id = id
         this.money = money
         this.isJailed = jailed
-        this.properties = props;
+        this.properties = props
         this.out_of_jail_cards = ooj
         this.bankrupt = bankrupt
     }
@@ -280,44 +300,13 @@ class Player {
     set_player_bankrupt(status) {
         this.bankrupt = status
     }
+    
+    // Returns this players data into a list
+    toString() {
+        //name, color, spot, id, money, jailed, props, ooj, bankrupt
+        return [this.name, this.color, this.spot_id, this.player_id, this.money, this.isJailed, this.properties, this.out_of_jail, this.bankrupt]
+    }
 }
-// This will load the google sheets API
-gapi.load('client', initClient);
-
-  function initClient() {
-    gapi.client.init({
-      apiKey: 'AIzaSyCc1rCgGDo-tSNlYNcSCfVtKH95opWPrxc',
-      clientId: '509853566509-ni4ai4rl0qj4ogdcvk5lv5pteia5f8m1.apps.googleusercontent.com',
-      discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-      scope: 'https://www.googleapis.com/auth/spreadsheets',
-    }).then(function () {
-      console.log("Loaded The Sheet")
-    });
-  }
-
-// Define the spreadsheet ID and range
-const spreadsheetId = '18VB76xchUiTxlHybLEsIiZ1c_I1Lb6ZXh0hyPpuxyK8';
-const range = 'Sheet1';
-
-// Data to write
-const data = [
-  ["Data 1", "Data 2", "Data 3"],
-  ["More data 1", "More data 2", "More data 3"]
-];
-
-// Call the Google Sheets API to update the data
-gapi.client.sheets.spreadsheets.values.update({
-  spreadsheetId: spreadsheetId,
-  range: range,
-  valueInputOption: 'RAW',
-  resource: {
-    values: data
-  }
-}).then(function (response) {
-  console.log("Data written to Google Sheets:", response);
-}, function (error) {
-  console.error("Error writing data:", error);
-});
 
 // Main Game Functions \\
 // Shuffles given arrays
@@ -338,6 +327,55 @@ function shuffle(array) {
     }
   
     return array;
+}
+
+// Main Const (Non Changeables)
+const valid_letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*(){}:\"<>?,./;'[]+_=-\|`~"
+
+// This Encrypts the given String
+function encrypt(string = "") {
+    // If the user does not give a String it will throw an error
+    if (string == "") {console.error("You must specify a String as \" \" is not valid"); return}
+
+    var new_data = ""
+    for (var letter = 0; letter < string.length; letter++) {
+        for (var num = 0; num < valid_letters.length; num++) { // Loop for the "valid_letters"
+            if (String(string).slice(letter, letter+1) == valid_letters.slice(num, num+1)) {
+                if (letter+5 < valid_letters.length) {
+                    // If the list does not have to start at the beginning of "valid_letters"
+                    new_data += valid_letters.slice(num+5, num+6)
+                } else {
+                    // If the given letter does have to start at the beginning of "valid_letters"
+                    index = letter - len(valid_letters)
+                    new_data += valid_letters.slice(index+5, index+6) 
+                }
+            } 
+        }
+    }
+    return new_data
+}
+
+// This Decrypts the given String
+function decrypt(string = "") {
+    // If the user does not give a String it will throw an error
+    if (string == "") {console.error("You must specify a String as \" \" is not valid"); return}
+
+    var new_data = ""
+    for (var letter = 0; letter < string.length; letter++) {
+        for (var num = 0; num < valid_letters.length; num++) { // Loop for the "valid_letters"
+            if (String(string).slice(letter, letter+1) == valid_letters.slice(num, num+1)) {
+                if (letter+5 < valid_letters.length) {
+                    // If the list does not have to start at the beginning of "valid_letters"
+                    new_data += valid_letters.slice(num-5, num-4)
+                } else {
+                    // If the given letter does have to start at the beginning of "valid_letters"
+                    index = len(valid_letters) - letter
+                    new_data += valid_letters.slice(index-5, index-4) 
+                }
+            } 
+        }
+    }
+    return new_data
 }
 
 // This will add what is happening on the board through the on screen textbox
@@ -379,6 +417,85 @@ function update_all_prop_tags() {
             cell_tag.firstChild.innerHTML = "Owner: "+player_list[propData[i]["property_data"]["by"]].get_player_name()
         }
     }
+}
+
+// Finds the given Cookie
+function getCookie(name) {
+    var nameEQ = name + "=";
+    //alert(document.cookie);
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') {
+            c = c.substring(1);
+            if (c.indexOf(nameEQ) != -1) {
+                return c.substring(nameEQ.length,c.length);
+            }
+        }
+    }
+    return null;
+} 
+
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  let expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+// This saves the players name
+function save_current_game() {
+    var player_data = []
+    // Gets all the player data into a list
+    for (var i=0; i < player_list.length; i++) {
+        player_data.push(player_list[i].toString())
+    }
+
+    var savingData = { // All data that needs to be saved
+        "cards": {
+            "chest": chest_deck,
+            "chance": chance_deck
+        },
+        "players": player_data,
+        "houses": houses,
+        "hotels": hotels,
+        "freeParking": freeParking_cash,
+        "turn": current_turn
+    }
+    // This will seperate the data because of the cookies max size
+    var prop_keys = Object.keys(propData)
+    var propData_p1 = {}
+    var propData_p2 = {}
+    var propData_p3 = {}
+    for (var i=0; i < prop_keys.length; i++) {
+        if (i <= 15) {
+            propData_p1[i] = propData[i]
+        } else if (i <= 30) {
+            propData_p2[i] = propData[i]
+        } else if (i <= 405) {
+            propData_p3[i] = propData[i]
+        }
+    }
+    // This will try to find a open save slot
+    var slot = 0
+    while (true) {
+        if (getCookie(`saveSlot${slot}`) == null) { // If the cookie found was available
+            console.log(slot)
+            break
+        }
+        slot++
+    }
+    // Save the data into the saveSlot
+    setCookie(`saveSlot${slot}`, JSON.stringify(savingData).toString(), 775)
+    setCookie(`saveSlot${slot}_props1`, JSON.stringify(propData_p1), 775)
+    setCookie(`saveSlot${slot}_props2`, JSON.stringify(propData_p2), 775)
+    setCookie(`saveSlot${slot}_props3`, JSON.stringify(propData_p3), 775)
+    alert("The Game has been successfully saved")
+    location.reload();
+}
+
+function load_saved_game() {
+
 }
 
 // Other Menus \\
@@ -1157,10 +1274,14 @@ function change_turn() {
     trade_btn.className = "action_btn_disabled"
     any_btn.className = "action_btn_disabled"
     bankrupt_btn.className = "action_btn_disabled"
+    // Sets up the save action
+    if (savingStatus == true) { // If the client allowed cookies
+        saveGame_btn.className = "save_btn"
+    }
     // Sets the Player turn text to the new player
     turn_text.innerHTML = "Current Turn:<br>"+player_list[current_turn].get_player_name()
     doubles = 0 // This sets rolled doubles to 0
-    roll_btn.onclick = ""
+    roll_btn.onclick = "" // This is so that they don't unhide the roll and hit it again
     set_roll()
 }
 
@@ -1875,9 +1996,11 @@ function set_roll() {
     sell_btn.onclick = ""; sell_btn.className = "action_btn_disabled"
     pay_btn.onclick = ""; pay_btn.className = "action_btn_disabled"
     trade_btn.onclick = ""; trade_btn.className = "action_btn_disabled"
-
+    // Allows the save btn to be interactable
+    saveGame_btn.onclick = save_current_game
     // Makes the roll function
     roll_btn.onclick = function() {
+        saveGame_btn.className = "action_btn_disabled" // Hides the save btn
         // Variables for dice animation
         var roll_speed = 250 // The speed the dice rolls
         // Shows the dice
@@ -1896,7 +2019,6 @@ function set_roll() {
             // Stops the animation once the roll_speed hits 2500
             if (roll_speed >= 2500) {
                 clearInterval(animate_dice_roll)
-                console.log(dice1)
                 movement = dice1 + dice2; // Adds both dice to see how far the player moves
                 message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> has rolled a "+dice1.toString()+" and a "+dice2.toString())
                 // If the player rolls a double
@@ -2035,6 +2157,10 @@ function set_up_game(player_names, player_colors, starting_cash, bankrupt) {
     // Randomizes the chance/chest cards
     chest_deck = shuffle(Object.keys(cardsData["Community Chest"])) // Randomize Chest
     chance_deck = shuffle(Object.keys(cardsData["Chance"])) // Randomize Chest
+    // Sets up save btn
+    if (savingStatus == true) { // if the client allows saving
+        saveGame_btn.className = "save_btn"
+    }
 }
 
 // This will setup the main menu after the JSON file data from changeLogs are readable
@@ -2069,7 +2195,6 @@ function set_menu(changeLog) {
             }
         }
     }
-
     // When the player clicks the start btn on the Main Menu
     start_btn.onclick = function() {
         // Player input variables
@@ -2107,7 +2232,6 @@ function set_menu(changeLog) {
 
         if (error_count == false) {set_up_game(input_names, input_colors, 2000, false)}
     }
-
     // This will add all the versions to the dropdown menu
     var version_keys = Object.keys(changeLog)
     for (var i=0; i < version_keys.length; i++) {
@@ -2117,6 +2241,21 @@ function set_menu(changeLog) {
         add_ver.id = version_keys[i]
         select_version.appendChild(add_ver)
     }
+
+    // Will add all the saved games to the list
+    var saveSelector = document.getElementById("saveSelect")
+    slot = 0
+    while(true) {
+        if (getCookie(`saveSlot${slot}`) == null) {
+            break
+        }
+        let addSave = document.createElement("option")
+        addSave.value = `saveSlot${slot}`
+        addSave.text = `Save ${slot}`
+        saveSelector.appendChild(addSave)
+        slot++
+    }
+
     // Hides the first element
     let curSelect = document.getElementById(select_version.value)
     curSelect.style.display = "none"
@@ -2224,7 +2363,33 @@ function set_menu(changeLog) {
     }
 }
 
-
+// Sets up the cookie Warning
+function set_cookie_menu(data) {
+    // This will allow the cookie btns to work
+    const acceptBtn = document.getElementById("cookieAccept")
+    const declineBtn = document.getElementById("cookieDecline")
+    var hasCookie=getCookie("saveData0");
+    // If the acceptBtn was clicked
+    const saveOn = function() {
+        cookie_menu.style.display = "none"
+        main_menu.style.display = "block"
+        set_menu(data)
+    }
+    acceptBtn.onclick = function() {
+        savingStatus = true
+        saveOn()
+    }
+    // Checks if the client already has a cookie 
+    if (hasCookie !== null) { // Uf the have a cookie then just continue
+        savingStatus = true
+        saveOn()
+    }
+    // If the acceptBtn was clicked
+    declineBtn.onclick = function() {
+        savingStatus = false
+        saveOn()
+    }
+}
 
 // If the client selected another tab or minimized the tab
 document.addEventListener("visibilitychange", () => {

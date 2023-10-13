@@ -10,33 +10,48 @@
     <body>
         <div class="background-design" style="display: none">
             <div id="diagLineRight" class="bgLine"></div>
+            
         </div>
-        <div id="main_menu" class="menu">
+        <div id="cookie_menu">
+            <div id="cookie_warning" class="center"><b style="color:red">WARNING</b><br>This site uses Cookies to save your game data.<br>
+                If you do not accept then saving will not be available to you.<br>
+                (If you do save then this will not pop up again)<br>
+            <button id="cookieAccept" class="myBtn" style="background-color: green;">Accept</button><button id="cookieDecline" class="myBtn" style="background-color: red;">Decline</button></div>
+        </div>
+        <div id="main_menu" class="menu" style="display:none;">
             <div class="center_main">
                 <div class="player_select">
+                    <div class="saveContainer">
+                        <select id="saveSelect" class="selector">
+                            <option value="null">Select Save</option>
+                        </select>
+                        <div class="divider"></div>
+                        <div class="loadNsave">
+                            <button id="loadSave_btn" class="myBtn" style="background-color: green;">Load</button>
+                            <button id="deleteSave_btn" class="myBtn" style="background-color: red;">Delete</button>
+                        </div>
+                    </div>
                     <div class="player_input_container">
-                        <label for="player1_name">Player 1's Name:</label>
+                        <label for="player1_name" style="margin-left:24px">Player 1's Name:</label>
                         <input id="player1_name">
                         <input type="color" id="player1_color" class="pointer">
                         <br>
-                        <label for="player2_name">Player 2's Name:</label>
+                        <label for="player2_name" style="margin-left:24px">Player 2's Name:</label>
                         <input id="player2_name">
                         <input type="color" id="player2_color" class="pointer">
                         <br>
+                        <input type="checkbox" id="player3_enable" class="pointer">
                         <label for="player3_name">Player 3's Name:</label>
                         <input id="player3_name" disabled="disabled">
-                        <input type="color" id="player3_color" class="pointer" disabled="disabled">
-                        <label for="player3_enable">| Enable</label>
-                        <input type="checkbox" id="player3_enable" class="pointer">
+                        <input type="color" id="player3_color" class="pointer" disabled="disabled">                        
                         <br>
+                        <input type="checkbox" id="player4_enable" class="pointer">
                         <label for="player4_name">Player 4's Name:</label>
                         <input id="player4_name" disabled="disabled">
                         <input type="color" id="player4_color" class="pointer" disabled="disabled">
-                        <label for="player4_enable">| Enable</label>
-                        <input type="checkbox" id="player4_enable" class="pointer">
                     </div>
                     <div class="start_action">
-                        <button id="start_game" class="start_btn">Start the game</button>
+                        <button id="start_game" class="myBtn">Start the game</button>
                     </div>
                     <div id="error_box" class="error">
                         <div id="error_txt"></div>
@@ -121,6 +136,7 @@
             <div id="Players" class="player_container">
             </div>
             <button id="bankrupt_btn" class="action_btn_disabled">Bankrupt</button>
+            <button id="saveGame_btn" class="action_btn_disabled">Save</button>
             <table id="board" style="display:table;">  
                 <tr id="row1">
                     <td class="corner"><div id="cell_21" class="cell_name">Free Parking</div></td>
@@ -382,8 +398,5 @@
             <div id="winningText" class="winningScreen_txt"><div>How are you seeing this</div></div>
         </div>
         <script src="index.js"></script>
-        <script>
-            
-        </script>
     </body>
 </html

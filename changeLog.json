@@ -32,12 +32,12 @@
             "Added | See the future plans that you can see coming to the game",
             "Added | Different Web Title's and Icon Depending on What the Player is Doing",
             "Added | A title to the links box",
-            "Added | When a player is any Railroads it will change their border to \"white\"",
-            "Added | Bug Fixes to the change logs ( Since I there is a lot )",
+            "Added | When a player is on any Railroads it will change their border to \"white\"",
+            "Added | Bug Fixes to the change logs ( Since there is a lot )",
             "Added | Animated Dice Rolling ( 2D Images only )",
             "Added | Python Scripting for Anti-Cheat (won't be completed for a bit)",
             "Added | Data logging for collecting anti cheat data and for debugging issues",
-            "Added | Google API ( This will allow for saving later on plus debug data)"
+            "Added | Google API ( This will allow for saving in the future plus debug data)"
         ],
         "bug_fix": [
             "Fixed | When an auction ends the player who started the auction can buy or auction the property again",
@@ -56,6 +56,21 @@
             "Changed | The Change Log and how it displays to the user",
             "Changed | How button interactions are ( This does not affect gameplay at all )",
             "Changed | Warning Text"
+        ]
+    },
+    "V 1.2": {
+        "date": "October 20th, 2023",
+        "title": "Game Changing Features",
+        "added": [
+            "Added | A cookie use warning",
+            "Added | Cookies",
+            "Added | Save / Loading feature for multiple saves (Only if they accept the cookies)"
+        ],
+        "bug_fix":[],
+        "removed":[],
+        "changed":[
+            "Changed | The Layout for the creating players boxs",
+            "Changed | Most of the buttons will know be a custom style"
         ]
     }
 }
