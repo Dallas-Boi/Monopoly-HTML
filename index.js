@@ -104,7 +104,7 @@ var hotels = 12
 var doubles = 0
 var dice1, dice2, player, movement
 var chest_deck, chance_deck
-var saveSlot
+var saveSlot = "null"
 var savingStatus = false
 
 // Elements
@@ -123,6 +123,7 @@ const start_btn = document.getElementById("start_game")
 const error_txt = document.getElementById("error_txt")
 const select_version = document.getElementById("version_menu")
 const changeLog_txt = document.getElementById("changeLog_main")
+const saveSelector = document.getElementById("saveSelect")
 // Buttons for game board
 const roll_btn = document.getElementById('roll_action')
 const trade_btn = document.getElementById("trade_action")
@@ -134,6 +135,8 @@ const cell_house = document.getElementById("cell_houses")
 const turn_text = document.getElementById("player_turn")
 const bankrupt_btn = document.getElementById("bankrupt_btn")
 const saveGame_btn = document.getElementById("saveGame_btn")
+const loadGame_btn = document.getElementById("loadSave_btn")
+const delGame_btn = document.getElementById("deleteSave_btn")
 // Dice Img
 const dice1_img = document.getElementById("dice1")
 const dice2_img = document.getElementById("dice2")
@@ -396,7 +399,7 @@ function update_money_display() {
     // Sets the money containers to the right color and text
     for (var i=0; i < playerAmount; i++) {
         var setMoneyContainer = document.getElementById("player"+(i+1)+"_money")
-        setMoneyContainer.innerHTML = "<br>"+player_list[i].get_player_name()+":<br>---------<br>$"+player_list[i].get_player_money().toString()
+        setMoneyContainer.innerHTML = "<br>"+player_list[i].get_player_name()+":<br>---------<br>$"+player_list[i].get_player_money()
     }
 }
 
@@ -419,28 +422,49 @@ function update_all_prop_tags() {
     }
 }
 
+// Fixes player positions
+function fix_all_positions() {
+    // Resets all "players_on"
+    for (var i=0; i < Object.keys(propData).length; i++) { 
+        propData[Object.keys(propData)[i]]["property_data"]["players_on"] = []
+    }
+    // Goes through all players and fixes the position
+    for (var i=0; i < player_list.length; i++) { 
+        if (player_list[i].get_player_bankrupt() == false) { // If the player is not bankrupts
+            var player_elm = document.getElementById(player_list[i].get_player_id())
+            propData[player_list[i].get_player_spot_id()]["property_data"]["players_on"].push(i) // Adds the player back to the "players_on" || FIND A BETTER FIX LATER
+            player_elm.style.left = propData[player_list[i].get_player_spot_id()]["placement"][propData[player_list[i].get_player_spot_id()]["property_data"]["players_on"].indexOf(i)][0].toString()+"px"
+            player_elm.style.top = propData[player_list[i].get_player_spot_id()]["placement"][propData[player_list[i].get_player_spot_id()]["property_data"]["players_on"].indexOf(i)][1].toString()+"px"
+        }
+    }
+    // Changes the players border
+    if ([6,16,26,36].includes(player_list[current_turn].get_player_spot_id())) { // If the player is on railroads
+        document.getElementById(player_list[current_turn].get_player_id()).style.border = "1px solid white" // Changes the border to white
+        return
+    }
+    document.getElementById(player_list[current_turn].get_player_id()).style.border = "1px solid black" // Changes the border to white
+    
+}
+
 // Finds the given Cookie
 function getCookie(name) {
     var nameEQ = name + "=";
-    //alert(document.cookie);
     var ca = document.cookie.split(';');
     for(var i=0;i < ca.length;i++) {
         var c = ca[i];
-        while (c.charAt(0)==' ') {
-            c = c.substring(1);
-            if (c.indexOf(nameEQ) != -1) {
-                return c.substring(nameEQ.length,c.length);
-            }
+        if (c.indexOf(nameEQ) !== -1) {
+            return c.substring(nameEQ.length,c.length);
         }
     }
     return null;
 } 
 
+// Makes / Deletes the named cookie 
 function setCookie(cname, cvalue, exdays) {
-  const d = new Date();
-  d.setTime(d.getTime() + (exdays*24*60*60*1000));
-  let expires = "expires="+ d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
 // This saves the players name
@@ -462,40 +486,70 @@ function save_current_game() {
         "freeParking": freeParking_cash,
         "turn": current_turn
     }
-    // This will seperate the data because of the cookies max size
-    var prop_keys = Object.keys(propData)
-    var propData_p1 = {}
-    var propData_p2 = {}
-    var propData_p3 = {}
-    for (var i=0; i < prop_keys.length; i++) {
-        if (i <= 15) {
-            propData_p1[i] = propData[i]
-        } else if (i <= 30) {
-            propData_p2[i] = propData[i]
-        } else if (i <= 405) {
-            propData_p3[i] = propData[i]
-        }
-    }
     // This will try to find a open save slot
     var slot = 0
-    while (true) {
-        if (getCookie(`saveSlot${slot}`) == null) { // If the cookie found was available
-            console.log(slot)
-            break
+    if (saveSlot == "null") { // If the save Slot equals null then continue
+        while (true) {
+            if (getCookie(`saveSlot${slot}`) == null) { // If the founded cookie is available
+                break
+            }
+            slot++
         }
-        slot++
+    } else { // If the save was loaded
+        slot = parseInt(saveSlot.replace("saveSlot", ""))
     }
     // Save the data into the saveSlot
     setCookie(`saveSlot${slot}`, JSON.stringify(savingData).toString(), 775)
-    setCookie(`saveSlot${slot}_props1`, JSON.stringify(propData_p1), 775)
-    setCookie(`saveSlot${slot}_props2`, JSON.stringify(propData_p2), 775)
-    setCookie(`saveSlot${slot}_props3`, JSON.stringify(propData_p3), 775)
-    alert("The Game has been successfully saved")
+    alert(`The Game has been successfully saved on save: saveSlot${slot}`)
     location.reload();
 }
 
+// This will load the game when called
 function load_saved_game() {
-
+    // This will rewrite the data
+    var playerData = JSON.parse(getCookie(saveSelector.value))
+    saveSlot = saveSelector.value
+    console.log(playerData)
+    // Sets up every tag
+    houses = playerData["houses"]
+    hotels = playerData["hotels"]
+    current_turn = playerData["turn"]
+    freeParking_cash = playerData["freeParking"]
+    // Sets player length
+    playerAmount = playerData["players"].length
+    // Gets all the data needed for the player
+    var player_names = []
+    var player_colors = []
+    var player_spot = []
+    var player_id = []
+    var player_money = []
+    var player_jail = []
+    var player_props = []
+    var player_ooj = []
+    var player_bank = []
+    for (var play=0; play < playerAmount; play++) {
+        player_names.push(playerData["players"][play][0])
+        player_colors.push(playerData["players"][play][1])
+        propData[playerData["players"][play][2].toString()]["property_data"]["players_on"].push(play)
+        player_spot.push(playerData["players"][play][2])
+        player_id.push(playerData["players"][play][3])
+        player_money.push(playerData["players"][play][4])
+        player_jail.push(playerData["players"][play][5])
+        player_props.push(playerData["players"][play][6])
+        var prop_keys = Object.keys(playerData["players"][play][6])
+        for (var j=0; j < prop_keys.length; j++) { // Updates the propData
+            propData[prop_keys[j]]["property_data"]["by"] = play
+        }
+        player_ooj.push(playerData["players"][play][7])
+        player_bank.push(playerData["players"][play][8])
+    }
+    
+    // Starts the game
+    set_up_game(player_names, player_colors, player_spot, player_id, player_money, player_jail, player_props, player_ooj, player_bank)
+    // Overwrites Data
+    chest_deck = playerData["cards"]["chest"]
+    chance_deck = playerData["cards"]["chance"]
+    update_all_prop_tags()
 }
 
 // Other Menus \\
@@ -1276,7 +1330,7 @@ function change_turn() {
     bankrupt_btn.className = "action_btn_disabled"
     // Sets up the save action
     if (savingStatus == true) { // If the client allowed cookies
-        saveGame_btn.className = "save_btn"
+        saveGame_btn.className = "myBtn"
     }
     // Sets the Player turn text to the new player
     turn_text.innerHTML = "Current Turn:<br>"+player_list[current_turn].get_player_name()
@@ -1339,30 +1393,6 @@ function bankrupt_player(type, data, to_player) {
     }
 }
 
-// Fixes player positions
-function fix_all_positions() {
-    for (var i=0; i < Object.keys(propData).length; i++) { // Resets all "players_on"
-        propData[Object.keys(propData)[i]]["property_data"]["players_on"] = []
-    }
-    
-    for (var i=0; i < player_list.length; i++) { // Goes through all players and fixes the position
-        if (player_list[i].get_player_bankrupt() == false) {
-            var player_elm = document.getElementById(player_list[i].get_player_id())
-            var id_raw = parseInt(player_list[i].get_player_id().replace("player", ""))-1
-            propData[player_list[i].get_player_spot_id()]["property_data"]["players_on"].push(id_raw) // Adds the player back to the "players_on" || FIND A BETTER FIX LATER
-            player_elm.style.right = propData[player_list[i].get_player_spot_id()]["placement"][propData[player_list[i].get_player_spot_id()]["property_data"]["players_on"].indexOf(id_raw)][0].toString()+"px"
-            player_elm.style.top = propData[player_list[i].get_player_spot_id()]["placement"][propData[player_list[i].get_player_spot_id()]["property_data"]["players_on"].indexOf(id_raw)][1].toString()+"px"
-        }
-    }
-    // Changes the players border
-    if ([6,16,26,36].includes(player_list[current_turn].get_player_spot_id())) { // If the player is on railroads
-        document.getElementById(player_list[current_turn].get_player_id()).style.border = "1px solid white" // Changes the border to white
-        return
-    }
-    document.getElementById(player_list[current_turn].get_player_id()).style.border = "1px solid black" // Changes the border to white
-    
-}
-
 // The last part of a players' turn
 function after_roll(end_jail, player, auctioned) {
     update_all_prop_tags()
@@ -1406,7 +1436,7 @@ function after_roll(end_jail, player, auctioned) {
         if (Object.keys(player_list[current_turn].get_player_properties()).length > 0) {any_btn.className = "action_btn"} // If the player has any properties it will open the management menu
         bankrupt_btn.onclick = function() { // if the player decides to bankrupt themselfs
             bankrupt_player("by_bank", Object.keys(player_list[current_turn].get_player_properties()))
-        }; bankrupt_btn.className = "bankrupt_btn"
+        }; bankrupt_btn.className = "myBtn"
     }
 }
 
@@ -1872,7 +1902,7 @@ function check_landed_property() {
         if (player_list[owned_id].get_player_properties()[location]["mortgage"] == false) { // Checks if the property is mortgage
             if (([13,29].includes(location) == false)) { // If the property is not Electric Company or Water Works
                 var amount = propData[location]['rent'][player_list[owned_id].get_player_properties()[location]['houses']] // Amount the player owes
-                message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> owes "+player_list[owned_id].get_player_name()+" $"+amount.toString())
+                message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> owes <b>"+player_list[owned_id].get_player_name()+"</b> $"+amount.toString())
                 // Checks if the player has enough to pay if so then it will pay the next player
                 pay_btn.onclick = function() {
                     if (player_list[current_turn].get_player_money() >= amount) {
@@ -1885,7 +1915,7 @@ function check_landed_property() {
                 // pay_btn setup
                 pay_btn.className = "action_btn"
                 pay_btn.textContent = "Pay $"+amount.toString()
-                bankrupt_btn.className = "bankrupt_btn"
+                bankrupt_btn.className = "myBtn"
                 bankrupt_btn.onclick = function() {
                     bankrupt_player("by_player", location, owned_id)
                 }
@@ -1912,7 +1942,7 @@ function check_landed_property() {
                 // pay_btn setup
                 pay_btn.className = "action_btn"
                 pay_btn.textContent = "Pay $"+amount.toString()
-                bankrupt_btn.className = "bankrupt_btn"
+                bankrupt_btn.className = "myBtn"
                 bankrupt_btn.onclick = function() {
                     bankrupt_player("by_player", location, owned_id)
                 }
@@ -2054,7 +2084,7 @@ function set_roll() {
                     // Stops the loop if the player lands on the spot they rolled to
                     if (i > movement-1) {
                         clearInterval(spot_by_spot)
-                        propData[current_spot]['property_data']['players_on'].push(current_turn)
+                        fix_all_positions()
                         check_landed_property()
                     }
                 }, 250);
@@ -2064,7 +2094,8 @@ function set_roll() {
 }
 
 // Sets up everything that will be used in the game
-function set_up_game(player_names, player_colors, starting_cash, bankrupt) {
+//name, color, spot, id, money, jailed, props, ooj, bankrupt
+function set_up_game(player_names, player_colors, playerSpot, playerId, starting_cash, playerJailed, playerProps, playerOoj,bankrupt) {
     if (false) { // Set this to true to enable python scripting
         pyodide.runPython(`
             import os
@@ -2099,18 +2130,17 @@ function set_up_game(player_names, player_colors, starting_cash, bankrupt) {
         // Adds the player tooltip to the board
         playerContainer.appendChild(newPlayer)
         // Adds the player to the player list
-        player_list.push(new Player(player_names[i], player_colors[i], 1, "player"+(i+1).toString(), starting_cash, false, {}, [], bankrupt))
+        player_list.push(new Player(player_names[i], player_colors[i], playerSpot[i], playerId[i], starting_cash[i], playerJailed[i], playerProps[i], playerOoj[i], bankrupt[i]))
         // Sets the money containers to the right color and text
         var setMoneyContainer = document.getElementById("player"+(i+1)+"_money")
         setMoneyContainer.style = "border: 3px solid "+player_colors[i]+";background-color: white;text-align: center;"
-        setMoneyContainer.innerHTML = "<br>"+player_names[i]+":<br>---------<br>$"+starting_cash.toString()
     }
+    
     playerAmount = player_list.length // The amount of players
     //Adds roll button
     set_roll()
     // Sets the Player turn text to the new player
     turn_text.innerHTML = "Current Turn:<br>"+player_list[current_turn].get_player_name()
-
     // This will Add the color to each property
     var propData_keys = Object.keys(propData)
     for (var i=0; i < propData_keys.length; i++) { // Goes through each property
@@ -2159,8 +2189,11 @@ function set_up_game(player_names, player_colors, starting_cash, bankrupt) {
     chance_deck = shuffle(Object.keys(cardsData["Chance"])) // Randomize Chest
     // Sets up save btn
     if (savingStatus == true) { // if the client allows saving
-        saveGame_btn.className = "save_btn"
+        saveGame_btn.className = "myBtn"
     }
+    update_money_display() // This will fix the big cash number
+    fix_all_positions()
+    update_game_text()
 }
 
 // This will setup the main menu after the JSON file data from changeLogs are readable
@@ -2198,8 +2231,15 @@ function set_menu(changeLog) {
     // When the player clicks the start btn on the Main Menu
     start_btn.onclick = function() {
         // Player input variables
-        const input_names = []
-        const input_colors = []
+        var input_names = []
+        var input_colors = []
+        var player_spot = []
+        var player_ids = []
+        var player_money = []
+        var player_jailed = []
+        var player_props = []
+        var player_ooj = []
+        var player_bank = []
         var error_count = false
         // Gets all the values
         for (let i=0; i < 4; i++) {
@@ -2217,6 +2257,13 @@ function set_menu(changeLog) {
                 if (input_names.includes((name_input.value).replace(" ", "")) == false) { // Checks if the name is taken // Checks if the color is taken
                     input_names.push(name_input.value)
                     input_colors.push(color_input.value)
+                    player_spot.push(1)
+                    player_ids.push("player"+(i+1))
+                    player_money.push(2000)
+                    player_jailed.push(false)
+                    player_props.push({})
+                    player_ooj.push([])
+                    player_bank.push(false)
                     error_count = false
                     continue
                 } else {
@@ -2229,8 +2276,7 @@ function set_menu(changeLog) {
             error_count = true
         }
         // Starts the game
-
-        if (error_count == false) {set_up_game(input_names, input_colors, 2000, false)}
+        if (error_count == false) {set_up_game(input_names, input_colors, player_spot, player_ids, player_money, player_jailed, player_props, player_ooj, player_bank)}
     }
     // This will add all the versions to the dropdown menu
     var version_keys = Object.keys(changeLog)
@@ -2242,20 +2288,47 @@ function set_menu(changeLog) {
         select_version.appendChild(add_ver)
     }
 
-    // Will add all the saved games to the list
-    var saveSelector = document.getElementById("saveSelect")
-    slot = 0
-    while(true) {
-        if (getCookie(`saveSlot${slot}`) == null) {
-            break
+    // If saveSelector is value is changed
+    saveSelector.onchange = function() {
+        if (saveSelector.value == null) { // If the save is invalid
+            loadGame_btn.disabled = "disabled"
+            delGame_btn.disabled = "disabled"
         }
+        // Enables the btns
+        loadGame_btn.disabled = ""
+        delGame_btn.disabled = ""
+    }
+    // Allows the save to be loaded
+    loadGame_btn.onclick = function() {
+        if (saveSelector.value !== "null") {
+            load_saved_game()
+        }
+    }
+    delGame_btn.onclick = function() {
+        if (saveSelector.value !== null) { // If its a valid cookie
+            setCookie(saveSelector.value, "", 0)
+            document.getElementById(saveSelector.value).remove()
+        }
+    }
+    // Gets all cookies for this domain
+    var cookies = document.cookie.split(';')
+    var validSaves = []
+    for (var i=0; i < cookies.length; i++) {
+        if (cookies[i].includes("saveSlot")) {
+            validSaves.push(cookies[i].substring(0,9))
+        }
+    }
+    // Will add all the saved games to the list
+    slot = 0
+    while(validSaves.length !== 0) { // Goes through everything
         let addSave = document.createElement("option")
-        addSave.value = `saveSlot${slot}`
+        addSave.value = validSaves[slot]
+        addSave.id = validSaves[slot]
         addSave.text = `Save ${slot}`
         saveSelector.appendChild(addSave)
+        validSaves.splice(slot, 1)
         slot++
     }
-
     // Hides the first element
     let curSelect = document.getElementById(select_version.value)
     curSelect.style.display = "none"

@@ -63,14 +63,16 @@
         "title": "Game Changing Features",
         "added": [
             "Added | A cookie use warning",
-            "Added | Cookies",
             "Added | Save / Loading feature for multiple saves (Only if they accept the cookies)"
         ],
-        "bug_fix":[],
+        "bug_fix":[
+            "Fixed | An Issue that did not show until loading a save"
+        ],
         "removed":[],
         "changed":[
             "Changed | The Layout for the creating players boxs",
-            "Changed | Most of the buttons will know be a custom style"
+            "Changed | Most of the buttons will have my own custom style",
+            "Changed | The setup game function ( Due to the new Saving Feature )"
         ]
     }
 }

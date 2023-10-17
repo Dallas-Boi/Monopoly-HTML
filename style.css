@@ -389,6 +389,7 @@ table {
 	max-width: 100%;
 	max-height: 100%;
 }
+
 .prop_container {
 	border: 1px solid black;
 	position: absolute;
@@ -404,6 +405,7 @@ table {
 	margin-top: 5px;
 	margin-left: 5px;
 }
+
 .prop_container .prop_name {
 	position: absolute;
 	margin-top: 4px;
@@ -716,22 +718,21 @@ table {
     z-index: 2; /* Ensure the button is above the table (higher z-index) */
 }
 
-.bankrupt_btn {
-	background-color: lightblue; /* Green */
+#bankrupt_btn {
 	position: absolute;
-	border: none;
-	color: black;
-	padding: 15px 29px;
-	text-align: center;
-	text-decoration: none;
-	font-size: 16px;
-	border-radius: 5px;
-	top:750px;
-	left:430px;
+	top:740px;
+	left:421.25px;
 	z-index: 3;
 }
 
-.bankrupt_btn:hover  {
+#saveGame_btn {
+	position: absolute;
+	top:740px;
+	left:421.25px;
+	z-index: 3;
+}
+
+.control .myBtn:hover  {
 	background-color: black;
 	color: white;
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
@@ -774,14 +775,16 @@ table {
 }
 
 .menu_btn .action_btn {
-	background-color: lightblue; /* Green */
-	border: none;
+	font-size: 20px;
+	margin-left: 0px;
+	width: 100px;
+	max-width: 100%;
+	height:50px;
+	max-height: 100%;
+	border-radius: 15%;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 	color: black;
-	padding: 15px 29px;
-	text-align: center;
-	text-decoration: none;
-	font-size: 16px;
-	border-radius: 5px;
+	font-weight: 400;
 	margin-bottom: auto;
 }
 
@@ -903,45 +906,34 @@ table {
 	z-index: 10;
 }
 
-.player_money1 {
+.player_money {
 	position: absolute;
 	width: 200px;
 	height: 100px;
 	max-width: 100%;
 	max-height: 100%;
+}
+
+#player1_money {
 	left: 100px;
 	top: 10px;
 }
 
-.player_money2 {
-	position: absolute;
-	width: 200px;
-	height: 100px;
-	max-width: 100%;
-	max-height: 100%;
+#player2_money {
 	left: 400px;
 	top: 10px;
 }
 
-.player_money3 {
-	position: absolute;
-	width: 200px;
-	height: 100px;
-	max-width: 100%;
-	max-height: 100%;
+#player3_money {
 	left: 100px;
 	top: 130px;
 }
 
-.player_money4 {
-	position: absolute;
-	width: 200px;
-	height: 100px;
-	max-width: 100%;
-	max-height: 100%;
+#player4_money {
 	left: 400px;
 	top: 130px;
 }
+
 /* This is for the Houses of properties */
 .house {
 	background-color: lime;
