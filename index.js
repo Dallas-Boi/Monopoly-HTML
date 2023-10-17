@@ -2313,20 +2313,22 @@ function set_menu(changeLog) {
     // Gets all cookies for this domain
     var cookies = document.cookie.split(';')
     var validSaves = []
-    for (var i=0; i < cookies.length; i++) {
-        if (cookies[i].includes("saveSlot")) {
-            validSaves.push(cookies[i].substring(0,9))
+    for (var save=0; save < cookies.length; save++) {
+        if (cookies[save].includes("saveSlot")) {
+            validSaves.push(cookies[save].substring(0,9))
         }
     }
     // Will add all the saved games to the list
     slot = 0
-    while(validSaves.length !== 0) { // Goes through everything
+    while(true) { // Goes through everything
+        if (slot == validSaves.length) { // Will stop the loop if the saveSlot is not found
+            break
+        }
         let addSave = document.createElement("option")
         addSave.value = validSaves[slot]
         addSave.id = validSaves[slot]
         addSave.text = `Save ${slot}`
         saveSelector.appendChild(addSave)
-        validSaves.splice(slot, 1)
         slot++
     }
     // Hides the first element
