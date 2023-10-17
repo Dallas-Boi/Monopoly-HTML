@@ -453,7 +453,7 @@ function getCookie(name) {
     for(var i=0;i < ca.length;i++) {
         var c = ca[i];
         if (c.indexOf(nameEQ) !== -1) {
-            return c.substring(nameEQ.length,c.length);
+            return c.substring(nameEQ.length+1,c.length);
         }
     }
     return null;
@@ -487,7 +487,7 @@ function save_current_game() {
         "turn": current_turn
     }
     // This will try to find a open save slot
-    var slot = 0
+    let slot = 0
     if (saveSlot == "null") { // If the save Slot equals null then continue
         while (true) {
             if (getCookie(`saveSlot${slot}`) == null) { // If the founded cookie is available
@@ -2325,8 +2325,8 @@ function set_menu(changeLog) {
             break
         }
         let addSave = document.createElement("option")
-        addSave.value = validSaves[slot]
-        addSave.id = validSaves[slot]
+        addSave.value = `saveSlot${slot}`
+        addSave.id = `saveSlot${slot}`
         addSave.text = `Save ${slot}`
         saveSelector.appendChild(addSave)
         slot++
