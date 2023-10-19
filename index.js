@@ -441,12 +441,19 @@ function fix_all_positions() {
 
 // Finds the given Cookie
 function getCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        if (c.indexOf(nameEQ) !== -1) {
-            return c.substring(nameEQ.length+1,c.length);
+    var nameEQ = `${name}=`;
+    var allCookies = document.cookie.split(';');
+    for(var i=0;i < allCookies.length;i++) {
+        var thisCookie = allCookies[i];
+        if (thisCookie.indexOf(nameEQ) !== -1) {
+            let thisCookie_data = thisCookie.substring(nameEQ.length+1,thisCookie.length);
+            // Checks if there is a problem with turn the cookie into JSON data
+            try { // If there is no error
+                var placeHolder_cookie = JSON.parse(thisCookie_data)
+            } catch (err) { // If Making the cookie into json broke it
+                var placeHolder_cookie = JSON.parse(`{${thisCookie_data}`) // Just adds a curly bracket to fix JSON issue
+            }
+            return placeHolder_cookie
         }
     }
     return null;
@@ -461,14 +468,15 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 // This saves the players name
-function save_current_game() {
+function save_current_game(name) {
     var player_data = []
     // Gets all the player data into a list
     for (var i=0; i < player_list.length; i++) {
         player_data.push(player_list[i].toString())
     }
-
-    var savingData = { // All data that needs to be saved
+    // All data that needs to be saved
+    var savingData = { 
+        "name": name,
         "cards": {
             "chest": chest_deck,
             "chance": chance_deck
@@ -500,11 +508,7 @@ function save_current_game() {
 // This will load the game when called
 function load_saved_game() {
     // This will rewrite the data
-    try { // If the data return is not in JSON format
-        var playerData = JSON.parse(getCookie(saveSelector.value))
-    } catch (err) { // To fix an error that occurs if the return string breaks the JSON
-        var playerData = JSON.parse("{"+getCookie(saveSelector.value))
-    }
+    var playerData = getCookie(saveSelector.value)
     saveSlot = saveSelector.value
     //console.log(playerData)
     // Sets up every tag
@@ -1148,7 +1152,8 @@ function open_manager(player) {
                 while (all_prop.firstChild) { 
                     all_prop.removeChild(all_prop.firstChild)
                 }
-                if (player_list[player].get_player_spot_id() !== 21) { // This fixes the a glitch with free parking
+                // Updates texts and btns
+                if (player_list[player].get_player_spot_id() !== 21) { // This fixes the a glitch with free
                     check_landed_property()
                 }
             }
@@ -1782,7 +1787,7 @@ function c_cards(card_type) {
         pay_btn.textContent = "Pay All Players "+cardsData["Base"][card_type][played_card]["amount"].toString()
         var amount = 0
         // Occurs when the player clicks the pay_btn
-        pay_funct.onclick = function() {
+        pay_btn.onclick = function() {
             for (var i=0; i < player_list.length; i++) {
                 if (player_list[i].get_player_bankrupt() == false) { // Checks if they are bankrupt
                     if (player_list[i].get_player_id() !== player_list[current_turn].get_player_id()) { // Checks if the player is not the current player
@@ -2033,7 +2038,11 @@ function set_roll() {
     pay_btn.onclick = ""; pay_btn.className = "action_btn_disabled"
     trade_btn.onclick = ""; trade_btn.className = "action_btn_disabled"
     // Allows the save btn to be interactable
-    saveGame_btn.onclick = save_current_game
+    saveGame_btn.onclick = function() { // Allows for save name input
+        var sName = prompt("What should the name of the save be?")
+        console.log(sName)
+        save_current_game(sName)
+    }
     // Makes the roll function
     roll_btn.onclick = function() {
         saveGame_btn.className = "action_btn_disabled" // Hides the save btn
@@ -2287,13 +2296,16 @@ function set_menu(changeLog) {
 
     // If saveSelector is value is changed
     saveSelector.onchange = function() {
-        if (saveSelector.value == null) { // If the save is invalid
+        if (saveSelector.value == "null") { // If the save is invalid
             loadGame_btn.disabled = "disabled"
             delGame_btn.disabled = "disabled"
         }
         // Enables the btns
         loadGame_btn.disabled = ""
         delGame_btn.disabled = ""
+        // Hides the first element
+        let curSelect = document.getElementById(select_version.value)
+        curSelect.style.display = "none"
     }
     // Allows the save to be loaded
     loadGame_btn.onclick = function() {
@@ -2301,36 +2313,27 @@ function set_menu(changeLog) {
             load_saved_game()
         }
     }
+    // Allows the player to delete a save
     delGame_btn.onclick = function() {
-        if (saveSelector.value !== null) { // If its a valid cookie
+        if (saveSelector.value !== "null") { // If its a valid cookie
             setCookie(saveSelector.value, "", 0)
             document.getElementById(saveSelector.value).remove()
         }
     }
     // Gets all cookies for this domain
     var cookies = document.cookie.split(';')
-    var validSaves = []
-    for (var save=0; save < cookies.length; save++) {
+    for (var save=0; save < cookies.length; save++) { // This will get all the cookies that the site uses and checks if they containe "saveSlot"
         if (cookies[save].includes("saveSlot")) {
-            validSaves.push(cookies[save].substring(0,9))
+            let curSave_id = cookies[save].substring(0,9)
+            let curSave_data = getCookie(curSave_id)
+            let addSave = document.createElement("option")
+            addSave.value = curSave_id
+            addSave.id = curSave_id
+            addSave.text = curSave_data["name"]
+            saveSelector.appendChild(addSave)
         }
     }
-    // Will add all the saved games to the list
-    slot = 0
-    while(true) { // Goes through everything
-        if (slot == validSaves.length) { // Will stop the loop if the saveSlot is not found
-            break
-        }
-        let addSave = document.createElement("option")
-        addSave.value = `saveSlot${slot}`
-        addSave.id = `saveSlot${slot}`
-        addSave.text = `Save ${slot}`
-        saveSelector.appendChild(addSave)
-        slot++
-    }
-    // Hides the first element
-    let curSelect = document.getElementById(select_version.value)
-    curSelect.style.display = "none"
+    
     // This will update the text box for the change logs when the version is changed
     select_version.onchange = function() {
         // Shows all the elements

@@ -67,14 +67,16 @@
             "Added | A Dollar sign to the cash text in the trading Menu",
             "Added | \"Pay all Players\" Chance card",
             "Added | A Back to main menu button on the winning screen",
-            "Added | When a player adds money it will bold their name in the textbox"
+            "Added | When a player adds money it will bold their name in the textbox",
+            "Added | Naming Your Save"
         ],
         "bug_fix":[
             "Fixed | An Issue that did not show until loading a save",
             "Fixed | An issue with loading a save and the out of jail cards being null",
             "Fixed | When there is not 3-4 players it will not hide the player money values",
             "Fixed | When loading a save if a player is on a railroad it will set their border to white",
-            "Fixed | Infinite Money Glitch when entering and exiting the manage menu on free parking"
+            "Fixed | Infinite Money Glitch when entering and exiting the manage menu on free parking",
+            "Fixed | Players Positions being offset"
         ],
         "removed":[
             "Removed | Code for python scripts ( Will be added Later )",
@@ -85,7 +87,8 @@
             "Changed | Most of the buttons will have my own custom style",
             "Changed | The setup game function ( Due to the new Saving Feature )",
             "Changed | The layout of the auction house",
-            "Changed | Warning text"
+            "Changed | Warning text",
+            "Changed | How Saves are loaded into the save dropdown"
         ]
     }
 }
