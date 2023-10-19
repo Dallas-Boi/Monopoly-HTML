@@ -66,6 +66,13 @@ table {
 	font-weight: 400;
 }
 
+.myBtn:hover  {
+	background-color: black;
+	color: white;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	cursor: pointer;
+}
+
 .selector {
 	font-size: 15px;
 }
@@ -279,21 +286,28 @@ table {
 	text-align: center;
 }
 /* All auction styles */
+.center_auction {
+	justify-content: center;
+	align-content: center;
+	display: flex;
+}
+
 .auction_title {
 	position: absolute;
 	font-size: 25px;
-	left:125px;
 	top:10px;
 }
 
 .auction_actions {
 	border: 1px solid black;
 	position: absolute;
-	width: 400px;
+	width: 500px;
 	height: 600px;
 	max-width: 100%;
 	max-height: 100%;
-	left:500px;
+	justify-content: center;
+	align-content: center;
+	display: flex;
 }
 
 .auction_text {
@@ -303,7 +317,6 @@ table {
 	max-height: 200px;
 	height: 100%;
     top: 50px; /* Adjust the top position as needed to overlay the button where you want it */
-	left: 65px;
     z-index: 2; /* Ensure the button is above the table (higher z-index) */
 	border: 1px solid black;
 	background-color: white;
@@ -314,15 +327,20 @@ table {
 
 .auction_btn {
 	position: absolute;
-	border: 1px solid black;
-	top:275px;
-	left:35px
+	top:270px;
+}
+
+.auction_btn .myBtn {
+	font-size: 15px;
+	width: 80px;
+	height: 25px;
+	margin-left: 1px;
+	margin-top: 0px;
 }
 
 .auction_info_txt {
 	position: absolute;
 	top: 305px;
-	left:130px;
 	text-align: center;
 	font-size: 25px;
 }
@@ -332,7 +350,7 @@ table {
 	text-align: center;
 }
 
-.auct_player_money1 {
+.auct_player_money {
 	border: 1px solid black;
 	background-color: white;
 	position: absolute;
@@ -341,44 +359,21 @@ table {
 	max-width: 100%;
 	max-height: 100%;
 	left: 135px;
+}
+
+#auct_player1_money {
 	top: 10px;
 }
-
-.auct_player_money2 {
-	border: 1px solid black;
-	background-color: white;
-	position: absolute;
-	width: 200px;
-	height: 115px;
-	max-width: 100%;
-	max-height: 100%;
-	left: 1050px;
-	top: 10px;
+#auct_player2_money {
+	top: 150px;
+}
+#auct_player3_money {
+	top: 290px;
+}
+#auct_player4_money {
+	top: 430px;
 }
 
-.auct_player_money3 {
-	border: 1px solid black;
-	background-color: white;
-	position: absolute;
-	width: 200px;
-	height: 115px;
-	max-width: 100%;
-	max-height: 100%;
-	left: 135px;
-	top: 230px;
-}
-
-.auct_player_money4 {
-	border: 1px solid black;
-	background-color: white;
-	position: absolute;
-	width: 200px;
-	height: 115px;
-	max-width: 100%;
-	max-height: 100%;
-	left: 1050px;
-	top: 230px;
-}
 /* All management styles */
 .action {
 	position: absolute;
@@ -414,6 +409,24 @@ table {
 }
 
 /* All trading styles */
+#trading_menu .myBtn { /* myBtn for only the trading menu */
+	font-size: 15px;
+	width: 75px;
+	height: 30px;
+	margin-left:2px;
+	margin-top:-3px;
+}
+
+#trading_menu .trade_action_container .myBtn { /* myBtn for only the trading menu */
+	font-size: 15px;
+	width: 95px;
+	height: 40px;
+	margin-left:10px;
+	margin-top:3px;
+	text-align: center;
+	justify-content: center;
+}
+
 .menu_left {
 	border: 1px solid black;
 	position: absolute;
@@ -559,7 +572,7 @@ table {
 	max-height: 100% ;
 }
 
-.left_confirm {
+#left_player_confirm {
 	position: absolute;
 	display:flex;
 	font-size: 30px;
@@ -567,7 +580,7 @@ table {
 	margin-left: 10px;
 }
 
-.cancel_confirm {
+#cancel_trade {
 	position: absolute;
 	display:flex;
 	font-size: 30px;
@@ -575,7 +588,7 @@ table {
 	margin-left: 10px;
 }
 
-.right_confirm {
+#right_player_confirm {
 	position: absolute;
 	display:flex;
 	font-size: 30px;
@@ -888,6 +901,7 @@ table {
 	height: 20px;
 	max-width: 100%;
 	max-height: 100%;
+	margin-left: -3px;
 }
 
 /* The tool tip for the player */

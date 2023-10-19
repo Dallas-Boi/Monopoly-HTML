@@ -13,7 +13,8 @@
             
         </div>
         <div id="cookie_menu">
-            <div id="cookie_warning" class="center"><b style="color:red">WARNING</b><br>This site uses Cookies to save your game data.<br>
+            <div id="cookie_warning" class="center"><b style="color:red">WARNING</b><br>
+                This site uses Cookies to save your game data.<br>
                 If you do not accept then saving will not be available to you.<br>
                 (If you do save then this will not pop up again)<br>
             <button id="cookieAccept" class="myBtn" style="background-color: green;">Accept</button><button id="cookieDecline" class="myBtn" style="background-color: red;">Decline</button></div>
@@ -72,7 +73,8 @@
                     </div>
                 </div>
                 <div class="other_info">
-                    <div id="refresh_warning" class="other_info_text"><b style="color: red">WARING:</b><br>Refreshing the page will reset your DATA.<br>Saving is being wokred on</div>
+                    <div id="refresh_warning" class="other_info_text"><b style="color: red">WARING:</b><br>
+                        Refreshing the page will reset your DATA.<br>Remember to Save before exiting.</div>
                 </div>
             </div>
         </div>
@@ -269,7 +271,7 @@
                 </tr>
                 <tr id="row11">
                     <td class="corner"><div id="cell_11" class="cell_name">Just Visting</div><canvas id="jail_icon" class="jail_icon" width="65" height="55"></canvas></td>
-                    <td class="spot_mid"><div id="cell_10" class="cell_name" >Connecticut Avenue</div></td>
+                    <td class="spot_mid"><div id="cell_10" class="cell_name">Connecticut Avenue</div></td>
                     <td class="spot_mid"><div id="cell_9" class="cell_name">Chance</div></td>
                     <td class="spot_mid"><div id="cell_8" class="cell_name">Vermont Avenue</div></td>
                     <td class="spot_mid"><div id="cell_7" class="cell_name">Oriental Avenue</div></td>
@@ -291,20 +293,20 @@
                     <div><b>Properties: </b></div>
                     <br>
                     <select id="player_props_left" class="player_props"></select>
-                    <button id="prop_add_btn_left">Add</button>
-                    <button id="prop_sub_btn_left">Remove</button>
+                    <button id="prop_add_btn_left" class="myBtn" style="background-color: green;">Add</button>
+                    <button id="prop_sub_btn_left" class="myBtn" style="background-color: red;">Remove</button>
                 </div>
                 <div id="player_cash_left" class="player_cash_container">
-                    <div><b>Cash:</b></div>
+                    <div><b>Cash: $</b></div>
                     <input type="number" id="cash_input_left" min="0"/>
-                    <button id="cash_add_btn_left">Add</button>
-                    <button id="cash_sub_btn_left">Remove</button>
+                    <button id="cash_add_btn_left" class="myBtn" style="background-color: green;">Add</button>
+                    <button id="cash_sub_btn_left" class="myBtn" style="background-color: red;">Remove</button>
                 </div>
                 <div id="ooj_container_left" class="player_ooj_container">
                     <div><b>Out Of Jail Cards:</b></div>
                     <select id="player_ooj_left"></select>
-                    <button id="ooj_add_btn_left">Add</button>
-                    <button id="ooj_sub_btn_left">Remove</button>
+                    <button id="ooj_add_btn_left" class="myBtn" style="background-color: green;">Add</button>
+                    <button id="ooj_sub_btn_left" class="myBtn" style="background-color: red;">Remove</button>
                 </div>
                 <div id="info_left" class="player_info_container">
                     <div id="player_giving_props_left" class="giving_props">
@@ -329,20 +331,20 @@
                     <select id="player_props_right" class="player_props">
                         
                     </select>
-                    <button id="prop_add_btn_right">Add</button>
-                    <button id="prop_sub_btn_right">Remove</button>
+                    <button id="prop_add_btn_right" class="myBtn" style="background-color: green;">Add</button>
+                    <button id="prop_sub_btn_right" class="myBtn" style="background-color: red;">Remove</button>
                 </div>
                 <div id="player_cash_right" class="player_cash_container">
-                    <div><b>Cash:</b></div>
+                    <div><b>Cash: $</b></div>
                     <input type="number" id="cash_input_right" min="0"/>
-                    <button id="cash_add_btn_right">Add</button>
-                    <button id="cash_sub_btn_right">Remove</button>
+                    <button id="cash_add_btn_right" class="myBtn" style="background-color: green;">Add</button>
+                    <button id="cash_sub_btn_right" class="myBtn" style="background-color: red;">Remove</button>
                 </div>
                 <div id="ooj_container_right" class="player_ooj_container">
                     <div><b>Out Of Jail Cards:</b></div>
                     <select id="ooj_right"></select>
-                    <button id="ooj_add_btn_right">Add</button>
-                    <button id="ooj_sub_btn_right">Remove</button>
+                    <button id="ooj_add_btn_right" class="myBtn" style="background-color: green;">Add</button>
+                    <button id="ooj_sub_btn_right" class="myBtn" style="background-color: red;">Remove</button>
                 </div>
                 <div id="info_right" class="player_info_container">
                     <div id="player_giving_props_right" class="giving_props">
@@ -359,9 +361,9 @@
 
             </div>
             <div class="trade_action_container">
-                <button id="left_player_confirm" class="left_confirm">Confirm</button>
-                <button id="cancel_trade" class="cancel_confirm">Cancel</button>
-                <button id="right_player_confirm" class="right_confirm">Confirm</button>
+                <button id="left_player_confirm" class="myBtn" style="background-color: green;">Confirm</button>
+                <button id="cancel_trade" class="myBtn" style="background-color: red;">Cancel</button>
+                <button id="right_player_confirm" class="myBtn" style="background-color: green;">Confirm</button>
             </div>
         </div>
         <div id="manage_menu" class="menu" style="display:none;">
@@ -371,31 +373,34 @@
             </div>
         </div>
         <div id="auction_menu" class="menu" style="display:none;">
-            <div id="action_area" class="auction_actions">
-                <div class="auction_title">Auction House</div>
-                <div id="auction_text" class="auction_text"></div>
-                <div class="auction_btn">
-                    <button id="auction_add_1" class="auction_add">Add $1</button>
-                    <button id="auction_add_10" class="auction_add">Add $10</button>
-                    <button id="auction_add_50" class="auction_add">Add $50</button>
-                    <button id="auction_add_100" class="auction_add">Add $100</button>
-                    <button id="auction_out" class="auction_add">I'm Out</button>
+            <div class="center_auction">
+                <div id="action_area" class="auction_actions">
+                    <div class="auction_title">Auction House</div>
+                    <div id="auction_text" class="auction_text"></div>
+                    <div class="auction_btn">
+                        <button id="auction_add_1" class="myBtn">Add $1</button>
+                        <button id="auction_add_10" class="myBtn">Add $10</button>
+                        <button id="auction_add_50" class="myBtn">Add $50</button>
+                        <button id="auction_add_100" class="myBtn">Add $100</button>
+                        <button id="auction_out" class="myBtn">I'm Out</button>
+                    </div>
+                    <div id="auction_prop_name" class="auction_info_txt">Item Name:<br>Placeholder a<hr></div><br>
+                    <div id="auction_prop_cost" class="auction_info_txt" style="top:375px;">Item Value:<br>Broken<hr></div><br>
+                    <div id="auction_value" class="auction_info_txt" style="top:445px;">Auction Value:<br>$0</div><br>
+                    <div id="auction_player_turn" class="auction_info_txt" style="top:510px;">Current Turn:<br>Placeholder</div>
                 </div>
-                <div id="auction_prop_name" class="auction_info_txt">Item Name:<br>Placeholder a<hr></div><br>
-                <div id="auction_prop_cost" class="auction_info_txt" style="top:380px;left:240px;">Item Value:<br>Broken<hr></div><br>
-                <div id="auction_value" class="auction_info_txt" style="top:380px; left:60px;">Auction Value:<br>$0</div><br>
-                <div id="auction_player_turn" class="auction_info_txt" style="top:450px; left:140px;">Current Turn:<br>Placeholder</div>
-            </div>
-            <div id="auction_player_cash" class="auction_player_cash_container">
-                <div id="auct_player1_money" class="auct_player_money1"><br>Player1<br>-------<br>$2000</div>
-                <div id="auct_player2_money" class="auct_player_money2"><br>Player2<br>-------<br>$2000</div>
-                <div id="auct_player3_money" class="auct_player_money3"><br>Player3<br>-------<br>$2000</div>
-                <div id="auct_player4_money" class="auct_player_money4"><br>Player4<br>-------<br>$2000</div>
+                <div id="auction_player_cash" class="auction_player_cash_container">
+                    <div id="auct_player1_money" class="auct_player_money" style="display:none;"></div>
+                    <div id="auct_player2_money" class="auct_player_money" style="display:none;"></div>
+                    <div id="auct_player3_money" class="auct_player_money" style="display:none;"></div>
+                    <div id="auct_player4_money" class="auct_player_money" style="display:none;"></div>
+                </div>
             </div>
         </div>
         <div id="winningScreen" class="menu" style="display:none">
             <div id="winningText" class="winningScreen_txt"><div>How are you seeing this</div></div>
+            <button id="win_to_Menu" class="myBtn">Back to Main Menu</button>
         </div>
         <script src="index.js"></script>
     </body>
-</html
+</htm>

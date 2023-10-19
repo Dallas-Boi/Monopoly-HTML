@@ -43,47 +43,41 @@ var propData = { // Placement is "left" px, "top" px
     "39": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [871, 719], "1": [894, 719], "2":[871, 742], "3": [894, 742]}},
     "40": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "blue"}, "name": "Board walk", "property_cost":400, "house_price":200, "house_placement": {"axis": "", "left":[808, 822, 837, 852, 829]}, "rent":[50, 200, 600, 1400, 1700, 2000], "placement": {"0": [871, 802], "1": [894, 802], "2":[871, 825], "3": [894, 825]}}
 }
+// Different Property Names for different modes
+const propertyNames = {
+    "Base": [
+        "Go","Mediterranean Avenue","Community Chest","Baltic Avenue","Income Tax","Reading Railroad","Oriental Avenue","Vermont Avenue","Chance","Connecticut Avenue","Just Visting",
+        "St. Charles Place","Electric Company","States Avenue","Virginia Avenue","Pennsylvania Railroad","St. James Place","Community Chest","Tennessee Avenue","New York Avenue","Free Parking",
+        "Kentucky Avenue","Chance","Indiana Avenu","Illinois Avenue","B&O Railroad","Atlantic Avenue","Ventnor Avenue","Water Works","Marvin Gardens","Go To Jail",
+        "Pacific Avenue","North Carolina Avenue","Community Chest","Pennsylvania Avenue","Short Line Railroad","Chance","Park Place","Luxury Tax","Boardwalk"
+    ],
+    "AHS": [ // Work In Progress
+        "Courtyard"
+    ]
+}
 
 // Chance / chest cards
 const cardsData = {
-    "Community Chest": {
-        "advance_boardwalk": {"location_id": 40, "description": " Advance's to boardwalk", "gamemode": "normal"},
-        "advance_railroad_1": {"location_id": 6, "description": " Advance's to Reading Railroad", "gamemode": "normal"},
-        "advance_go": {"location_id": 1, "description": " Advance's to Go", "gamemode": "normal"},
-        "out_of_jail_Community Chest": {"description": " Allows the player to get out of jail for free", "gamemode": "normal"}
+    "Base": {
+        "Community Chest": {
+            "advance_boardwalk": {"location_id": 40, "description": " Advance's to boardwalk"},
+            "advance_railroad_1": {"location_id": 6, "description": " Advance's to Reading Railroad"},
+            "advance_go": {"location_id": 1, "description": " Advance's to Go"},
+            "out_of_jail_Community Chest": {"description": " Allows the player to get out of jail for free"}
+        },
+        "Chance": {
+            "advance_railroad_4": {"location_id": 36, "description": " Advance's to Short Line Railroad"},
+            "out_of_jail_Chance": {"description": " Allows the player to get out of jail for free"},
+            "pay_tax": {"tax_amount": 100, "description": " Has to pay $100 in tax"},
+            "pay_prop_tax": {"house": 15, "hotels": 115, "description": " has to Pay for each house ($15 per) and hotel ($115 per)"},
+            "pay_to_all": {"amount": 50, "description": " Has to Pay all players $50", "gamemode": "normal"}
+        }
     },
-    "Chance": {
-        "advance_railroad_4": {"location_id": 36, "description": " Advance's to Short Line Railroad", "gamemode": "normal"},
-        "out_of_jail_Chance": {"description": " Allows the player to get out of jail for free", "gamemode": "normal"},
-        "pay_tax": {"tax_amount": 100, "description": " Has to pay $100 in tax", "gamemode": "normal"},
-        "pay_prop_tax": {"house": 15, "hotels": 115, "description": " has to Pay for each house ($15 per) and hotel ($115 per)", "gamemode": "normal"},
-        
-    }
-}
-// This will allow python Code to be executed
-if (false) {
-    async function main(){
-        pyodide = await loadPyodide();
-        console.log("Loaded Pyodide") 
-    }
-    // This will load the google sheets API
-    gapi.load('client', initClient);
-    function initClient() {
-        gapi.client.init({
-        apiKey: 'AIzaSyCc1rCgGDo-tSNlYNcSCfVtKH95opWPrxc',
-        clientId: '509853566509-ni4ai4rl0qj4ogdcvk5lv5pteia5f8m1.apps.googleusercontent.com',
-        discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-        scope: 'https://www.googleapis.com/auth/spreadsheets',
-        }).then(function () {
-        console.log("Loaded The Sheet")
-        });
-    }
-}
-// Define the spreadsheet ID and range
-const spreadsheetId = '18VB76xchUiTxlHybLEsIiZ1c_I1Lb6ZXh0hyPpuxyK8';
-const range = 'Sheet1';
+    "AHS": {
 
-// "pay_to_all": {"amount": 50, "description": " Has to Pay all players $50", "gamemode": "normal"}
+    }   
+}
+
 // This will get the change log 
 fetch('changeLog.json')
     .then(response => response.json())
@@ -307,7 +301,7 @@ class Player {
     // Returns this players data into a list
     toString() {
         //name, color, spot, id, money, jailed, props, ooj, bankrupt
-        return [this.name, this.color, this.spot_id, this.player_id, this.money, this.isJailed, this.properties, this.out_of_jail, this.bankrupt]
+        return [this.name, this.color, this.spot_id, this.player_id, this.money, this.isJailed, this.properties, this.out_of_jail_cards, this.bankrupt]
     }
 }
 
@@ -443,7 +437,6 @@ function fix_all_positions() {
         return
     }
     document.getElementById(player_list[current_turn].get_player_id()).style.border = "1px solid black" // Changes the border to white
-    
 }
 
 // Finds the given Cookie
@@ -507,9 +500,13 @@ function save_current_game() {
 // This will load the game when called
 function load_saved_game() {
     // This will rewrite the data
-    var playerData = JSON.parse(getCookie(saveSelector.value))
+    try { // If the data return is not in JSON format
+        var playerData = JSON.parse(getCookie(saveSelector.value))
+    } catch (err) { // To fix an error that occurs if the return string breaks the JSON
+        var playerData = JSON.parse("{"+getCookie(saveSelector.value))
+    }
     saveSlot = saveSelector.value
-    console.log(playerData)
+    //console.log(playerData)
     // Sets up every tag
     houses = playerData["houses"]
     hotels = playerData["hotels"]
@@ -543,13 +540,19 @@ function load_saved_game() {
         player_ooj.push(playerData["players"][play][7])
         player_bank.push(playerData["players"][play][8])
     }
-    
     // Starts the game
     set_up_game(player_names, player_colors, player_spot, player_id, player_money, player_jail, player_props, player_ooj, player_bank)
     // Overwrites Data
     chest_deck = playerData["cards"]["chest"]
     chance_deck = playerData["cards"]["chance"]
     update_all_prop_tags()
+    // If the player loads a save this will fix the border issue
+    for (var i=0; i < player_list.length; i++) {
+        document.getElementById(player_list[current_turn].get_player_id()).style.border = "1px solid black" // Changes the border to white
+        if ([6,16,26,36].includes(player_list[i].get_player_spot_id())) { // If the player is on railroads
+            document.getElementById(player_list[i].get_player_id()).style.border = "1px solid white" // Changes the border to white
+        }
+    }
 }
 
 // Other Menus \\
@@ -578,8 +581,8 @@ function open_trade(player) {
         trader_total_text.textContent = "Total Value: $"+(left_items["cash"]+left_items["prop_cash"]).toString()
         other_total_text.textContent = "Total Value: $"+(right_items["cash"]+right_items["prop_cash"]).toString()
     }
-    trader_name.textContent = player_list[player].get_player_name() // Make it the player who turn it is // Makes 
-    
+    trader_name.textContent = player_list[player].get_player_name() // Make it the player who turn it is
+    console.log(player_list[player])
     // LEFT side trading variables
     var left_items = {"properties": [], "prop_cash": 0,"cash": 0, "ooj": []}
     var left_property = player_list[player].get_player_properties()
@@ -588,7 +591,8 @@ function open_trade(player) {
 
     // Adds all the properties for the LEFT side
     var prop_keys = Object.keys(left_property) 
-    if (prop_keys.length > 0) { // If the player has no properties
+    // Adds the properties
+    if (prop_keys.length > 0) { // Checks if the player has any properties
         for (var i=0; i < prop_keys.length; i++) { // Adds all the properties to LEFT side
             var prop_opt = document.createElement("option")
             prop_opt.id = "property_opt_"+prop_keys[i]
@@ -596,7 +600,7 @@ function open_trade(player) {
             prop_opt.textContent = propData[prop_keys[i]]["name"]
             trader_prop_input.appendChild(prop_opt)
         }
-    } else {
+    } else {// If the player has no properties
         var prop_opt = document.createElement("option")
         prop_opt.value = null
         prop_opt.textContent = "No Properties"
@@ -1120,10 +1124,12 @@ function open_manager(player) {
             }
             // This will add interaction and puts the elements on screen
             let prop_id = prop_keys[i]
+            // Buy btn
             new_buy.onclick = function() {
                 buy_item(prop_id, "house", player)
                 update_text(prop_id)
             }
+            // Sell btn
             new_sell.onclick = function() {
                 sell_item(prop_id, "house", player)
                 update_text(prop_id)
@@ -1138,10 +1144,13 @@ function open_manager(player) {
             exit_to_game.onclick = function() {
                 game_board.style.display = "block"
                 manage_menu.style.display = "none"
-                while (all_prop.firstChild) { // Removes all the properties so it doesn't overlap with others
+                // Resets the manage menu
+                while (all_prop.firstChild) { 
                     all_prop.removeChild(all_prop.firstChild)
                 }
-                check_landed_property()
+                if (player_list[player].get_player_spot_id() !== 21) { // This fixes the a glitch with free parking
+                    check_landed_property()
+                }
             }
         }
     }
@@ -1173,30 +1182,35 @@ function open_auction_house(items, type) {
     } else { // if the items arg is just one thing
         auction_list.push(items)
     }
-    
-    for (var i=0; i < player_list.length; i++) { // Adds all players that are not bankrupt to the amount
-        let auction_money = document.getElementById("auct_player"+(i+1)+"_money")
+
+    // Adds all players that are not bankrupt to the amount
+    for (var i=0; i < player_list.length; i++) { 
+        let auction_money = document.getElementById(`auct_player${(i+1)}_money`)
+        auction_money.style.display = "block"
+        auction_money.style.border = `1px solid ${player_list[i].get_player_color()}`
         if (player_list[i].get_player_bankrupt() == false) { // Checks if the player is not bankrupt
             players_in.push(i)
             // Sets up the cash text
-            auction_money.innerHTML = "<br>"+player_list[i].get_player_name()+"<br>-------<br>$"+player_list[i].get_player_money().toString()
+            auction_money.innerHTML = `<br>${player_list[i].get_player_name()}<br>-------<br>$${player_list[i].get_player_money()}`
         } else {
             auction_money.style.backgroundColor = "black"
         }
     }
+
     // This updates the text for the next item just incase there is more than one item being auctioned
     while (auction_message_box.firstChild) { // Removes all text in the auction_message_box
         auction_message_box.removeChild(auction_message_box.firstChild)
     }
     // Sets the name and cost of the item
-    name_txt.innerHTML = "Item Name:<br>"+propData[auction_list[0]]["name"]
-    cost_txt.innerHTML = "Item Value:<br>$"+propData[auction_list[0]]["property_cost"]
+    name_txt.innerHTML = "<b>Item Name:</b><br>"+propData[auction_list[0]]["name"]
+    cost_txt.innerHTML = "<b>Item Value:</b><br>$"+propData[auction_list[0]]["property_cost"]
     // Enables all the add btns
     add_1.disabled = ""
     add_10.disabled = ""
     add_50.disabled = ""
     add_100.disabled = ""
-    const change_auction_turn = function(items, type, remove, start) { // Changes the Auction turn and Sets up most of the things
+    // Changes the Auction turn and Sets up most of the things
+    const change_auction_turn = function(items, type, remove, start) { 
         // Places the players_in first value into the back
         if (start !== true) { // If the auction didn't start
             players_in.push(players_in[0])
@@ -1235,8 +1249,8 @@ function open_auction_house(items, type) {
             }
             after_roll(null, null, true)
         }
-        
-        turn_txt.innerHTML = "Current Turn:<br>"+player_list[parseInt(players_in[0])].get_player_name()
+        value_txt.innerHTML = `<b>Auction Value:</b><br>$${auction_value.toString()}` // Updates auction value
+        turn_txt.innerHTML = `<b>Current Turn:</b><br>${player_list[parseInt(players_in[0])].get_player_name()}`
         // Enables all add btns
         add_1.disabled = ""
         add_10.disabled = ""
@@ -1259,10 +1273,6 @@ function open_auction_house(items, type) {
             add_100.disabled = "disabled"
         }
     }
-    // Updates the Item Price 
-    const update_auction_value = function() {
-        value_txt.innerHTML = "Auction Value:<br>$"+auction_value.toString()
-    }
     // Adds text to the auction_auction_message_box
     const send_auction_message = function(message) {
         var txt_elm = document.createElement("div")
@@ -1271,36 +1281,32 @@ function open_auction_house(items, type) {
         // Scroll to the bottom of the text container
         auction_message_box.scrollTop = auction_message_box.scrollHeight;
     }
-    send_auction_message("CONSOLE Added $10")
+    send_auction_message("<b>CONSOLE</b> Added $10")
     // Calls all the items to set up the auctionz
     change_auction_turn(auction_list[0], null, null, true)
     update_auction_value()
     add_1.onclick = function() { // Allows the add_1 but interactable
         auction_value += 1
-        send_auction_message(player_list[parseInt(players_in[0])].get_player_name()+" added $1")
-        update_auction_value()
+        send_auction_message(`<b>${player_list[parseInt(players_in[0])].get_player_name()}</b> added $1`)
         change_auction_turn(auction_list)
     }
     add_10.onclick = function() { // Allows the add_1 but interactable
         auction_value += 10
-        send_auction_message(player_list[parseInt(players_in[0])].get_player_name()+" added $10")
-        update_auction_value()
+        send_auction_message(`<b>${player_list[parseInt(players_in[0])].get_player_name()}</b> added $10`)
         change_auction_turn(auction_list)
     }
     add_50.onclick = function() { // Allows the add_1 but interactable
         auction_value += 50
-        send_auction_message(player_list[parseInt(players_in[0])].get_player_name()+" added $50")
-        update_auction_value()
+        send_auction_message(`<b>${player_list[parseInt(players_in[0])].get_player_name()}</b> added $50`)
         change_auction_turn(auction_list)
     }
     add_100.onclick = function() { // Allows the add_1 but interactable
         auction_value += 100
-        send_auction_message(player_list[parseInt(players_in[0])].get_player_name()+" added $100")
-        update_auction_value()
+        send_auction_message(`<b>${player_list[parseInt(players_in[0])].get_player_name()}</b> added $100`)
         change_auction_turn(auction_list)
     }
     player_out.onclick = function() { // Removes the player if they are out
-        send_auction_message(player_list[parseInt(players_in[0])].get_player_name()+" is Out")
+        send_auction_message(`<b>${player_list[parseInt(players_in[0])].get_player_name()}</b> is out`)
         change_auction_turn(auction_list, auction_type, true)
     }
 }
@@ -1688,7 +1694,7 @@ function c_cards(card_type) {
     }
     player = document.getElementById(player_list[current_turn].get_player_id())
     // Sends message
-    message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b>"+cardsData[card_type][played_card]["description"])
+    message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b>"+cardsData["Base"][card_type][played_card]["description"])
     // Sees what card was pick
     if (played_card.includes("advance")) { // If the player advance to another place
         // Removes the player from the old property
@@ -1713,7 +1719,7 @@ function c_cards(card_type) {
                 player.style.left = propData[current_spot]['placement'][spot_placement][0].toString()+"px"
                 fix_all_positions() // This will fix any positioning issues
                 // Stops the loop if the player lands on the spot they rolled to
-                if (player_list[current_turn].get_player_spot_id() == cardsData[card_type][played_card]['location_id']) {
+                if (player_list[current_turn].get_player_spot_id() == cardsData["Base"][card_type][played_card]['location_id']) {
                     clearInterval(spot_by_spot)
                     propData[current_spot]['property_data']['players_on'].push(current_turn)
                     check_landed_property()
@@ -1722,10 +1728,10 @@ function c_cards(card_type) {
         }, 1500)
     } else if (played_card.includes("pay_tax")) { // If the player pays a tax
         pay_btn.className = "action_btn"
-        pay_btn.textContent = "Pay $"+cardsData[card_type][played_card]["tax_amount"].toString()
+        pay_btn.textContent = "Pay $"+cardsData["Base"][card_type][played_card]["tax_amount"].toString()
         pay_btn.onclick = function() {
-            if (player_list[current_turn].get_player_money() >= cardsData[card_type][played_card]["tax_amount"]) {
-                player_pays(cardsData[card_type][played_card]["tax_amount"], "parking")
+            if (player_list[current_turn].get_player_money() >= cardsData["Base"][card_type][played_card]["tax_amount"]) {
+                player_pays(cardsData["Base"][card_type][played_card]["tax_amount"], "parking")
                 after_roll()
             } else {
                 message_text_box("<b>"+player_list[current_turn].get_player_name()+"</b> does not have enough money")
@@ -1752,7 +1758,7 @@ function c_cards(card_type) {
             return
         }
         // The total amount the player has to pay
-        amount = (total_houses*cardsData[card_type][played_card]["house"]) + (total_hotels*cardsData[card_type][played_card]["hotel"])
+        amount = (total_houses*cardsData["Base"][card_type][played_card]["house"]) + (total_hotels*cardsData["Base"][card_type][played_card]["hotel"])
         // pay_btn Actions
         pay_btn.className = "action_btn"
         pay_btn.textContent = "$"+amount.toString()
@@ -1773,14 +1779,14 @@ function c_cards(card_type) {
         after_roll()
     } else if (played_card.includes("pay_to_all")) { // player pays all players the amount
         pay_btn.className = "action_btn"
-        pay_btn.textContent = "Pay All Players "+cardsData[card_type][played_card]["amount"].toString()
+        pay_btn.textContent = "Pay All Players "+cardsData["Base"][card_type][played_card]["amount"].toString()
         var amount = 0
         // Occurs when the player clicks the pay_btn
         pay_funct.onclick = function() {
             for (var i=0; i < player_list.length; i++) {
                 if (player_list[i].get_player_bankrupt() == false) { // Checks if they are bankrupt
                     if (player_list[i].get_player_id() !== player_list[current_turn].get_player_id()) { // Checks if the player is not the current player
-                        player_pays(cardsData[card_type][played_card]["amount"], i)
+                        player_pays(cardsData["Base"][card_type][played_card]["amount"], i)
                     }
                 }
             }
@@ -2096,15 +2102,6 @@ function set_roll() {
 // Sets up everything that will be used in the game
 //name, color, spot, id, money, jailed, props, ooj, bankrupt
 function set_up_game(player_names, player_colors, playerSpot, playerId, starting_cash, playerJailed, playerProps, playerOoj,bankrupt) {
-    if (false) { // Set this to true to enable python scripting
-        pyodide.runPython(`
-            import os
-            def do_something():
-                return 'Developement'
-            
-            print(do_something())
-        `);
-    }
     main_menu.style.display = "none" // Hides the main menu
     game_board.style.display = "block" // Shows the game
     // Spawns the players
@@ -2185,8 +2182,8 @@ function set_up_game(player_names, player_colors, playerSpot, playerId, starting
         cellTag.appendChild(cellTag_tip) // Appends the tag to the cell
     }
     // Randomizes the chance/chest cards
-    chest_deck = shuffle(Object.keys(cardsData["Community Chest"])) // Randomize Chest
-    chance_deck = shuffle(Object.keys(cardsData["Chance"])) // Randomize Chest
+    chest_deck = shuffle(Object.keys(cardsData["Base"]["Community Chest"])) // Randomize Chest
+    chance_deck = shuffle(Object.keys(cardsData["Base"]["Chance"])) // Randomize Chest
     // Sets up save btn
     if (savingStatus == true) { // if the client allows saving
         saveGame_btn.className = "myBtn"
