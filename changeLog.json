@@ -68,7 +68,11 @@
             "Added | \"Pay all Players\" Chance card",
             "Added | A Back to main menu button on the winning screen",
             "Added | When a player adds money it will bold their name in the textbox",
-            "Added | Naming Your Save"
+            "Added | Naming Your Save",
+            "Added | When rolling 3 Doubles it just puts you in jail after a few seconds ( Looks Better )",
+            "Added | A tag for the propertys color in the Auction House",
+            "Added | Green Text to anything that relates to money in the output",
+            "Added | Sets the color of the current turn to the current player turns color"
         ],
         "bug_fix":[
             "Fixed | An Issue that did not show until loading a save",
@@ -88,7 +92,9 @@
             "Changed | The setup game function ( Due to the new Saving Feature )",
             "Changed | The layout of the auction house",
             "Changed | Warning text",
-            "Changed | How Saves are loaded into the save dropdown"
+            "Changed | How Saves are loaded into the save dropdown",
+            "Changed | The Layout for the Winning Player Screen",
+            "Changed | A lot backend code to make the game run faster and be ready for Multiplayer"
         ]
     }
 }
