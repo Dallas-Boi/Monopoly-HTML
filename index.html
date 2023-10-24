@@ -6,6 +6,7 @@
         <link rel="icon" href="favicon.png">
         <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
         <script src="https://apis.google.com/js/api.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     </head>
     <body>
         <div class="background-design" style="display: none">
@@ -106,12 +107,12 @@
             </div>
             <div id="cell_tags" class="cell_tag_container">
                 <div id="cell_houses"></div>
-                <div id="cell_2_tag" class="cell_tag_mid" style="top: 985px;left: 763px;"><div id="testing" class="cell_tip_bottom" style="display: none;">Testing</div></div>
-                <div id="cell_4_tag" class="cell_tag_mid" style="top: 985px;left: 601px;"></div>
-                <div id="cell_6_tag" class="cell_tag_mid" style="top: 985px;left: 446px;"></div>
-                <div id="cell_7_tag" class="cell_tag_mid" style="top: 985px;left: 368px;"></div>
-                <div id="cell_8_tag" class="cell_tag_mid" style="top: 985px;left: 290px;"></div>
-                <div id="cell_10_tag" class="cell_tag_mid" style="top: 985px;left: 135px;"></div>
+                <div id="cell_2_tag" class="cell_tag_mid" style="top: 985px;left: 765px;"><div id="testing" class="cell_tip_bottom" style="display: none;">Testing</div></div>
+                <div id="cell_4_tag" class="cell_tag_mid" style="top: 985px;left: 606px;"></div>
+                <div id="cell_6_tag" class="cell_tag_mid" style="top: 985px;left: 451px;"></div>
+                <div id="cell_7_tag" class="cell_tag_mid" style="top: 985px;left: 373px;"></div>
+                <div id="cell_8_tag" class="cell_tag_mid" style="top: 985px;left: 295px;"></div>
+                <div id="cell_10_tag" class="cell_tag_mid" style="top: 985px;left: 140px;"></div>
                 <div id="cell_12_tag" class="cell_tag_side" style="top: 801px;left: 0px;"></div>
                 <div id="cell_13_tag" class="cell_tag_side" style="top: 718px;left: 0px;"></div>
                 <div id="cell_14_tag" class="cell_tag_side" style="top: 635px;left: 0px;"></div>
@@ -120,14 +121,14 @@
                 <div id="cell_17_tag" class="cell_tag_side" style="top: 386px;left: 0px;"></div>
                 <div id="cell_19_tag" class="cell_tag_side" style="top: 220px;left: 0px;"></div>
                 <div id="cell_20_tag" class="cell_tag_side" style="top: 137px;left: 0px;"></div>
-                <div id="cell_22_tag" class="cell_tag_mid" style="top: 0px;left: 135px;"></div>
-                <div id="cell_24_tag" class="cell_tag_mid" style="top: 0px;left: 290px;"><div id="testing1" class="cell_tip_top" style="display: none;">Testing</div></div>
-                <div id="cell_25_tag" class="cell_tag_mid" style="top: 0px;left: 368px;"></div>
-                <div id="cell_26_tag" class="cell_tag_mid" style="top: 0px;left: 446px;"></div>
-                <div id="cell_27_tag" class="cell_tag_mid" style="top: 0px;left: 523.5px;"></div>
-                <div id="cell_28_tag" class="cell_tag_mid" style="top: 0px;left: 601px;"></div>
-                <div id="cell_29_tag" class="cell_tag_mid" style="top: 0px;left: 680px;"></div>
-                <div id="cell_30_tag" class="cell_tag_mid" style="top: 0px;left: 763px;"></div>
+                <div id="cell_22_tag" class="cell_tag_mid" style="top: 0px;left: 140px;"></div>
+                <div id="cell_24_tag" class="cell_tag_mid" style="top: 0px;left: 295px;"><div id="testing1" class="cell_tip_top" style="display: none;">Testing</div></div>
+                <div id="cell_25_tag" class="cell_tag_mid" style="top: 0px;left: 373px;"></div>
+                <div id="cell_26_tag" class="cell_tag_mid" style="top: 0px;left: 451px;"></div>
+                <div id="cell_27_tag" class="cell_tag_mid" style="top: 0px;left: 525.5px;"></div>
+                <div id="cell_28_tag" class="cell_tag_mid" style="top: 0px;left: 606px;"></div>
+                <div id="cell_29_tag" class="cell_tag_mid" style="top: 0px;left: 685px;"></div>
+                <div id="cell_30_tag" class="cell_tag_mid" style="top: 0px;left: 765px;"></div>
                 <div id="cell_32_tag" class="cell_tag_side" style="top: 137px;left: 955px;"></div>
                 <div id="cell_33_tag" class="cell_tag_side" style="top: 220px;left: 955px;"></div>
                 <div id="cell_35_tag" class="cell_tag_side" style="top: 386px;left: 955px;"></div>
@@ -140,20 +141,20 @@
             <button id="saveGame_btn" class="action_btn_disabled">Save</button>
             <table id="board" style="display:table;">  
                 <tr id="row1">
-                    <td class="corner"><div id="cell_21" class="cell_name">Free Parking</div></td>
-                    <td class="spot_mid"><div id="cell_22" class="cell_name">Kentucky Avenue</div></td>
-                    <td class="spot_mid"><div id="cell_23" class="cell_name">Chance</div></td>
-                    <td class="spot_mid"><div id="cell_24" class="cell_name">Indiana Avenu</div></td>
-                    <td class="spot_mid"><div id="cell_25" class="cell_name">Illinois Avenue</div></td>
-                    <td class="spot_mid"><div id="cell_26" class="cell_name">B&O Railroad</div></td>
-                    <td class="spot_mid"><div id="cell_27" class="cell_name">Atlantic Avenue</div></td>
-                    <td class="spot_mid"><div id="cell_28" class="cell_name">Ventnor Avenue</div></td>
-                    <td class="spot_mid"><div id="cell_29" class="cell_name">Water Works</div></td>
-                    <td class="spot_mid"><div id="cell_30" class="cell_name">Marvin Gardens</div></td>
-                    <td class="corner"><div id="cell_31" class="cell_name">Go To Jail</div></td>
+                    <td id="cell_21" class="corner"><div id="cell_name_21" class="cell_name">Free Parking</div></td>
+                    <td id="cell_22" class="spot_mid"><div id="cell_name_22" class="cell_name">Kentucky Avenue</div></td>
+                    <td id="cell_23" class="spot_mid"><div id="cell_name_23" class="cell_name">Chance</div></td>
+                    <td id="cell_24" class="spot_mid"><div id="cell_name_24" class="cell_name">Indiana Avenu</div></td>
+                    <td id="cell_25" class="spot_mid"><div id="cell_name_25" class="cell_name">Illinois Avenue</div></td>
+                    <td id="cell_26" class="spot_mid"><div id="cell_name_26" class="cell_name">B&O Railroad</div></td>
+                    <td id="cell_27" class="spot_mid"><div id="cell_name_27" class="cell_name">Atlantic Avenue</div></td>
+                    <td id="cell_28" class="spot_mid"><div id="cell_name_28" class="cell_name">Ventnor Avenue</div></td>
+                    <td id="cell_29" class="spot_mid"><div id="cell_name_29" class="cell_name">Water Works</div></td>
+                    <td id="cell_30" class="spot_mid"><div id="cell_name_30" class="cell_name">Marvin Gardens</div></td>
+                    <td id="cell_31" class="corner"><div id="cell_name_31" class="cell_name">Go To Jail</div></td>
                 </tr>
                 <tr id="row2">
-                    <td class="spot_side"><div id="cell_20" class="cell_name">New York Avenue</div></td>
+                    <td id="cell_20" class="spot_side"><div id="cell_name_20" class="cell_name">New York Avenue</div></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -163,10 +164,10 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="spot_side"><div id="cell_32" class="cell_name">Pacific Avenue</div></td>
+                    <td id="cell_32" class="spot_side"><div id="cell_name_32" class="cell_name">Pacific Avenue</div></td>
                 </tr>
                 <tr id="row3">
-                    <td class="spot_side"><div id="cell_19" class="cell_name">Tennessee Avenue</div></td>
+                    <td id="cell_19" class="spot_side"><div id="cell_name_19" class="cell_name">Tennessee Avenue</div></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -176,10 +177,10 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="spot_side"><div id="cell_33" class="cell_name">North Carolina Avenue</div></td>
+                    <td id="cell_33" class="spot_side"><div id="cell_name_33" class="cell_name">North Carolina Avenue</div></td>
                 </tr>
                 <tr id="row4">
-                    <td class="spot_side"><div id="cell_18" class="cell_name">Community Chest</div></td>
+                    <td id="cell_18" class="spot_side"><div id="cell_name_18" class="cell_name">Community Chest</div></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -189,10 +190,10 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="spot_side"><div id="cell_34" class="cell_name">Community Chest</div></td>
+                    <td id="cell_34" class="spot_side"><div id="cell_name_34" class="cell_name">Community Chest</div></td>
                 </tr>
                 <tr id="row5">
-                    <td class="spot_side"><div id="cell_17" class="cell_name">St. James Place</div></td>
+                    <td id="cell_17" class="spot_side"><div id="cell_name_17" class="cell_name">St. James Place</div></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -202,10 +203,10 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="spot_side"><div id="cell_35" class="cell_name">Pennsylvania Avenue</div></td>
+                    <td id="cell_35" class="spot_side"><div id="cell_name_35" class="cell_name">Pennsylvania Avenue</div></td>
                 </tr>
                 <tr id="row6">
-                    <td class="spot_side"><div id="cell_16" class="cell_name">Pennsylvania Railroad</div></td>
+                    <td id="cell_16" class="spot_side"><div id="cell_name_16" class="cell_name">Pennsylvania Railroad</div></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -215,10 +216,10 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="spot_side"><div id="cell_36" class="cell_name">Short Line Railroad</div></td>
+                    <td id="cell_36" class="spot_side"><div id="cell_name_36" class="cell_name">Short Line Railroad</div></td>
                 </tr>
                 <tr id="row7">
-                    <td class="spot_side"><div id="cell_15" class="cell_name">Virginia Avenue</div></td>
+                    <td id="cell_15" class="spot_side"><div id="cell_name_15" class="cell_name">Virginia Avenue</div></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -228,10 +229,10 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="spot_side"><div id="cell_37" class="cell_name">Chance</div></td>
+                    <td id="cell_37" class="spot_side"><div id="cell_name_37" class="cell_name">Chance</div></td>
                 </tr>
                 <tr id="row8">
-                    <td class="spot_side"><div id="cell_14" class="cell_name">States Avenue</div></td>
+                    <td id="cell_14" class="spot_side"><div id="cell_name_14" class="cell_name">States Avenue</div></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -241,10 +242,10 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="spot_side"><div id="cell_38" class="cell_name">Park Place</div></td>
+                    <td id="cell_38" class="spot_side"><div id="cell_name_38" class="cell_name">Park Place</div></td>
                 </tr>
                 <tr id="row9">
-                    <td class="spot_side"><div id="cell_13" class="cell_name">Electric Company</div></td>
+                    <td id="cell_13" class="spot_side"><div id="cell_name_13" class="cell_name">Electric Company</div></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -254,10 +255,10 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="spot_side"><div id="cell_39" class="cell_name">Luxury Tax</div></td>
+                    <td id="cell_39" class="spot_side"><div id="cell_name_39" class="cell_name">Luxury Tax</div></td>
                 </tr>
                 <tr id="row10">
-                    <td class="spot_side"><div id="cell_12" class="cell_name">St. Charles Place</div></td>
+                    <td id="cell_12" class="spot_side"><div id="cell_name_12" class="cell_name">St. Charles Place</div></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -267,20 +268,20 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="spot_side"><div id="cell_40" class="cell_name">Boardwalk</div></td>
+                    <td id="cell_40" class="spot_side"><div id="cell_name_40" class="cell_name">Boardwalk</div></td>
                 </tr>
                 <tr id="row11">
-                    <td class="corner"><div id="cell_11" class="cell_name">Just Visting</div><canvas id="jail_icon" class="jail_icon" width="65" height="55"></canvas></td>
-                    <td class="spot_mid"><div id="cell_10" class="cell_name">Connecticut Avenue</div></td>
-                    <td class="spot_mid"><div id="cell_9" class="cell_name">Chance</div></td>
-                    <td class="spot_mid"><div id="cell_8" class="cell_name">Vermont Avenue</div></td>
-                    <td class="spot_mid"><div id="cell_7" class="cell_name">Oriental Avenue</div></td>
-                    <td class="spot_mid"><div id="cell_6" class="cell_name">Reading Railroad</div></td>
-                    <td class="spot_mid"><div id="cell_5" class="cell_name">Income Tax</div></td>
-                    <td class="spot_mid"><div id="cell_4" class="cell_name">Baltic Avenue</div></td>
-                    <td class="spot_mid"><div id="cell_3" class="cell_name">Community Chest</div></td>
-                    <td class="spot_mid"><div id="cell_2" class="cell_name">Mediterranean Avenue</div></td>
-                    <td class="corner"><div id="cell_1" class="cell_name">Go</div></td>
+                    <td id="cell_11" class="corner"><div id="cell_name_11" class="cell_name">Just Visting</div><canvas id="jail_icon" class="jail_icon" width="70" height="55"></canvas></td>
+                    <td id="cell_10" class="spot_mid"><div id="cell_name_10" class="cell_name">Connecticut Avenue</div></td>
+                    <td id="cell_9" class="spot_mid"><div id="cell_name_9" class="cell_name">Chance</div></td>
+                    <td id="cell_8" class="spot_mid"><div id="cell_name_8" class="cell_name">Vermont Avenue</div></td>
+                    <td id="cell_7" class="spot_mid"><div id="cell_name_7" class="cell_name">Oriental Avenue</div></td>
+                    <td id="cell_6" class="spot_mid"><div id="cell_name_6" class="cell_name">Reading Railroad</div></td>
+                    <td id="cell_5" class="spot_mid"><div id="cell_name_5" class="cell_name">Income Tax</div></td>
+                    <td id="cell_4" class="spot_mid"><div id="cell_name_4" class="cell_name">Baltic Avenue</div></td>
+                    <td id="cell_3" class="spot_mid"><div id="cell_name_3" class="cell_name">Community Chest</div></td>
+                    <td id="cell_2" class="spot_mid"><div id="cell_name_2" class="cell_name">Mediterranean Avenue</div></td>
+                    <td id="cell_1" class="corner"><div id="cell_name_1" class="cell_name">Go</div></td>
                 </tr>
             </table>
         </div>

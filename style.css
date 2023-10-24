@@ -606,6 +606,7 @@ table {
 .spot_side {
     border: 1px solid black;
     height: 80px;
+	width: 100px;
 }
 
 .corner {

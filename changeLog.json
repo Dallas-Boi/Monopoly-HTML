@@ -1,6 +1,5 @@
 {
     "Future Updates": [
-        "Add different version that will change the name of the locations.",
         "Multiplayer (This will be a maybe depending on how stable it will be and if it is even possible) Using window.postMessage()",
         "3D houses / hotels",
         "Chooseable Player Pieces",
@@ -79,8 +78,7 @@
             "Fixed | An issue with loading a save and the out of jail cards being null",
             "Fixed | When there is not 3-4 players it will not hide the player money values",
             "Fixed | When loading a save if a player is on a railroad it will set their border to white",
-            "Fixed | Infinite Money Glitch when entering and exiting the manage menu on free parking",
-            "Fixed | Players Positions being offset"
+            "Fixed | Infinite Money Glitch when entering and exiting the manage menu on free parking"
         ],
         "removed":[
             "Removed | Code for python scripts ( Will be added Later )",
@@ -96,5 +94,16 @@
             "Changed | The Layout for the Winning Player Screen",
             "Changed | A lot backend code to make the game run faster and be ready for Multiplayer"
         ]
+    }, 
+    "V 1.3": {
+        "date": "October 27th, 2023",
+        "title": "Getting Ready for Multiplayer",
+        "added": [],
+        "bug_fix": [
+            "Fixed | Property Tag Offset",
+            "Fixed | Player Positioning on the side properties"
+        ],
+        "removed": [],
+        "changed": []
     }
 }

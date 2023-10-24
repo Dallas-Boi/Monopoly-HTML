@@ -2,7 +2,7 @@
 // Data Variables
 var propData = { // Placement is `left` px, `top` px
     "0": {"property_data": {"by": null, "players_on": [], "color": null},"placement": [[75, 884], [100, 884], [75, 907], [100, 907]]}, // When the player is sent to jail this is their location
-    "1": {"buyable":false, "property_data": {"by": null, "players_on": [0,1,2,3], "color": null}, "placement": [[842, 884],[865, 884],[888, 884],[911, 884]]},
+    "1": {"buyable":false, "property_data": {"by": null, "players_on": [0,1,2,3], "color": null}, "placement": [[849, 884],[872, 884],[895, 884],[918, 884]]},
     "2": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "brown"}, "name": "Mediterranean Avenue", "property_cost": 60, "house_price": 50, "house_placement": {"axis": 988, "left":[770, 785, 800, 814, 792]}, "rent": [2, 10, 30, 90, 160, 250], "placement": [[775, 884],[798, 884],[775, 907],[918, 907]]},
     "3": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [693, 884], "1": [715, 884], "2":[693, 907], "3": [715, 907]}},
     "4": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "brown"}, "name": "Baltic Avenue", "property_cost": 60, "house_price": 50, "house_placement": {"axis": 988, "left":[608, 622, 637, 652, 629]}, "rent":[4, 20, 60, 180, 320, 450], "placement": {"0": [616, 884], "1": [639, 884], "2":[616, 907], "3": [639, 907]}},
@@ -13,16 +13,16 @@ var propData = { // Placement is `left` px, `top` px
     "9": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [226, 884], "1": [250, 884], "2":[226, 907], "3": [250, 907]}},
     "10": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "aqua"}, "name": "Connecticut Avenue", "property_cost": 120, "house_price":50, "house_placement": {"axis": 988, "left":[142, 157, 171, 186, 164]}, "rent":[8, 40, 100, 300, 450, 600], "placement": {"0": [149, 884], "1": [173, 884], "2":[149, 907], "3": [173, 907]}},
     "11": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": [[40, 882],[40, 904],[40, 927],[63, 927]]}, // Just Visting
-    "12": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "magenta"}, "name": "St. Charles Place", "property_cost": 140, "house_price":100, "house_placement": {"axis": 3, "left":[808, 822, 837, 852, 829]}, "rent":[10, 50, 150, 450, 625, 750], "placement": {"0": [60, 802], "1": [83, 802], "2":[60, 825], "3": [83, 825]}},
-    "13": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "white"}, "name": "Electric Company", "property_cost": 150, "rent": [4,10], "placement": {"0": [60, 719], "1": [83, 719], "2":[60, 742], "3": [83, 742]}},
-    "14": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "magenta"}, "name": "States Avenue", "property_cost": 140, "house_price":100, "house_placement": {"axis": 3, "left":[642, 656, 671, 686, 661]}, "rent":[10, 50, 150, 450, 625, 750], "placement": {"0": [60, 637], "1": [83, 637], "2":[60, 660], "3": [83, 660]}},
-    "15": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "magenta"}, "name": "Virginia Avenue", "property_cost": 160, "house_price":100, "house_placement": {"axis": 3, "left":[559, 573, 588, 603, 580]}, "rent":[12,60,180,500,700,900], "placement": {"0": [60, 555], "1": [83, 555], "2":[60, 578], "3": [83, 578]}},
-    "16": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "black"}, "name": "Pennsylvania Railroad", "property_cost": 200, "rent": [25, 50, 100, 200], "placement": {"0": [60, 473], "1": [83, 473], "2":[60, 496], "3": [83, 496]}},
-    "17": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "orange"}, "name": "St. James Place", "property_cost": 180, "house_price": 100, "house_placement": {"axis": 3, "left":[393, 407, 422, 437, 414]}, "rent": [14, 70, 200, 550, 750, 950], "placement": {"0": [60, 388], "1": [83, 388], "2":[60, 411], "3": [83, 411]}},
-    "18": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [60, 305], "1": [83, 305], "2":[60, 328], "3": [83, 328]}},
-    "19": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "orange"}, "name": "Tennessee Avenue", "property_cost": 180, "house_price": 100, "house_placement": {"axis": 3, "left":[227, 241, 256, 271, 248]}, "rent": [14, 70, 200, 550, 750, 950], "placement": {"0": [60, 222], "1": [83, 222], "2":[60, 245], "3": [83, 245]}},
-    "20": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "orange"}, "name": "New York Avenue", "property_cost": 200, "house_price":100, "house_placement": {"axis": 3, "left":[144, 158, 173, 188, 165]}, "rent":[16, 80, 220, 600, 800, 1000], "placement": {"0": [60, 140], "1": [83, 140], "2":[60, 163], "3": [83, 163]}},
-    "21": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [60, 42], "1": [83, 42], "2":[60, 65], "3": [83, 65]}}, // Free Parking
+    "12": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "magenta"}, "name": "St. Charles Place", "property_cost": 140, "house_price":100, "house_placement": {"axis": 3, "left":[808, 822, 837, 852, 829]}, "rent":[10, 50, 150, 450, 625, 750], "placement": {"0": [37, 802], "1": [62, 802], "2":[88, 802], "3":[113, 802]}},
+    "13": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "white"}, "name": "Electric Company", "property_cost": 150, "rent": [4,10], "placement": {"0": [37, 719], "1": [62, 719], "2":[88, 719], "3":[113, 719]}},
+    "14": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "magenta"}, "name": "States Avenue", "property_cost": 140, "house_price":100, "house_placement": {"axis": 3, "left":[642, 656, 671, 686, 661]}, "rent":[10, 50, 150, 450, 625, 750], "placement": {"0": [37, 637], "1": [62, 637], "2":[88, 637], "3":[113, 637]}},
+    "15": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "magenta"}, "name": "Virginia Avenue", "property_cost": 160, "house_price":100, "house_placement": {"axis": 3, "left":[559, 573, 588, 603, 580]}, "rent":[12,60,180,500,700,900], "placement": {"0": [37, 555], "1": [62, 555], "2":[88, 555], "3":[113, 555]}},
+    "16": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "black"}, "name": "Pennsylvania Railroad", "property_cost": 200, "rent": [25, 50, 100, 200], "placement": {"0": [37, 473], "1": [62, 473], "2":[88, 473], "3":[113, 473]}},
+    "17": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "orange"}, "name": "St. James Place", "property_cost": 180, "house_price": 100, "house_placement": {"axis": 3, "left":[393, 407, 422, 437, 414]}, "rent": [14, 70, 200, 550, 750, 950], "placement": {"0": [37, 388], "1": [62, 388], "2":[88, 388], "3":[113, 388]}},
+    "18": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [37, 305], "1": [62, 305], "2":[88, 305], "3":[113, 305]}},
+    "19": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "orange"}, "name": "Tennessee Avenue", "property_cost": 180, "house_price": 100, "house_placement": {"axis": 3, "left":[227, 241, 256, 271, 248]}, "rent": [14, 70, 200, 550, 750, 950], "placement": {"0": [37, 222], "1": [62, 222], "2":[88, 222], "3":[113, 222]}},
+    "20": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "orange"}, "name": "New York Avenue", "property_cost": 200, "house_price":100, "house_placement": {"axis": 3, "left":[144, 158, 173, 188, 165]}, "rent":[16, 80, 220, 600, 800, 1000], "placement": {"0": [37, 140], "1": [62, 140], "2":[88, 140], "3":[113, 140]}},
+    "21": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [60, 42], "1": [62, 42], "2":[88, 65], "3":[113, 65]}}, // Free Parking
     "22": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "red"}, "name": "Kentucky Avenue", "property_cost": 220, "house_price": 150, "house_placement": {"axis": 3, "left":[142, 157, 171, 186, 164]}, "rent":[18, 90, 250, 700, 875, 1050], "placement": {"0": [149, 42], "1": [173, 42], "2":[149, 65], "3": [173, 65]}},
     "23": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [226, 42], "1": [250, 42], "2":[226, 65], "3": [250, 65]}},
     "24": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "red"}, "name": "Indiana Avenu", "property_cost": 220, "house_price": 150, "house_placement": {"axis": 3, "left":[297, 311, 326, 341, 318]}, "rent":[18, 90, 250, 700, 875, 1050], "placement": {"0": [305, 42], "1": [329, 42], "2":[305, 65], "3": [329, 65]}},
@@ -33,15 +33,15 @@ var propData = { // Placement is `left` px, `top` px
     "29": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "white"}, "name": "Water Works", "property_cost": 150, "rent": [4,10], "placement": {"0": [693, 42], "1": [715, 42], "2":[693, 65], "3": [715, 65]}},
     "30": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "yellow"}, "name": "Marvin Gardens", "property_cost": 280, "house_price":150, "house_placement": {"axis": 3, "left":[770, 785, 800, 814, 792]}, "rent":[24, 120, 360, 850, 1025, 1200], "placement": {"0": [775, 42], "1": [798, 42], "2":[775, 65], "3": [798, 65]}},
     "31": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [880, 65]}}, // To Jail
-    "32": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "green"}, "name": "Pacific Avenue", "property_cost": 300, "house_price":200, "house_placement": {"axis": 959, "left":[144, 158, 173, 188, 165]}, "rent":[26, 130, 390, 900, 1100, 1275], "placement": [[871, 140],[894, 140],[871, 163],[894, 163]]},
-    "33": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "green"}, "name": "North Carolina Avenue", "property_cost": 300, "house_price":200, "house_placement": {"axis": 959, "left":[227, 241, 256, 271, 248]}, "rent":[26, 130, 390, 900, 1100, 1275], "placement": {"0": [871, 222], "1": [894, 222], "2":[871, 245], "3": [894, 245]}},
-    "34": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [871, 305], "1": [894, 305], "2":[871, 328], "3": [894, 328]}},
-    "35": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "green"}, "name": "Pennsylvania Avenue", "property_cost": 320, "house_price":200, "house_placement": {"axis": 959, "left":[393, 407, 422, 437, 414]}, "rent":[28, 150, 450, 1000, 1200, 1400], "placement": {"0": [871, 388], "1": [894, 388], "2":[871, 411], "3": [894, 411]}},
-    "36": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "black"}, "name": "Short Line Railroad", "property_cost": 200, "rent": [25, 50, 100, 200], "placement": {"0": [871, 473], "1": [894, 473], "2":[871, 496], "3": [894, 496]}},
-    "37": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [871, 555], "1": [894, 555], "2":[871, 578], "3": [894, 578]}},
-    "38": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "blue"}, "name": "Park Place", "property_cost":350, "house_price":200, "house_placement": {"axis": "", "left":[642, 656, 671, 686, 661]}, "rent":[35, 175, 500, 1100, 1300, 1500], "placement": {"0": [871, 637], "1": [894, 637], "2":[871, 660], "3": [894, 660]}},
-    "39": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [871, 719], "1": [894, 719], "2":[871, 742], "3": [894, 742]}},
-    "40": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "blue"}, "name": "Board walk", "property_cost":400, "house_price":200, "house_placement": {"axis": "", "left":[808, 822, 837, 852, 829]}, "rent":[50, 200, 600, 1400, 1700, 2000], "placement": {"0": [871, 802], "1": [894, 802], "2":[871, 825], "3": [894, 825]}}
+    "32": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "green"}, "name": "Pacific Avenue", "property_cost": 300, "house_price":200, "house_placement": {"axis": 959, "left":[144, 158, 173, 188, 165]}, "rent":[26, 130, 390, 900, 1100, 1275], "placement": [[848, 140],[872, 140],[896, 140],[920, 140]]},
+    "33": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "green"}, "name": "North Carolina Avenue", "property_cost": 300, "house_price":200, "house_placement": {"axis": 959, "left":[227, 241, 256, 271, 248]}, "rent":[26, 130, 390, 900, 1100, 1275], "placement": {"0":[848, 222], "1":[872, 222], "2":[896, 222], "3":[920, 222]}},
+    "34": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0":[848, 305], "1":[872, 305], "2":[896, 305], "3":[920, 305]}},
+    "35": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "green"}, "name": "Pennsylvania Avenue", "property_cost": 320, "house_price":200, "house_placement": {"axis": 959, "left":[393, 407, 422, 437, 414]}, "rent":[28, 150, 450, 1000, 1200, 1400], "placement": {"0":[848, 388], "1":[872, 388], "2":[896, 388], "3":[920, 388]}},
+    "36": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "black"}, "name": "Short Line Railroad", "property_cost": 200, "rent": [25, 50, 100, 200], "placement": {"0":[848, 473], "1":[872, 473], "2":[896, 473], "3":[920, 473]}},
+    "37": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0":[848, 555], "1":[872, 555], "2":[896, 555], "3":[920, 555]}},
+    "38": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "blue"}, "name": "Park Place", "property_cost":350, "house_price":200, "house_placement": {"axis": "", "left":[642, 656, 671, 686, 661]}, "rent":[35, 175, 500, 1100, 1300, 1500], "placement": {"0":[848, 637], "1":[872, 637], "2":[896, 637], "3":[920, 637]}},
+    "39": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0":[848, 719], "1":[872, 719], "2":[896, 719], "3":[920, 719]}},
+    "40": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "blue"}, "name": "Board walk", "property_cost":400, "house_price":200, "house_placement": {"axis": "", "left":[808, 822, 837, 852, 829]}, "rent":[50, 200, 600, 1400, 1700, 2000], "placement": {"0":[848, 802], "1":[872, 802], "2":[896, 802], "3":[920, 802]}}
 }
 // Different Property Names for different modes
 const propertyNames = {
@@ -390,8 +390,8 @@ function message_text_box(message, classType) {
 function update_money_display() {
     // Sets the money containers to the right color and text
     for (var i=0; i < playerAmount; i++) {
-        var setMoneyContainer = document.getElementById(`player`+(i+1)+`_money`)
-        setMoneyContainer.innerHTML = `<br>`+player_list[i].get_player_name()+`:<br>---------<br>$`+player_list[i].get_player_money()
+        var setMoneyContainer = document.getElementById(`player${(i+1)}_money`)
+        setMoneyContainer.innerHTML = `<br>${player_list[i].get_player_name()}:<br>---------<br>$${player_list[i].get_player_money()}`
     }
 }
 
@@ -407,9 +407,9 @@ function update_all_prop_tags() {
     var prop_keys = Object.keys(propData)
     for (var i=0; i < prop_keys.length; i++) {
         if (propData[i][`property_data`][`by`] !== null) { // Checks if the property is buyable
-            var cell_tag = document.getElementById(`cell_`+i.toString()+`_tag`)
+            var cell_tag = document.getElementById(`cell_${i}_tag`)
             cell_tag.style.backgroundColor = player_list[propData[i][`property_data`][`by`]].get_player_color()
-            cell_tag.firstChild.innerHTML = `Owner: `+player_list[propData[i][`property_data`][`by`]].get_player_name()
+            cell_tag.firstChild.innerHTML = `Owner: ${player_list[propData[i][`property_data`][`by`]].get_player_name()}`
         }
     }
 }
@@ -502,7 +502,7 @@ function save_current_game(name) {
     }
     // Save the data into the saveSlot
     setCookie(`saveSlot${slot}`, JSON.stringify(savingData).toString(), 775)
-    alert(`The Game has been successfully saved on save: saveSlot${slot}`)
+    alert(`The Game has been successfully saved as: ${name}`)
     location.reload();
 }
 
@@ -1081,25 +1081,25 @@ function open_manager(player) {
             // Color box
             let new_color = document.createElement(`canvas`)
             
-            new_color.id=`cell_`+prop_keys[i]+`_color`
+            new_color.id=`cell_${prop_keys[i]}_color`
             new_color.className = `prop_color`
             new_color.width = `20`
             new_color.height = `20`
-            new_color.style = `background-color:`+propData[prop_keys[i]][`property_data`][`color`]+`;top:`+(30*prop_amount).toString()+`px;`
+            new_color.style = `background-color:${propData[prop_keys[i]][`property_data`][`color`]};top:${(30*prop_amount)}px;`
             cell_contain.appendChild(new_color)
             // Text Box
             let new_text = document.createElement(`div`)
-            new_text.textContent = `- `+propData[prop_keys[i]][`name`]+` `
+            new_text.textContent = `- ${propData[prop_keys[i]][`name`]} `
             new_text.className = `prop_name`
-            new_text.style = `top:`+(30*prop_amount).toString()+`px;`
+            new_text.style = `top:${(30*prop_amount)}px;`
             const new_buy = document.createElement(`button`)
             const new_sell = document.createElement(`button`)
-            new_buy.id=`buy_`+prop_keys[i]
-            new_sell.id=`sell_`+prop_keys[i]
+            new_buy.id=`buy_${(30*prop_amount)}`
+            new_sell.id=`sell_${(30*prop_amount)}`
             // This will update the button text
             var update_text = function(id) { 
-                let new_buy = document.getElementById(`buy_`+id)
-                let new_sell = document.getElementById(`sell_`+id)
+                let new_buy = document.getElementById(`buy_${id}`)
+                let new_sell = document.getElementById(`sell_${id}`)
                 if (player_list[player].get_player_properties()[id][`mortgage`] == true) { // if the property is mortgage
                     new_buy.textContent = `Un-mortgage`
                     new_sell.textContent = `Mortgaged`
@@ -1220,7 +1220,7 @@ function open_auction_house(items, type) {
     // Adds text to the auction_auction_message_box
     const send_auction_message = function(message) {
         var txt_elm = document.createElement(`div`)
-        txt_elm.innerHTML = `- `+message+`<br>`
+        txt_elm.innerHTML = `- ${message}<br>`
         auction_message_box.appendChild(txt_elm)
         // Scroll to the bottom of the text container
         auction_message_box.scrollTop = auction_message_box.scrollHeight;
@@ -1254,7 +1254,7 @@ function open_auction_house(items, type) {
             message_text_box(`<b>${player_list[parseInt(players_in[0])].get_player_name()}</b> Aquired ${propData[items[0]][`name`]} for <b class="cash">$${auction_value}</b>`) 
             // Sets up the new property for the player
             propData[items[0]][`property_data`][`by`] = parseInt(players_in[0])
-            var cell_tag = document.getElementById(`cell_`+items[0].toString()+`_tag`)
+            var cell_tag = document.getElementById(`cell_${items[0]}_tag`)
             cell_tag.style.backgroundColor = player_list[parseInt(players_in[0])].get_player_color()
             player_list[parseInt(players_in[0])].add_player_properties(parseInt(items[0])) // Gives the player the property
             // If the auction type was the banks auction or just a player auctioning
@@ -1389,7 +1389,7 @@ function bankrupt_player(type, data, to_player) {
             player_list[current_turn].remove_player_properties(parseInt(player_props[i])) // Romves the property from the player
             propData[player_props[i]][`property_data`][`by`] = to_player
             // Updates the cell tag
-            var cell_tag = document.getElementById(`cell_`+player_props[i].toString()+`_tag`)
+            var cell_tag = document.getElementById(`cell_${player_props[i]}_tag`)
             cell_tag.style.backgroundColor = player_list[to_player].get_player_color()
         }
         // Gives the money
@@ -1398,7 +1398,7 @@ function bankrupt_player(type, data, to_player) {
         update_money_display()
         // Sends the message
         message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> has bankrupt to `+player_list[to_player].get_player_name())
-        var player_txt = document.getElementById(`player`+(current_turn+1)+`_money`)
+        var player_txt = document.getElementById(`player${(current_turn+1)}_money`)
         player_txt.style.backgroundColor = `black`
         // Removes the player marker
         document.getElementById(`player`+(current_turn+1)).remove()
@@ -1474,7 +1474,7 @@ function buy_item(location, type, player) {
             // Lets the players know
             message_text_box(`<b>${player_list[player].get_player_name()}</b> bought `+propData[location]['name'])
             // Updates the cell tag to be the color of the player
-            var cell_tag = document.getElementById(`cell_`+location.toString()+`_tag`)
+            var cell_tag = document.getElementById(`cell_${location}_tag`)
             cell_tag.style.backgroundColor = player_list[player].get_player_color()
             update_money_display()
         } else {
@@ -1546,7 +1546,7 @@ function buy_item(location, type, player) {
             var amount = (propData[location][`property_cost`]/10)+propData[location][`property_cost`]
             if (player_list[current_turn].get_player_money() >= amount) {
                 // Removes the red line
-                var red_line = document.getElementById(`cell_`+location.toString()+`_mortgage`)
+                var red_line = document.getElementById(`cell_${location}_mortgage`)
                 red_line.remove()
                 // Removes from the players money
                 player_list[player].remove_player_money(amount)
@@ -1661,7 +1661,7 @@ function player_jailed(player, type) {
         }
         // Pay Button
         pay_btn.className = `action_btn`
-        pay_btn.textContent = `Pay $50`
+        pay_btn.innerHTML = `Pay $50`
         pay_btn.onclick = function() {
             if (player_list[player].get_player_money() >= 50) {
                 message_text_box(`<b>${player_list[player].get_player_name()}</b> Paid $50 to get out of jail`)
@@ -1714,31 +1714,11 @@ function c_cards(card_type) {
         }
         // Moves player
         setTimeout(function() { // After 1.5 seconds it will move the player
-            var spot_by_spot = setInterval(() => { // Every 250 milliseconds the player will move
-                player_list[current_turn].add_player_spot_id(1) 
-                // Checks if the player is passing go ( if so then sets there spot to 1)
-                if (player_list[current_turn].get_player_spot_id() > 40) {
-                    player_list[current_turn].set_player_spot_id(1)
-                    passed_go()
-                }
-                current_spot = player_list[current_turn].get_player_spot_id()
-                var spot_placement = propData[current_spot]['property_data']['players_on'].length
-                // Gets the player and sets their position
-                player = document.getElementById(`player${(current_turn+1)}`)
-                player.style.top = `${propData[current_spot]['placement'][spot_placement][1].toString()}px`
-                player.style.left = `${propData[current_spot]['placement'][spot_placement][0].toString()}px`
-                fix_all_positions() // This will fix any positioning issues
-                // Stops the loop if the player lands on the spot they rolled to
-                if (player_list[current_turn].get_player_spot_id() == cardsData[`Base`][card_type][played_card]['location_id']) {
-                    clearInterval(spot_by_spot)
-                    propData[current_spot]['property_data']['players_on'].push(current_turn)
-                    check_landed_property()
-                }
-            }, 250);
+            move_player(current_turn, 40-player_list[current_turn].get_player_spot_id())
         }, 1500)
     } else if (played_card.includes(`pay_tax`)) { // If the player pays a tax
         pay_btn.className = `action_btn`
-        pay_btn.textContent = `Pay $${cardsData[`Base`][card_type][played_card][`tax_amount`]}`
+        pay_btn.innerHTML = `Pay $${cardsData[`Base`][card_type][played_card][`tax_amount`]}`
         pay_btn.onclick = function() {
             if (player_list[current_turn].get_player_money() >= cardsData[`Base`][card_type][played_card][`tax_amount`]) {
                 player_pays(cardsData[`Base`][card_type][played_card][`tax_amount`], `parking`)
@@ -1771,7 +1751,7 @@ function c_cards(card_type) {
         amount = (total_houses*cardsData[`Base`][card_type][played_card][`house`]) + (total_hotels*cardsData[`Base`][card_type][played_card][`hotel`])
         // pay_btn Actions
         pay_btn.className = `action_btn`
-        pay_btn.textContent = `<b class="cash">$${amount}</b>`
+        pay_btn.innerHTML = `<b class="cash">$${amount}</b>`
         // payBtn click
         pay_btn.onclick = function() {
             if (player_list[current_turn].get_player_money() >= amount) { // Checks if the player has enough money
@@ -1789,7 +1769,7 @@ function c_cards(card_type) {
         after_roll()
     } else if (played_card.includes(`pay_to_all`)) { // player pays all players the amount
         pay_btn.className = `action_btn`
-        pay_btn.textContent = `Pay All Players $${cardsData[`Base`][card_type][played_card][`amount`]}`
+        pay_btn.innerHTML = `Pay All Players $${cardsData[`Base`][card_type][played_card][`amount`]}`
         var amount = 0
         // Occurs when the player clicks the pay_btn
         pay_btn.onclick = function() {
@@ -1909,7 +1889,7 @@ function check_landed_property() {
             }
             // pay_btn setup
             pay_btn.className = `action_btn`
-            pay_btn.textContent = `Pay <b class="cash">$${amount}</b>`
+            pay_btn.innerHTML = `Pay <b class="cash">$${amount}</b>`
         } else {
             message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> does not have to pay since this property is mortgage`)
             after_roll()
@@ -1930,7 +1910,7 @@ function check_landed_property() {
                 }
                 // pay_btn setup
                 pay_btn.className = `action_btn`
-                pay_btn.textContent = `Pay <b class="cash">$${amount}</b>`
+                pay_btn.innerHTML = `Pay <b class="cash">$${amount}</b>`
                 bankrupt_btn.className = `myBtn`
                 bankrupt_btn.onclick = function() {
                     bankrupt_player(`by_player`, location, owned_id)
@@ -1957,7 +1937,7 @@ function check_landed_property() {
                 }
                 // pay_btn setup
                 pay_btn.className = `action_btn`
-                pay_btn.textContent = `Pay <b class="cash">$${amount}</b>`
+                pay_btn.innerHTML = `Pay <b class="cash">$${amount}</b>`
                 bankrupt_btn.className = `myBtn`
                 bankrupt_btn.onclick = function() {
                     bankrupt_player(`by_player`, location, owned_id)
@@ -1979,7 +1959,7 @@ function check_landed_property() {
         } else if (location == 5) { // If the player lands on Income Tax
             message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> Pay <b class="cash">$200</b>`)
             pay_btn.className = `action_btn`
-            pay_btn.textContent = `Pay $200`
+            pay_btn.innerHTML = `Pay <b class="cash">$200</b>`
             // Allows the player to pay the amount
             pay_btn.onclick = function() {
                 if (player_list[current_turn].get_player_money() >= 200) {
@@ -1992,7 +1972,7 @@ function check_landed_property() {
         } else if (location == 39) { // If the player lands on Luxury Tax
             message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> Pay <b class="cash">$100</b>`)
             pay_btn.className = `action_btn`
-            pay_btn.textContent = `Pay $100`
+            pay_btn.innerHTML = `Pay <b class="cash">$100</b>`
             // Allows the player to pay
             pay_btn.onclick = function() {
                 if (player_list[current_turn].get_player_money() >= 100) {
@@ -2102,7 +2082,7 @@ function set_roll() {
                 // If the player rolls a double
                 if (dice1 == dice2) { 
                     doubles += 1
-                    if (doubles == 3) {
+                    if (doubles == 3) { // Checks if the player has rolled 3 doubles
                         player_list[current_turn].set_player_isJailed(true)
                         message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> Rolled 3 Doubles and is now being sent to jail`)
                         setTimeout(function() { // This just makes the player not move instantly
@@ -2122,10 +2102,11 @@ function set_roll() {
 
 // Sets up everything that will be used in the game
 //name, color, spot, id, money, jailed, props, ooj, bankrupt
-function set_up_game(player_names, player_colors, playerSpot, playerId, starting_cash, playerJailed, playerProps, playerOoj,bankrupt) {
+function set_up_game(player_names, player_colors, playerSpot, playerId, starting_cash, playerJailed, playerProps, playerOoj, bankrupt) {
     main_menu.style.display = `none` // Hides the main menu
     game_board.style.display = `block` // Shows the game
-    // Spawns the players
+    playerAmount = player_names.length // The amount of players
+    // Handles all player creation
     var playerContainer = document.getElementById('Players')
     for (var i = 0; i < player_names.length; i++) {
         // Creates the Players' tool tip
@@ -2133,17 +2114,18 @@ function set_up_game(player_names, player_colors, playerSpot, playerId, starting
         playerToolTip.textContent = player_names[i]
         playerToolTip.className = `playerTip`
         playerToolTip.style.display = `none`
+        // Gets the location of the first Location
+        var firstPlacement = document.querySelector("#row11 > td:nth-child(11)").getClientRects()
+        var playerLeft = firstPlacement[0].left+(2+(i*25))
         // Creates the Player
         const newPlayer = document.createElement(`div`)
-        newPlayer.id = `player`+(i+1).toString()
+        newPlayer.id = `player${(i+1)}`
         newPlayer.className = `player`
-        newPlayer.style = `background-color: `+player_colors[i]+`;top:884px;left:`+(849+(23*(i))).toString()+`px;`
-        newPlayer.onmouseover = function() { // When the players mouse is over a player it will show the name of that player
-            playerToolTip.style.display = `block`
-        }
-        newPlayer.onmouseout = function() { // When the players mouse is not over a player it will hide that players name
-            playerToolTip.style.display = `none`
-        }
+        newPlayer.style = `background-color: ${player_colors[i]};top:884px;left:${playerLeft}px;`
+        // When the players mouse is over a player it will show the name of that player
+        newPlayer.onmouseover = function() { playerToolTip.style.display = `block` }
+        // When the players mouse is not over a player it will hide that players name
+        newPlayer.onmouseout = function() { playerToolTip.style.display = `none` }
         newPlayer.appendChild(playerToolTip) // Adds the tool tip to the player
         // Adds the player tooltip to the board
         playerContainer.appendChild(newPlayer)
@@ -2154,33 +2136,29 @@ function set_up_game(player_names, player_colors, playerSpot, playerId, starting
         setMoneyContainer.style = `border: 3px solid `+player_colors[i]+`;background-color: white;text-align: center;`
     }
     
-    playerAmount = player_list.length // The amount of players
-    //Adds roll button
+    // Sets up the roll btn
     set_roll()
     // Sets the Player turn text to the new player
     turn_text.innerHTML = `Current Turn:<br>`+player_list[current_turn].get_player_name()
-    // This will Add the color to each property
+    // Handles the setup for the properties
     var propData_keys = Object.keys(propData)
     for (var i=0; i < propData_keys.length; i++) { // Goes through each property
         if (propData[propData_keys[i]][`property_data`][`color`] !== null) { // Checks if that property has a color
-            let propCell = document.getElementById(`cell_`+i.toString()) // The Property
-            let propPar = document.getElementById(`cell_`+i.toString()).parentElement // The propertys' parent element
+            let propCell = document.getElementById(`cell_${i}`) // The Property
             let textColor = `black` // The property cell text color
+            // Checks prop location for text color
             if ([`blue`, `black`, `brown`].includes(propData[propData_keys[i]][`property_data`][`color`])) { // If the prop Color is in the list it will set the text color to white
                 textColor = `white` // Sets text color to white
             }
-            propCell.style = `color:`+textColor+`;` // Sets the cell text color
-            propPar.style = `background-color:`+propData[propData_keys[i]][`property_data`][`color`]+`;` // Sets the propertys' color
+            propCell.style = `color:${textColor};background-color:${propData[propData_keys[i]][`property_data`][`color`]};` // Sets the cell text color and Sets the propertys' color
         }
     }
     // This will allow the player to hover over the property tag to sell who owns it
     for (var i=0; i < propData_keys.length; i++) {
-        let cellTag = document.getElementById(`cell_`+i.toString()+`_tag`)
+        let cellTag = document.getElementById(`cell_${i}_tag`)
         let cellTag_tip = document.createElement(`div`)
-        
-        if (cellTag == null) { // If the cellTag is not a element
-            continue
-        }
+        // If the cellTag is not a element
+        if (cellTag == null) { continue }
         cellTag_tip.style.display = `none`
         // Checks the tag location
         if ([2,4,6,7,8,10].includes(i)) { // if the prop is on the bottom
@@ -2218,9 +2196,9 @@ function set_up_game(player_names, player_colors, playerSpot, playerId, starting
 function set_menu(changeLog) {
     // Allows the enable buttons to be interactable
     for (let j=2; j < 4; j++) {
-        const enable_btn = document.getElementById(`player`+(j+1).toString()+`_enable`)
-        const name_input = document.getElementById(`player`+(j+1).toString()+`_name`)
-        const color_input = document.getElementById(`player`+(j+1).toString()+`_color`)
+        const enable_btn = document.getElementById(`player${(j+1)}_enable`)
+        const name_input = document.getElementById(`player${(j+1)}_name`)
+        const color_input = document.getElementById(`player${(j+1)}_color`)
         enable_btn.onclick = function() {
             if (enable_btn.checked == false) { // if the enable button is player3
                 if (j+1 == 3) { // If player3 was unchecked
@@ -2261,9 +2239,9 @@ function set_menu(changeLog) {
         var error_count = false
         // Gets all the values
         for (let i=0; i < 4; i++) {
-            const enable_box = document.getElementById(`player`+(i+1)+`_enable`)
-            const name_input = document.getElementById(`player`+(i+1)+`_name`)
-            const color_input = document.getElementById(`player`+(i+1)+`_color`)
+            const enable_box = document.getElementById(`player${i+1}_enable`)
+            const name_input = document.getElementById(`player${i+1}_name`)
+            const color_input = document.getElementById(`player${i+1}_color`)
             
             if (i+1 >= 3) { // Checks if `i` is on 3
                 if (enable_box.checked == false) { // Checks to see if that player was enabled
@@ -2276,7 +2254,7 @@ function set_menu(changeLog) {
                     input_names.push(name_input.value)
                     input_colors.push(color_input.value)
                     player_spot.push(1)
-                    player_ids.push(`player`+(i+1))
+                    player_ids.push(`player${(i+1)}`)
                     player_money.push(2000)
                     player_jailed.push(false)
                     player_props.push({})
@@ -2285,12 +2263,12 @@ function set_menu(changeLog) {
                     error_count = false
                     continue
                 } else {
-                    error_txt.innerHTML = `Player `+(i+1)+`'s Name is already Taken`
+                    error_txt.innerHTML = `Player ${i+1}'s Name is already Taken`
                     error_count = true
                     continue
                 }
             }
-            error_txt.innerHTML = `player `+(i+1)+`'s name is not longer than 3 letters`
+            error_txt.innerHTML = `player ${i+1}'s name is not longer than 3 letters`
             error_count = true
         }
         // Starts the game
@@ -2490,3 +2468,4 @@ document.addEventListener(`visibilitychange`, () => {
     document.title = `Monopoly 2.0` // If the document is not hidden (hidden meaning if the client is looking at the page or not)
     webicon.href = `./favicon.png`
 });
+
