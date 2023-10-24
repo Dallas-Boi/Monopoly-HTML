@@ -386,57 +386,6 @@ function message_text_box(message, classType) {
     actionBox.scrollTop = actionBox.scrollHeight;
 }
 
-// Updates all the money display labels
-function update_money_display() {
-    // Sets the money containers to the right color and text
-    for (var i=0; i < playerAmount; i++) {
-        var setMoneyContainer = document.getElementById(`player${(i+1)}_money`)
-        setMoneyContainer.innerHTML = `<br>${player_list[i].get_player_name()}:<br>---------<br>$${player_list[i].get_player_money()}`
-    }
-}
-
-// Updates all game information text
-function update_game_text() {
-    document.getElementById(`house_text`).innerHTML = `Houses Left:<br>`+houses.toString()
-    document.getElementById(`hotel_text`).innerHTML = `Hotels Left:<br>`+hotels.toString()
-    document.getElementById(`freeParking_text`).innerHTML = `Cash In Free Parking: $`+freeParking_cash.toString() 
-}
-
-// Updates all property tags 
-function update_all_prop_tags() {
-    var prop_keys = Object.keys(propData)
-    for (var i=0; i < prop_keys.length; i++) {
-        if (propData[i][`property_data`][`by`] !== null) { // Checks if the property is buyable
-            var cell_tag = document.getElementById(`cell_${i}_tag`)
-            cell_tag.style.backgroundColor = player_list[propData[i][`property_data`][`by`]].get_player_color()
-            cell_tag.firstChild.innerHTML = `Owner: ${player_list[propData[i][`property_data`][`by`]].get_player_name()}`
-        }
-    }
-}
-
-// Fixes player positions
-function fix_all_positions() {
-    // Resets all `players_on`
-    for (var i=0; i < Object.keys(propData).length; i++) { 
-        propData[Object.keys(propData)[i]][`property_data`][`players_on`] = []
-    }
-    // Goes through all players and fixes the position
-    for (var i=0; i < player_list.length; i++) { 
-        if (player_list[i].get_player_bankrupt() == false) { // If the player is not bankrupts
-            var player_elm = document.getElementById(player_list[i].get_player_id())
-            propData[player_list[i].get_player_spot_id()][`property_data`][`players_on`].push(i) // Adds the player back to the `players_on` || FIND A BETTER FIX LATER
-            player_elm.style.left = propData[player_list[i].get_player_spot_id()][`placement`][propData[player_list[i].get_player_spot_id()][`property_data`][`players_on`].indexOf(i)][0].toString()+`px`
-            player_elm.style.top = propData[player_list[i].get_player_spot_id()][`placement`][propData[player_list[i].get_player_spot_id()][`property_data`][`players_on`].indexOf(i)][1].toString()+`px`
-        }
-    }
-    // Changes the players border
-    if ([6,16,26,36].includes(player_list[current_turn].get_player_spot_id())) { // If the player is on railroads
-        document.getElementById(player_list[current_turn].get_player_id()).style.border = `1px solid white` // Changes the border to white
-        return
-    }
-    document.getElementById(player_list[current_turn].get_player_id()).style.border = `1px solid black` // Changes the border to white
-}
-
 // Finds the given Cookie
 function getCookie(name) {
     var nameEQ = `${name}=`;
@@ -1062,6 +1011,39 @@ function open_manager(player) {
     var propData_keys = Object.keys(propData)
     var prop_keys = Object.keys(player_list[player].get_player_properties())
     var all_prop = document.getElementById(`all_prop`)
+
+    // This will update the button text
+    var update_text = function(id) { 
+        let new_buy = document.getElementById(`buy_${id}`)
+        let new_sell = document.getElementById(`sell_${id}`)
+        if (player_list[player].get_player_properties()[id][`mortgage`] == true) { // if the property is mortgage
+            new_buy.textContent = `Un-mortgage`
+            new_sell.textContent = `Mortgaged`
+            new_buy.disabled = ``
+            new_sell.disabled = `disable`
+        } else if ([6,16,26,36].includes(id)) {
+            new_buy.textContent = `Nope`
+            new_sell.textContent = `Mortgage`
+            new_buy.disabled = `disabled`
+            new_sell.disabled = ``
+        } else if (player_list[player].get_player_properties()[id][`houses`] == 5) { // If the amount of houses is 5
+            new_buy.textContent = `Has Hotel`
+            new_sell.textContent = `Sell Hotel`
+            new_buy.disabled = `disable`
+            new_sell.disabled = ``
+        } else if (player_list[player].get_player_properties()[id][`houses`] == 4) { // If the amount of houses is 4 / if the player is buying a hotel
+            new_buy.textContent = `Buy Hotel`
+            new_sell.textContent = `Sell House`
+            new_buy.disabled = ``
+            new_sell.disabled = ``
+        } else if (player_list[player].get_player_properties()[id][`houses`] >= 0) { // Checks how many houses they have
+            new_buy.textContent = `Buy House`
+            new_sell.textContent = `Mortgage`
+            new_buy.disabled = ``
+            new_sell.disabled = ``
+        }
+    }
+
     for (var i=0; i < prop_keys.length; i++) { // Goes through all the players properties and places them on the board
         if (propData_keys.includes(prop_keys[i])) { 
             var propGroup_amount = manage_menu.getElementsByClassName(`prop_container`).length // Amount of prop groups
@@ -1070,17 +1052,16 @@ function open_manager(player) {
                 var new_elm = document.createElement(`div`)
                 new_elm.id = propData[prop_keys[i]][`property_data`][`color`]
                 new_elm.className = `prop_container`
-                new_elm.style = `top:`+(10+(100*(propGroup_amount))).toString()+`px;`
+                new_elm.style = `top:${(10+(100*(propGroup_amount)))}px;`
                 all_prop.appendChild(new_elm)
             }
             // This makes the elements inside the containers
             elm = document.getElementById(propData[prop_keys[i]][`property_data`][`color`])
             var prop_amount = elm.getElementsByTagName(`canvas`).length // Gets the amount of properties in that group
             var cell_contain = document.createElement(`div`)
-            cell_contain.id = `manage_cell_`+prop_keys[i]
+            cell_contain.id = `manage_cell_${prop_keys[i]}`
             // Color box
             let new_color = document.createElement(`canvas`)
-            
             new_color.id=`cell_${prop_keys[i]}_color`
             new_color.className = `prop_color`
             new_color.width = `20`
@@ -1096,37 +1077,7 @@ function open_manager(player) {
             const new_sell = document.createElement(`button`)
             new_buy.id=`buy_${(30*prop_amount)}`
             new_sell.id=`sell_${(30*prop_amount)}`
-            // This will update the button text
-            var update_text = function(id) { 
-                let new_buy = document.getElementById(`buy_${id}`)
-                let new_sell = document.getElementById(`sell_${id}`)
-                if (player_list[player].get_player_properties()[id][`mortgage`] == true) { // if the property is mortgage
-                    new_buy.textContent = `Un-mortgage`
-                    new_sell.textContent = `Mortgaged`
-                    new_buy.disabled = ``
-                    new_sell.disabled = `disable`
-                } else if ([6,16,26,36].includes(id)) {
-                    new_buy.textContent = `Nope`
-                    new_sell.textContent = `Mortgage`
-                    new_buy.disabled = `disabled`
-                    new_sell.disabled = ``
-                } else if (player_list[player].get_player_properties()[id][`houses`] == 5) { // If the amount of houses is 5
-                    new_buy.textContent = `Has Hotel`
-                    new_sell.textContent = `Sell Hotel`
-                    new_buy.disabled = `disable`
-                    new_sell.disabled = ``
-                } else if (player_list[player].get_player_properties()[id][`houses`] == 4) { // If the amount of houses is 4 / if the player is buying a hotel
-                    new_buy.textContent = `Buy Hotel`
-                    new_sell.textContent = `Sell House`
-                    new_buy.disabled = ``
-                    new_sell.disabled = ``
-                } else if (player_list[player].get_player_properties()[id][`houses`] >= 0) { // Checks how many houses they have
-                    new_buy.textContent = `Buy House`
-                    new_sell.textContent = `Mortgage`
-                    new_buy.disabled = ``
-                    new_sell.disabled = ``
-                }
-            }
+            
             // This will add interaction and puts the elements on screen
             let prop_id = prop_keys[i]
             // Buy btn
@@ -1346,6 +1297,52 @@ function change_turn() {
     doubles = 0 // This sets rolled doubles to 0
     roll_btn.onclick = `` // This is so that they don't unhide the roll and hit it again
     set_roll()
+}
+
+// Updates all the money display labels
+function update_money_display() {
+    // Sets the money containers to the right color and text
+    for (var i=0; i < playerAmount; i++) {
+        var setMoneyContainer = document.getElementById(`player${(i+1)}_money`)
+        setMoneyContainer.innerHTML = `<br>${player_list[i].get_player_name()}:<br>---------<br>$${player_list[i].get_player_money()}`
+    }
+}
+
+// Updates all game information text
+function update_game_text() {
+    document.getElementById(`house_text`).innerHTML = `Houses Left:<br>`+houses.toString()
+    document.getElementById(`hotel_text`).innerHTML = `Hotels Left:<br>`+hotels.toString()
+    document.getElementById(`freeParking_text`).innerHTML = `Cash In Free Parking: $`+freeParking_cash.toString() 
+}
+
+// Updates all property tags 
+function update_all_prop_tags() {
+    var prop_keys = Object.keys(propData)
+    for (var i=0; i < prop_keys.length; i++) {
+        if (propData[i][`property_data`][`by`] !== null) { // Checks if the property is buyable
+            var cell_tag = document.getElementById(`cell_${i}_tag`)
+            cell_tag.style.backgroundColor = player_list[propData[i][`property_data`][`by`]].get_player_color()
+            cell_tag.firstChild.innerHTML = `Owner: ${player_list[propData[i][`property_data`][`by`]].get_player_name()}`
+        }
+    }
+}
+
+// Fixes player positions
+function fix_all_positions() {
+    // Goes through all players and fixes the position
+    for (var i=0; i < player_list.length; i++) { 
+        if (player_list[i].get_player_bankrupt() == false) { // If the player is not bankrupts
+            var player_elm = document.getElementById(player_list[i].get_player_id())
+            player_elm.style.left =`${propData[player_list[i].get_player_spot_id()][`placement`][propData[player_list[i].get_player_spot_id()][`property_data`][`players_on`].indexOf(i)][0]}px`
+            player_elm.style.top =`${propData[player_list[i].get_player_spot_id()][`placement`][propData[player_list[i].get_player_spot_id()][`property_data`][`players_on`].indexOf(i)][1]}px`
+        }
+    }
+    // Changes the players border
+    if ([6,16,26,36].includes(player_list[current_turn].get_player_spot_id())) { // If the player is on railroads
+        document.getElementById(player_list[current_turn].get_player_id()).style.border = `1px solid white` // Changes the border to white
+        return
+    }
+    document.getElementById(player_list[current_turn].get_player_id()).style.border = `1px solid black` // Changes the border to white
 }
 
 // When the player is bankrupt
@@ -2007,11 +2004,14 @@ function move_player(given_player, player_movement) {
     var i = 0
     var spot_by_spot = setInterval(() => {
         player_list[given_player].add_player_spot_id(1) // Every 250 milliseconds the player will move
+        // Removes given player from their previous location
+        propData[player_list[given_player].get_player_spot_id()-1]["property_data"]["players_on"].splice(propData[player_list[given_player].get_player_spot_id()-1]["property_data"]["players_on"].indexOf(given_player), 1)
         // Checks if the player is passing go ( if so then sets there spot to 1)
         if (player_list[given_player].get_player_spot_id() > 40) {
             player_list[given_player].set_player_spot_id(1)
             passed_go()
         }
+        propData[player_list[given_player].get_player_spot_id()]["property_data"]["players_on"].push(given_player)
         current_spot = player_list[given_player].get_player_spot_id()
         var spot_placement = propData[current_spot]['property_data']['players_on'].length
         // Gets the player and sets their position
@@ -2214,7 +2214,6 @@ function set_menu(changeLog) {
             } else if (enable_btn.checked == true) {
                 if (j+1 == 4) { // If player4 was checked
                     document.getElementById(`player3_enable`).checked = true
-                    document.getElementById(`player3_name`).value = ``
                     document.getElementById(`player3_name`).disabled = ``
                     document.getElementById(`player3_color`).disabled = ``
                 }
@@ -2468,4 +2467,3 @@ document.addEventListener(`visibilitychange`, () => {
     document.title = `Monopoly 2.0` // If the document is not hidden (hidden meaning if the client is looking at the page or not)
     webicon.href = `./favicon.png`
 });
-

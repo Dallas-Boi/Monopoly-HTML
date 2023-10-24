@@ -101,9 +101,13 @@
         "added": [],
         "bug_fix": [
             "Fixed | Property Tag Offset",
-            "Fixed | Player Positioning on the side properties"
+            "Fixed | Player Positioning on the side properties",
+            "Fixed | Issue where selecting the \"Enable\" Button on Player 4 it sets Player 3's Text to Nothing"
         ],
         "removed": [],
-        "changed": []
+        "changed": [
+            "Changed | The player fix position system ( To Make the game run faster )",
+            "Changed | When clicking on a link it will open up a new tab instead of replacing the current one"
+        ]
     }
 }
