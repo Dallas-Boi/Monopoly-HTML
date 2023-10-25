@@ -152,6 +152,7 @@ class Player {
     get_player_name() {
         return this.name
     }
+
     // Returns the color of the player
     get_player_color() {
         return this.color
@@ -178,6 +179,10 @@ class Player {
     // Returns the players' money amount
     get_player_money() {
         return this.money
+    }
+    // Sets the players money
+    set_player_money(amount) {
+        this.money = amount
     }
     // Adds to the players' money amount
     add_player_money(amount) {
@@ -2035,6 +2040,7 @@ function set_roll() {
     // Checks if the player is in jail
     if (player_list[current_turn].get_player_isJailed() == true) {
         player_jailed(current_turn, `old`)
+        p.send(["player_jailed", `${current_turn}, "old"`])
         return
     }
     // When the player rolls the dice
@@ -2079,22 +2085,31 @@ function set_roll() {
                 clearInterval(animate_dice_roll)
                 movement = dice1 + dice2; // Adds both dice to see how far the player moves
                 message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> has rolled a ${dice1} and a ${dice2}`)
+                if (client_connection_to_game == true) {
+                    p.send(["message_text_box", `<b>${player_list[current_turn].get_player_name()}</b> has rolled a ${dice1} and a ${dice2}`])
+                }
                 // If the player rolls a double
                 if (dice1 == dice2) { 
                     doubles += 1
                     if (doubles == 3) { // Checks if the player has rolled 3 doubles
-                        player_list[current_turn].set_player_isJailed(true)
                         message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> Rolled 3 Doubles and is now being sent to jail`)
                         setTimeout(function() { // This just makes the player not move instantly
                             player_jailed(current_turn, `new`)
                             dice1 = -1; dice2 = -2
                             after_roll(`no`, current_turn)
+                            if (client_connection_to_game == true) {
+                                p.send(["player_jailed", `${current_turn}, "new"`])
+                                p.send(["after_roll", `"no", ${current_turn}`])
+                            }
                             return
                         }, 2000)
                     }
                 }
                 // Moves the player 
                 move_player(current_turn, movement)
+                if (client_connection_to_game == true) {
+                    p.send(["move_player", `${current_turn}, ${movement}`])
+                }
             }
         }, roll_speed);
     }
