@@ -21,12 +21,15 @@
             <button id="cookieDecline" class="myBtn" style="background-color: red;">Decline</button>
             </div>
         </div>
-        <div id="connectScreen"></div>
-        <div id="main_menu" class="menu" style="display:none;">
+        <div id="notification" class="notifi"></div>
+        <div id="connectScreen" style="display:none;"></div>
+        <div id="main_menu" style="display:none;">
             <div class="center_main">
                 <div class="multi_client">
                     <textarea id="id_input" class="action_txt"></textarea>
-                    <button id="connect_multi" class="myBtn">Connect</button>
+                    <button id="hostBtn" href="#host" class="myBtn" style="left:35px;">Host Game</button>
+                    <button id="connect_multi" class="myBtn" style="left:35px;top:30px;">Connect</button>
+                    <button id="copyKey" class="myBtn" style="left:35px;top:280px;">Copy</button>
                 </div>
                 <div class="player_select">
                     <div class="saveContainer">
@@ -291,7 +294,7 @@
                 </tr>
             </table>
         </div>
-        <div id="trading_menu" class="menu" style="display:none;">
+        <div id="trading_menu" style="display:none;">
             <div id="current_turn_menu" class="menu_left" >
                 <div id="name_left" class="player_name_container">
                     <div id="player_name_left" class="player_name">Left</div>
@@ -373,13 +376,13 @@
                 <button id="right_player_confirm" class="myBtn" style="background-color: green;">Confirm</button>
             </div>
         </div>
-        <div id="manage_menu" class="menu" style="display:none;">
+        <div id="manage_menu" style="display:none;">
             <div id="all_prop"></div>
             <div class="action">
                 <button id="exit_back" class="action_btn">Exit To Game</button>
             </div>
         </div>
-        <div id="auction_menu" class="menu" style="display:none;">
+        <div id="auction_menu" style="display:none;">
             <div class="center_auction">
                 <div id="action_area" class="auction_actions">
                     <div class="auction_title">Auction House</div>
@@ -404,12 +407,12 @@
                 </div>
             </div>
         </div>
-        <div id="winningScreen" class="menu" style="display:none">
+        <div id="winningScreen" style="display:none">
             <div id="cookie_warning" class="center"><div>Congratulations</div><b id="winningName"style="color:green">How are you seeing this?</b><br>For Winning The Game<br>
             <button id="win_to_Menu" class="myBtn" style="background-color: green; margin-left: 0px;">Back to Menu</button></div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/simple-peer@9.11.1/simplepeer.min.js"></script>
-        <script src="index.js"></script>
-        <script src="multiplayer.js"></script>
+        <script type="module" src="index.js"></script>
+        <script type="module" src="multiplayer.js"></script>
     </body>
 </htm>

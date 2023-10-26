@@ -1,37 +1,35 @@
 // Made October 24th, 2023
 // This handles all multiplayer stuff
+import changeLog from './changeLog.json' assert { type: 'json' };
 
-const p = new SimplePeer({
+var player2; // The 2nd player
+var client_connection_to_game = false // If client has p2p connection
+var this_client_id = 0 // client player ID
+// Setups the connect for the host
+player2 = new SimplePeer({
     initiator: location.hash === '#host',
     trickle: false
 })
 
-var client_connection_to_game = false // If client has p2p connection
-var this_client_id = 0 
 // If an error occurs with the client
-p.on('error', err => console.error('error', err))
+player2.on('error', err => console.error('error', err))
 // Returns the client signal
-p.on('signal', data => {
-    console.log('SIGNAL', JSON.stringify(data))
-})
-// On Client Token Submit
-document.querySelector("#connect_multi").addEventListener('click', ev => {
-    ev.preventDefault()
-    p.signal(JSON.parse(document.querySelector('#id_input').value))
+player2.on('signal', data => {
+    document.getElementById("id_input").value = JSON.stringify(data)
 })
 
 // When a client Connects
-p.on('connect', () => {
+player2.on('connect', () => {
     // Checks if the player is the host or not
     if (location.hash !== "#host") {
         this_client_id += 1
     }
-    console.log('CONNECTED')
+    send_notification("You Have Successfully Connect To another Client")
     client_connection_to_game = true // This makes it possible to tell if the player is playing multiplayer or not
 })
 
 // When a client Sends data
-p.on('data', data => {
+player2.on('data', data => {
     command = data + ""
     command = command.split("|")
     if (command.length == 2) { // Replaces the commas if there are args and commas in this function
@@ -56,3 +54,25 @@ p.on('data', data => {
     btns = document.querySelectorAll("button");
     btns.forEach(button => button.disabled = "disabled")
 })
+
+// On Client Token Submit
+document.querySelector("#connect_multi").addEventListener('click', ev => {
+    ev.preventDefault()
+    player2.signal(JSON.parse(document.querySelector('#id_input').value))
+})
+
+// Allows for host btn
+document.getElementById("hostBtn").onclick = function() {
+    location.hash = "#host"
+    location.reload()
+    document.getElementById("hostBtn").disabled = "disabled"
+}
+
+// Allows client to use copy Btn
+document.getElementById("copyKey").onclick = function() {
+    var text = document.getElementById('id_input');
+    text.select();
+    document.execCommand('copy');
+    alert("Successfully Copied The Key")
+    document.getElementById("id_input").value = ""
+}

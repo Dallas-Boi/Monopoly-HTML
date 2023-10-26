@@ -47,14 +47,32 @@ table {
 
 .center {
     position: absolute;
-    top: 50%; margin-top:-100px;
-    left: 50%; margin-left:-400px;
-	text-align:center; vertical-align:middle;
-    font-weight: bold;
+	text-align: center;
+    top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
 }
 
 .cash {
 	color:green;
+}
+
+.notifi {
+	background-color: grey;
+	z-index: 20;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	border-radius: 15%;
+	width: 350px;
+	height: 100px;
+	max-width: 100%;
+	max-height: 100%;
+	border: 1px solid black;
+	display: flex;
+	place-items: center;
+	justify-content: center;
+	position: absolute;
+  	left: 50%;
+  	transform: translate(-50%);
 }
 
 /* Cookie Warning Menu Styles */
@@ -99,15 +117,17 @@ table {
 	max-height: 100%;
 	border: 1px solid black
 }
+
 .multi_client .action_txt {
+	top: 75px;
 	position: absolute;
 	width: 195px;
 	z-index: 3;
 }
-#connect_multi {
+
+.multi_client .myBtn {
+	z-index: 2;
 	position: absolute;
-	left: 35px;
-	top:10px;
 	font-size: 15px;
 	width: 100px;
 	height: 30px;

@@ -1,4 +1,6 @@
 // Made September 13th, Wednesday, 2023
+import changeLog from './changeLog.json' assert { type: 'json' };
+
 // Data Variables
 var propData = { // Placement is `left` px, `top` px
     "0": {"property_data": {"by": null, "players_on": [], "color": null},"placement": [[75, 884], [100, 884], [75, 907], [100, 907]]}, // When the player is sent to jail this is their location
@@ -77,18 +79,8 @@ const cardsData = {
 
     }   
 }
-
-// This will get the change log 
-fetch('changeLog.json')
-    .then(response => response.json())
-    .then(data => {
-        set_cookie_menu(data)
-    })
-    .catch(error => {
-        console.error('Error:', error);
-});
-
 // Game Variables
+var changeLog_data;
 var playerAmount = 4;
 var player_list = [];
 var current_turn = 0
@@ -100,7 +92,6 @@ var dice1, dice2, player, movement
 var chest_deck, chance_deck
 var saveSlot = `null`
 var savingStatus = false
-var skip_client = false
 // Elements
 // Menus
 const cookie_menu = document.getElementById(`cookie_menu`)
@@ -378,6 +369,16 @@ function decrypt(string = ``) {
     return new_data
 }
 
+// When called the notifi element will show the notification and then fade away
+function send_notification(message) {
+    document.getElementById("notification").innerHTML = message
+    $("#notification").fadeIn()
+    setTimeout(function() {
+        $("#notification").fadeOut()
+    }, 2500)
+    
+}
+
 // Finds the given Cookie
 function getCookie(name) {
     var nameEQ = `${name}=`;
@@ -443,8 +444,11 @@ function save_current_game(name) {
     }
     // Save the data into the saveSlot
     setCookie(`saveSlot${slot}`, JSON.stringify(savingData).toString(), 775)
-    alert(`The Game has been successfully saved as: ${name}`)
-    location.reload();
+    send_notification(`The Game has been successfully saved as: ${name}`)
+    // After 1.5 seconds it will reload the page
+    setTimeout(function() {
+        location.reload();
+    }, 1500)
 }
 
 // This will load the game when called
@@ -1262,7 +1266,7 @@ function open_auction_house(items, type) {
 function change_turn() {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
-        p.send("change_turn")
+        player2.send("change_turn")
     }
     dice1_img.style.display = `none`
     dice2_img.style.display = `none`
@@ -1299,7 +1303,7 @@ function change_turn() {
 function message_text_box(message, classType) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
-        p.send(`message_text_box|${message}, ${classType}`)
+        player2.send(`message_text_box|${message}, ${classType}`)
     }
     var actionBox = document.getElementById(`action_txt`)
     var text = document.createElement(`div`)
@@ -1362,7 +1366,7 @@ function fix_all_positions() {
 function bankrupt_player(type, data, to_player) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
-        p.send(`after_roll|${type}, ${data}, ${to_player}`)
+        player2.send(`after_roll|${type}, ${data}, ${to_player}`)
     }
     // Sets them to bankrupt / Blacks their text
     player_list[current_turn].set_player_bankrupt(true)
@@ -1427,7 +1431,7 @@ function bankrupt_player(type, data, to_player) {
 function after_roll(end_jail, player, auctioned) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
-        p.send(`after_roll |${end_jail}, ${player}, ${auctioned}`)
+        player2.send(`after_roll |${end_jail}, ${player}, ${auctioned}`)
     }
     update_all_prop_tags()
     if (end_jail == `out`) { // If the player got out so it will disable all buttons except roll
@@ -1485,7 +1489,7 @@ function passed_go() {
 function buy_item(location, type, player) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
-        p.send(`buy_item|${location}, ${type}, ${player}`)
+        player2.send(`buy_item|${location}, ${type}, ${player}`)
     }
     // if the player is buying the property
     if (type == `prop`) {
@@ -1585,7 +1589,7 @@ function buy_item(location, type, player) {
 function sell_item(location, type, player) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
-        p.send(`sell_item|${location}, ${type}, ${player}`)
+        player2.send(`sell_item|${location}, ${type}, ${player}`)
     }
     if (type == `house`) {
         if (player_list[parseInt(player)].get_player_properties()[location]['mortgage'] == true) { // Checks if the property has been mortgage yet
@@ -1637,7 +1641,7 @@ function sell_item(location, type, player) {
 function player_pays(amount, to_who) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
-        p.send(`player_pays|${player}, ${to_who}`)
+        player2.send(`player_pays|${player}, ${to_who}`)
     }
     if (to_who == `parking`) { // If the player pays and the money goes to the free parking
         freeParking_cash += amount
@@ -1657,7 +1661,7 @@ function player_pays(amount, to_who) {
 function player_jailed(player, type) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
-        p.send(`player_jailed|${player}, ${type}`)
+        player2.send(`player_jailed|${player}, ${type}`)
     }
     if (type == `new`) { // When the player is sent to jail
         message_text_box(`<b>${player_list[parseInt(player)].get_player_name()}</b> has been sent to jail.`)
@@ -2039,7 +2043,7 @@ function check_landed_property() {
 function move_player(given_player, player_movement) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
-        p.send(`move_player|${given_player}, ${player_movement}`)
+        player2.send(`move_player|${given_player}, ${player_movement}`)
     }
     // Moves the player spot to spot
     var i = 0
@@ -2075,7 +2079,7 @@ function move_player(given_player, player_movement) {
 function update_dice_img(dice1, dice2) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
-        p.send(`update_dice_img|${dice1}, ${dice2}`)
+        player2.send(`update_dice_img|${dice1}, ${dice2}`)
     }
     // Shows the dice
     dice1_img.style.display = `block` // Shows dice1
@@ -2243,6 +2247,8 @@ function set_up_game(player_names, player_colors, playerSpot, playerId, starting
 
 // This will setup the main menu after the JSON file data from changeLogs are readable
 function set_menu(changeLog) {
+    cookie_menu.style.display = `none`
+    main_menu.style.display = `block`
     // Allows the enable buttons to be interactable
     for (let j=2; j < 4; j++) {
         const enable_btn = document.getElementById(`player${(j+1)}_enable`)
@@ -2316,7 +2322,7 @@ function set_menu(changeLog) {
                     continue
                 }
             }
-            error_txt.innerHTML = `player ${i+1}'s name is not longer than 3 letters`
+            error_txt.innerHTML = `Player ${i+1}'s name is not longer than 3 letters`
             error_count = true
         }
         // Starts the game
@@ -2479,29 +2485,26 @@ function set_menu(changeLog) {
 
 // Sets up the cookie Warning
 function set_cookie_menu(data) {
+    // Sets the change log data
+    changeLog_data = data
     // This will allow the cookie btns to work
     const acceptBtn = document.getElementById(`cookieAccept`)
     const declineBtn = document.getElementById(`cookieDecline`)
     var hasCookie=getCookie(`saveData0`);
     // If the acceptBtn was clicked
-    const saveOn = function() {
-        cookie_menu.style.display = `none`
-        main_menu.style.display = `block`
-        set_menu(data)
-    }
     acceptBtn.onclick = function() {
         savingStatus = true
-        saveOn()
+        set_menu(data)
     }
     // Checks if the client already has a cookie 
     if (hasCookie !== null) { // Uf the have a cookie then just continue
         savingStatus = true
-        saveOn()
+        set_menu(data)
     }
     // If the acceptBtn was clicked
     declineBtn.onclick = function() {
         savingStatus = false
-        saveOn()
+        set_menu(data)
     }
 }
 
@@ -2516,3 +2519,15 @@ document.addEventListener(`visibilitychange`, () => {
     document.title = `Monopoly 2.0` // If the document is not hidden (hidden meaning if the client is looking at the page or not)
     webicon.href = `./favicon.png`
 });
+
+// Once the document loads and the location hash is #host
+window.addEventListener("load", () => {
+    send_notification("Welcome to Monopoly")
+    // If the player is the host
+    if (location.hash == "#host") {
+        set_menu(changeLog)
+        document.getElementById("hostBtn").disabled = "disabled"
+        return
+    }
+    set_cookie_menu(changeLog)
+})

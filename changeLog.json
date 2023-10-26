@@ -99,7 +99,10 @@
         "date": "November 10th, 2023",
         "title": "Getting Ready for Multiplayer",
         "added": [
-            "Added | Basic Multiplayer Functionality "
+            "Added | Basic Multiplayer Functionality",
+            "Added | Host Game Button",
+            "Added | Copy Button ( Copys client Key )",
+            "Added | Custom Notifications ( Using instead of Alerts )"
         ],
         "bug_fix": [
             "Fixed | Property Tag Offset",
@@ -109,7 +112,8 @@
         "removed": [],
         "changed": [
             "Changed | The player fix position system ( To Make the game run faster )",
-            "Changed | When clicking on a link it will open up a new tab instead of replacing the current one"
+            "Changed | When clicking on a link it will open up a new tab instead of replacing the current one",
+            "Changed | How the site gets the changeLog JSON data"
         ]
     }
 }
