@@ -8,3 +8,6 @@
 <hr>
 <h2>The Difference Between the Versions</h2>
 <p>The difference in between the Game versions is that the Stable version is more stable than the Testing Version. The Testing version is always updated when I push the files from my computer to GitHub. The Stable version is the next update and does not have anything new until the next update that is tested and stable for others to play. The testing version uses the GitHub pages while The Stable version uses CodeHS because this site is not blocked by the school I go to. I used codeHS because it will not be blocked by the county I go to because the Computer Science Classes use this site to code. If there are any problems with the Stable version or if another site that is better for hosting the file becomes available then I will switch to that site if I know that the county will not block it.</p>
+<hr>
+<h2>This Projects tags</h2>
+<p>This Project has <b>Single Player</b> and <b>Multiplayer</b>. Multiplayer is a bit buggy and also unsecured. Multiplayer has no server attacted meaning that it is all peer connect. <b style="color:red;">WARNING:</b> When playing Multiplayer as of October 26th, 2023, be careful who you send the client/host key to this is because it will leak your IPv4. The Reason for this is because it is serverless.</p>
