@@ -1,6 +1,6 @@
 // Made September 13th, Wednesday, 2023
 import changeLog from './changeLog.json' assert { type: 'json' };
-
+import {client_connection_to_game, this_client_id} from './index.js'
 // Data Variables
 var propData = { // Placement is `left` px, `top` px
     "0": {"property_data": {"by": null, "players_on": [], "color": null},"placement": [[75, 884], [100, 884], [75, 907], [100, 907]]}, // When the player is sent to jail this is their location

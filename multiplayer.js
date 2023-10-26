@@ -1,6 +1,7 @@
 // Made October 24th, 2023
 // This handles all multiplayer stuff
 import changeLog from './changeLog.json' assert { type: 'json' };
+import send_notification from './index.js'
 
 var player2; // The 2nd player
 var client_connection_to_game = false // If client has p2p connection
