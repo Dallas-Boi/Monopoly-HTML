@@ -10,7 +10,7 @@ player2 = new SimplePeer({
     initiator: location.hash === '#host',
     trickle: false
 })
-
+peer._debug = console.log
 // If an error occurs with the client
 player2.on('error', err => console.error('error', err))
 // Returns the client signal
@@ -24,7 +24,7 @@ player2.on('connect', () => {
     if (location.hash !== "#host") {
         this_client_id += 1
     }
-    send_notification("You Have Successfully Connect To another Client")
+    console.log("Connected")
     client_connection_to_game = true // This makes it possible to tell if the player is playing multiplayer or not
 })
 
