@@ -10,7 +10,7 @@ player2 = new SimplePeer({
     initiator: location.hash === '#host',
     trickle: false
 })
-peer._debug = console.log
+player2._debug = console.log
 // If an error occurs with the client
 player2.on('error', err => console.error('error', err))
 // Returns the client signal
