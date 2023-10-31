@@ -102,7 +102,8 @@
             "Added | Basic Multiplayer Functionality",
             "Added | Host Game Button",
             "Added | Copy Button ( Copys client Key )",
-            "Added | Custom Notifications ( Using instead of Alerts )"
+            "Added | Custom Notifications ( Using instead of Alerts )",
+            "Added | A Game connection screen for those who are playing mutliplayer"
         ],
         "bug_fix": [
             "Fixed | Property Tag Offset",

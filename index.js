@@ -1,6 +1,6 @@
 // Made September 13th, Wednesday, 2023
 import changeLog from './changeLog.json' assert { type: 'json' };
-import {client_connection_to_game, this_client_id} from './index.js'
+import {client_connection_to_game, this_client_id} from './multiplayer.js'
 // Data Variables
 var propData = { // Placement is `left` px, `top` px
     "0": {"property_data": {"by": null, "players_on": [], "color": null},"placement": [[75, 884], [100, 884], [75, 907], [100, 907]]}, // When the player is sent to jail this is their location
@@ -95,6 +95,7 @@ var savingStatus = false
 // Elements
 // Menus
 const cookie_menu = document.getElementById(`cookie_menu`)
+const connectedScreen = document.getElementById("connectScreen")
 const main_menu = document.getElementById(`main_menu`)
 const game_board = document.getElementById(`gameboard`)
 const trade_menu = document.getElementById(`trading_menu`)
@@ -102,8 +103,6 @@ const manage_menu = document.getElementById(`manage_menu`)
 const auction_menu = document.getElementById(`auction_menu`)
 const winningScreen = document.getElementById(`winningScreen`)
 // Elements for Main menu
-const player3_check = document.getElementById(`player3_enable`)
-const player4_check = document.getElementById(`player4_enable`)
 const start_btn = document.getElementById(`start_game`)
 const error_txt = document.getElementById(`error_txt`)
 const select_version = document.getElementById(`version_menu`)
@@ -370,7 +369,7 @@ function decrypt(string = ``) {
 }
 
 // When called the notifi element will show the notification and then fade away
-function send_notification(message) {
+export function send_notification(message) {
     document.getElementById("notification").innerHTML = message
     $("#notification").fadeIn()
     setTimeout(function() {
@@ -2057,7 +2056,7 @@ function move_player(given_player, player_movement) {
             passed_go()
         }
         propData[player_list[parseInt(given_player)].get_player_spot_id()]["property_data"]["players_on"].push(parseInt(given_player))
-        current_spot = player_list[parseInt(given_player)].get_player_spot_id()
+        var current_spot = player_list[parseInt(given_player)].get_player_spot_id()
         var spot_placement = propData[current_spot]['property_data']['players_on'].length
         // Gets the player and sets their position
         player = document.getElementById(`player${(parseInt(given_player)+1)}`)
@@ -2157,6 +2156,7 @@ function set_roll() {
 //name, color, spot, id, money, jailed, props, ooj, bankrupt
 function set_up_game(player_names, player_colors, playerSpot, playerId, starting_cash, playerJailed, playerProps, playerOoj, bankrupt) {
     main_menu.style.display = `none` // Hides the main menu
+    connectedScreen.style.display = "none"
     game_board.style.display = `block` // Shows the game
     playerAmount = player_names.length // The amount of players
     // Handles all player creation
@@ -2243,6 +2243,12 @@ function set_up_game(player_names, player_colors, playerSpot, playerId, starting
     update_money_display() // This will fix the big cash number
     fix_all_positions()
     update_game_text()
+}
+
+// Sets the screen of the player to the connectiong screen when they connect to another client
+export function set_connected() {
+    main_menu.style.display = "none"
+    connectedScreen.style.display = "block"
 }
 
 // This will setup the main menu after the JSON file data from changeLogs are readable
