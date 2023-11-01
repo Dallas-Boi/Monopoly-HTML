@@ -112,7 +112,7 @@ table {
 	position: absolute;
 	left: 50px;
 	width: 200px;
-	height: 400px;
+	height: 250px;
 	max-width: 100%;
 	max-height: 100%;
 	border: 1px solid black
@@ -121,7 +121,8 @@ table {
 .multi_client .action_txt {
 	top: 75px;
 	position: absolute;
-	width: 195px;
+	max-width: 195px;
+	max-height: 100px;
 	z-index: 3;
 }
 
@@ -132,6 +133,14 @@ table {
 	width: 100px;
 	height: 30px;
 }
+
+.multi_divider {
+	background-color: black;
+	width: 200px;
+	height: 5px;
+	margin-top: 245px;
+}
+
 /* All main menu styles */
 .center_main {
 	display: flex;
