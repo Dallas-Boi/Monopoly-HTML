@@ -1,10 +1,10 @@
 // Made September 13th, Wednesday, 2023
 import changeLog from './changeLog.json' assert { type: 'json' };
-import {client_connection_to_game, this_client_id} from './multiplayer.js'
+import {client_connection_to_game, this_client_id, player2} from './multiplayer.js'
 // Data Variables
 var propData = { // Placement is `left` px, `top` px
     "0": {"property_data": {"by": null, "players_on": [], "color": null},"placement": [[75, 884], [100, 884], [75, 907], [100, 907]]}, // When the player is sent to jail this is their location
-    "1": {"buyable":false, "property_data": {"by": null, "players_on": [0,1,2,3], "color": null}, "placement": [[849, 884],[872, 884],[895, 884],[918, 884]]},
+    "1": {"buyable":false, "property_data": {"by": null, "players_on": [0,1,2,3], "color": null}, "placement": {"0":[849, 884],"1":[872, 884],"2":[895, 884],"3":[918, 884]}},
     "2": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "brown"}, "name": "Mediterranean Avenue", "property_cost": 60, "house_price": 50, "house_placement": {"axis": 988, "left":[770, 785, 800, 814, 792]}, "rent": [2, 10, 30, 90, 160, 250], "placement": [[775, 884],[798, 884],[775, 907],[918, 907]]},
     "3": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [693, 884], "1": [715, 884], "2":[693, 907], "3": [715, 907]}},
     "4": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "brown"}, "name": "Baltic Avenue", "property_cost": 60, "house_price": 50, "house_placement": {"axis": 988, "left":[608, 622, 637, 652, 629]}, "rent":[4, 20, 60, 180, 320, 450], "placement": {"0": [616, 884], "1": [639, 884], "2":[616, 907], "3": [639, 907]}},
@@ -14,7 +14,7 @@ var propData = { // Placement is `left` px, `top` px
     "8": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "aqua"}, "name": "Vermont Avenue", "property_cost": 100, "house_price": 50, "house_placement": {"axis": 988, "left":[297, 311, 326, 341, 318]}, "rent":[6, 30, 90, 270, 400, 550], "placement": {"0": [305, 884], "1": [329, 884], "2":[305, 907], "3": [329, 907]}},
     "9": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [226, 884], "1": [250, 884], "2":[226, 907], "3": [250, 907]}},
     "10": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "aqua"}, "name": "Connecticut Avenue", "property_cost": 120, "house_price":50, "house_placement": {"axis": 988, "left":[142, 157, 171, 186, 164]}, "rent":[8, 40, 100, 300, 450, 600], "placement": {"0": [149, 884], "1": [173, 884], "2":[149, 907], "3": [173, 907]}},
-    "11": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": [[40, 882],[40, 904],[40, 927],[63, 927]]}, // Just Visting
+    "11": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0":[40, 882],"1":[40, 904],"2":[40, 927],"3":[63, 927]}}, // Just Visting
     "12": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "magenta"}, "name": "St. Charles Place", "property_cost": 140, "house_price":100, "house_placement": {"axis": 3, "left":[808, 822, 837, 852, 829]}, "rent":[10, 50, 150, 450, 625, 750], "placement": {"0": [37, 802], "1": [62, 802], "2":[88, 802], "3":[113, 802]}},
     "13": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "white"}, "name": "Electric Company", "property_cost": 150, "rent": [4,10], "placement": {"0": [37, 719], "1": [62, 719], "2":[88, 719], "3":[113, 719]}},
     "14": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "magenta"}, "name": "States Avenue", "property_cost": 140, "house_price":100, "house_placement": {"axis": 3, "left":[642, 656, 671, 686, 661]}, "rent":[10, 50, 150, 450, 625, 750], "placement": {"0": [37, 637], "1": [62, 637], "2":[88, 637], "3":[113, 637]}},
@@ -2155,11 +2155,18 @@ function set_roll() {
 // Sets up everything that will be used in the game
 //name, color, spot, id, money, jailed, props, ooj, bankrupt
 function set_up_game(player_names, player_colors, playerSpot, playerId, starting_cash, playerJailed, playerProps, playerOoj, bankrupt) {
+    // If the player has a multiplayer connection then send them the data too
+    if ((client_connection_to_game == true) && (this_client_id == 0)) {
+        player2.send(`set_up_game|${player_names}, ${player_colors}, ${playerSpot}, ${playerId}, ${starting_cash}, ${playerJailed}, ${playerProps}, ${playerOoj}, ${bankrupt}`)
+        console.log(client_connection_to_game)
+    }
+
+    // Sets up displays and variables
     main_menu.style.display = `none` // Hides the main menu
-    connectedScreen.style.display = "none"
+    connectedScreen.style.display = `none`
     game_board.style.display = `block` // Shows the game
     playerAmount = player_names.length // The amount of players
-    // Handles all player creation
+    // Sets up players elements
     var playerContainer = document.getElementById('Players')
     for (var i = 0; i < player_names.length; i++) {
         // Creates the Players' tool tip
@@ -2185,10 +2192,9 @@ function set_up_game(player_names, player_colors, playerSpot, playerId, starting
         // Adds the player to the player list
         player_list.push(new Player(player_names[i], player_colors[i], playerSpot[i], playerId[i], starting_cash[i], playerJailed[i], playerProps[i], playerOoj[i], bankrupt[i]))
         // Sets the money containers to the right color and text
-        var setMoneyContainer = document.getElementById(`player`+(i+1)+`_money`)
+        var setMoneyContainer = document.getElementById(`player${(i+1)}_money`)
         setMoneyContainer.style = `border: 3px solid `+player_colors[i]+`;background-color: white;text-align: center;`
     }
-    
     // Sets up the roll btn
     set_roll()
     // Sets the Player turn text to the new player
@@ -2236,10 +2242,8 @@ function set_up_game(player_names, player_colors, playerSpot, playerId, starting
     // Randomizes the chance/chest cards
     chest_deck = shuffle(Object.keys(cardsData[`Base`][`Community Chest`])) // Randomize Chest
     chance_deck = shuffle(Object.keys(cardsData[`Base`][`Chance`])) // Randomize Chest
-    // Sets up save btn
-    if (savingStatus == true) { // if the client allows saving
-        saveGame_btn.className = `myBtn`
-    }
+    // if the client allows saving
+    if (savingStatus == true) { saveGame_btn.className = `myBtn` }
     update_money_display() // This will fix the big cash number
     fix_all_positions()
     update_game_text()
@@ -2332,18 +2336,11 @@ function set_menu(changeLog) {
             error_count = true
         }
         // Starts the game
-        if (error_count == false) {set_up_game(input_names, input_colors, player_spot, player_ids, player_money, player_jailed, player_props, player_ooj, player_bank)}
-    }
-    // This will add all the versions to the dropdown menu
-    var version_keys = Object.keys(changeLog)
-    for (var i=0; i < version_keys.length; i++) {
-        let add_ver = document.createElement(`option`)
-        add_ver.value = version_keys[i]
-        add_ver.textContent = version_keys[i]
-        add_ver.id = version_keys[i]
-        select_version.appendChild(add_ver)
-    }
+        if (error_count == false) {
+            set_up_game(input_names, input_colors, player_spot, player_ids, player_money, player_jailed, player_props, player_ooj, player_bank)
 
+        }
+    }
     // If saveSelector is value is changed
     saveSelector.onchange = function() {
         if (saveSelector.value == `null`) { // If the save is invalid
@@ -2369,6 +2366,15 @@ function set_menu(changeLog) {
             setCookie(saveSelector.value, ``, 0)
             document.getElementById(saveSelector.value).remove()
         }
+    }
+    // This will add all the versions to the dropdown menu
+    var version_keys = Object.keys(changeLog)
+    for (var i=0; i < version_keys.length; i++) {
+        let add_ver = document.createElement(`option`)
+        add_ver.value = version_keys[i]
+        add_ver.textContent = version_keys[i]
+        add_ver.id = version_keys[i]
+        select_version.appendChild(add_ver)
     }
     // Gets all cookies for this domain
     var cookies = document.cookie.split(';')
@@ -2528,12 +2534,11 @@ document.addEventListener(`visibilitychange`, () => {
 
 // Once the document loads and the location hash is #host
 window.addEventListener("load", () => {
-    send_notification("Welcome to Monopoly")
     // If the player is the host
     if (location.hash == "#host") {
         set_menu(changeLog)
-        document.getElementById("hostBtn").disabled = "disabled"
         return
     }
+    send_notification("Welcome to Monopoly")
     set_cookie_menu(changeLog)
 })

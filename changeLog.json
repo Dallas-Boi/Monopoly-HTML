@@ -1,14 +1,14 @@
 {
     "Future Updates": [
-        "Multiplayer (This will be a maybe depending on how stable it will be and if it is even possible) Using window.postMessage()",
         "3D houses / hotels",
         "Chooseable Player Pieces",
         "Changing the Name of the game and the properties to comply with legal terms (Trademark and Copyright by Hasbro Entertainmemt",
         "Adding a Real Time Poll for Ideas on the Main Menu",
-        "Making the other tabs pop up on a small menu instead of replacing the ",
+        "Making the other tabs pop up on a small menu instead of replacing the screen",
         "Making the auction house have a brick background and a house shape with all the text inside",
         "Error System so that players know if something breaks and they can either report it or it will automatically report it",
-        "Remake the rolling dice animation using a 3D object using Three.js"
+        "Remake the rolling dice animation using a 3D object using Three.js",
+        "More than 2 Player Multiplayer"
     ],
     "V 1.0": {
         "date": "October 5th, 2023",
@@ -95,26 +95,28 @@
             "Changed | A lot backend code to make the game run faster and be ready for Multiplayer"
         ]
     }, 
-    "V 1.3": {
+    "V 2.0": {
         "date": "November 10th, 2023",
-        "title": "Getting Ready for Multiplayer",
+        "title": "Multiplayer Release",
         "added": [
             "Added | Basic Multiplayer Functionality",
             "Added | Host Game Button",
             "Added | Copy Button ( Copys client Key )",
             "Added | Custom Notifications ( Using instead of Alerts )",
-            "Added | A Game connection screen for those who are playing mutliplayer"
+            "Added | A Game connection screen for those who are playing mutliplayer",
+            "Added | A way to stop other host players playing with other host players ( This causes problems )",
+            "Added | A way to disable the connect btn without the proper text ( This will Cause problems if button was clicked without text )"
         ],
         "bug_fix": [
             "Fixed | Property Tag Offset",
             "Fixed | Player Positioning on the side properties",
-            "Fixed | Issue where selecting the \"Enable\" Button on Player 4 it sets Player 3's Text to Nothing"
+            "Fixed | Issue where selecting the \"Enable\" Button on Player 4 it sets Player 3's Name to Nothing"
         ],
         "removed": [],
         "changed": [
-            "Changed | The player fix position system ( To Make the game run faster )",
             "Changed | When clicking on a link it will open up a new tab instead of replacing the current one",
-            "Changed | How the site gets the changeLog JSON data"
+            "Changed | How the site gets the changeLog JSON data",
+            "Changed | How the game starts up ( Back End | This is because of the multiplayer system)"
         ]
     }
 }
