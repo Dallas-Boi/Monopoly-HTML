@@ -1,7 +1,7 @@
 // Made October 24th, 2023
 // This handles all multiplayer stuff
 import changeLog from './changeLog.json' assert { type: 'json' };
-import {send_notification, set_connected} from './index.js'
+import * as mainFile from './index.js'
 
 export var player2
 export var client_connection_to_game = false // If client has p2p connection
@@ -26,9 +26,9 @@ player2.on('connect', () => {
     // This will make a ID system to tell what player is who
     if (player2["_pc"]["localDescription"]["type"] !== "offer") { // Checks if the player is the host or not
         this_client_id += 1
-        set_connected()
+        mainFile['set_connected']()
     } else if (player2["_pc"]["localDescription"]["type"] == "offer") {
-        send_notification("A Player has Connected")
+        mainFile["send_notification"]("A Player has Connected")
     }
     client_connection_to_game = true // This makes it possible to tell if the player is playing multiplayer or not
 })
@@ -40,24 +40,19 @@ player2.on('data', data => {
     if (command.length == 2) { // Replaces the commas if there are args and commas in this function
         if (command[1].indexOf(",") !== -1) {command[1] = command[1].split(", ")}
     }
+    console.log(command)
     // Executes the given command
     if (command.length == 2) { // Functions with args
-        if (command[1].length == 1) {window[command[0]](command[1][0])}  // With 1 arg
-        else if (command[1].length == 2) {window[command[0]](command[1][0], command[1][1])} // With 2 args
-        else if (command[1].length == 4) {window[command[0]](command[1][0], command[1][1], command[1][2])} // With 3 args
-        else if (command[1].length == 4) {window[command[0]](command[1][0], command[1][1], command[1][2], command[1][3])} // With 4 args
-        else if (command[1].length == 5) {window[command[0]](command[1][0], command[1][1], command[1][2], command[1][3], command[1][4])} // With 5 args
-        else if (command[0] == "set_up_game") {
-            // Cleans up and makes all args into strings
-            for (var i =0;i < command[1].length; i++) {
-                console.log(command[1][i])
-                command[1][i] = command[1][i].split(",")
-            }
-            // executes the cmd
-            window[command[0]](command[1][0], command[1][1], command[1][2], command[1][3], command[1][4], command[1][5], command[1][6], command[1][7], command[1][8])
-        } // Sends the start game from another player
-    } else {window[command[0]]()} // Function with no args
-    console.log(command)
+        if (command[0] == "load_saved_game") { // Sets up the game
+            command[1][0] = Boolean(command[1][0])
+            mainFile.load_saved_game(command[1][0], command[1][1])
+        }
+        else if (command[1].length == 1) {mainFile[command[0]](command[1][0])}  // With 1 arg
+        else if (command[1].length == 2) {mainFile[command[0]](command[1][0], command[1][1])} // With 2 args
+        else if (command[1].length == 3) {mainFile[command[0]](command[1][0], command[1][1], command[1][2])} // With 3 args
+        else if (command[1].length == 4) {mainFile[command[0]](command[1][0], command[1][1], command[1][2], command[1][3])} // With 4 args
+        else if (command[1].length == 5) {mainFile[command[0]](command[1][0], command[1][1], command[1][2], command[1][3], command[1][4])} // With 5 args
+    } else {mainFile[command[0]]()} // Function with no args
 })
 
 // On Client Token Submit
@@ -78,10 +73,10 @@ document.getElementById("copyKey").onclick = function() {
     var text = document.getElementById('id_input');
     text.select();
     document.execCommand('copy');
-    send_notification("Successfully Copied The Key")
+    mainFile["send_notification"]("Successfully Copied The Key")
     document.getElementById("id_input").value = ""
 }
-
+// Updates all multiplayer Elements when the userKey input value has changed
 function userKeyInput_update() {
     try { // If the input is a valid JSON
         var userKey = JSON.parse(document.getElementById("id_input").value)
@@ -98,6 +93,5 @@ function userKeyInput_update() {
         document.getElementById("connect_multi").disabled = "disabled"
     }
 }
-
 // This will make sure that a host player can not connect to other host players
 document.getElementById(`id_input`).oninput = userKeyInput_update

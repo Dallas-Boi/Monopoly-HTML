@@ -97,26 +97,34 @@
     }, 
     "V 2.0": {
         "date": "November 10th, 2023",
-        "title": "Multiplayer Release",
+        "title": "Getting Ready for Multiplayer",
         "added": [
-            "Added | Basic Multiplayer Functionality",
-            "Added | Host Game Button",
+            "Added | Basic Multiplayer Functionality ( In Testing )",
+            "Added | Host Game Button ( For Multiplayer )",
             "Added | Copy Button ( Copys client Key )",
             "Added | Custom Notifications ( Using instead of Alerts )",
             "Added | A Game connection screen for those who are playing mutliplayer",
             "Added | A way to stop other host players playing with other host players ( This causes problems )",
-            "Added | A way to disable the connect btn without the proper text ( This will Cause problems if button was clicked without text )"
+            "Added | A way to disable the connect btn without the proper text ( This will Cause problems if button was clicked without text )",
+            "Added | After every turn it will remove any players in the property tag that is not on the property anymore ( Mostly Backend )",
+            "Added | Custom Player Icons ( Not the best looking but better than just a colored box )"
         ],
         "bug_fix": [
             "Fixed | Property Tag Offset",
             "Fixed | Player Positioning on the side properties",
-            "Fixed | Issue where selecting the \"Enable\" Button on Player 4 it sets Player 3's Name to Nothing"
+            "Fixed | Issue where selecting the \"Enable\" Button on Player 4 it sets Player 3's Name to Nothing",
+            "Fixed | An Issue When placing the player it will place them if there were 2 players on that spot before fix all player positions was called",
+            "Fixed | An issue with the \"Pay all Players\" card not allowing the player to continue when the pay all the players | This card will also continue even if you have no money"
         ],
         "removed": [],
         "changed": [
             "Changed | When clicking on a link it will open up a new tab instead of replacing the current one",
             "Changed | How the site gets the changeLog JSON data",
-            "Changed | How the game starts up ( Back End | This is because of the multiplayer system)"
+            "Changed | How the game starts up ( Back End | This is because of the multiplayer system)",
+            "Changed | The text when a player rolls 3 doubles",
+            "Changed | The Out of Jail Free card Description",
+            "Changed | Capitalized the Advance to Boardwalk Description",
+            "Changed | How the change log is displayed on screen"
         ]
     }
 }

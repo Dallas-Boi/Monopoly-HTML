@@ -1,10 +1,10 @@
 // Made September 13th, Wednesday, 2023
 import changeLog from './changeLog.json' assert { type: 'json' };
-import {client_connection_to_game, this_client_id, player2} from './multiplayer.js'
+import {player2, client_connection_to_game, this_client_id} from './multiplayer.js'
 // Data Variables
 var propData = { // Placement is `left` px, `top` px
-    "0": {"property_data": {"by": null, "players_on": [], "color": null},"placement": [[75, 884], [100, 884], [75, 907], [100, 907]]}, // When the player is sent to jail this is their location
-    "1": {"buyable":false, "property_data": {"by": null, "players_on": [0,1,2,3], "color": null}, "placement": {"0":[849, 884],"1":[872, 884],"2":[895, 884],"3":[918, 884]}},
+    "0": {"buyable": false,"property_data": {"by": null, "players_on": [], "color": null},"placement": [[75, 884], [100, 884], [75, 907], [100, 907]]}, // When the player is sent to jail this is their location
+    "1": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0":[849, 884],"1":[872, 884],"2":[895, 884],"3":[918, 884]}},
     "2": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "brown"}, "name": "Mediterranean Avenue", "property_cost": 60, "house_price": 50, "house_placement": {"axis": 988, "left":[770, 785, 800, 814, 792]}, "rent": [2, 10, 30, 90, 160, 250], "placement": [[775, 884],[798, 884],[775, 907],[918, 907]]},
     "3": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [693, 884], "1": [715, 884], "2":[693, 907], "3": [715, 907]}},
     "4": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "brown"}, "name": "Baltic Avenue", "property_cost": 60, "house_price": 50, "house_placement": {"axis": 988, "left":[608, 622, 637, 652, 629]}, "rent":[4, 20, 60, 180, 320, 450], "placement": {"0": [616, 884], "1": [639, 884], "2":[616, 907], "3": [639, 907]}},
@@ -43,7 +43,7 @@ var propData = { // Placement is `left` px, `top` px
     "37": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0":[848, 555], "1":[872, 555], "2":[896, 555], "3":[920, 555]}},
     "38": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "blue"}, "name": "Park Place", "property_cost":350, "house_price":200, "house_placement": {"axis": "", "left":[642, 656, 671, 686, 661]}, "rent":[35, 175, 500, 1100, 1300, 1500], "placement": {"0":[848, 637], "1":[872, 637], "2":[896, 637], "3":[920, 637]}},
     "39": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0":[848, 719], "1":[872, 719], "2":[896, 719], "3":[920, 719]}},
-    "40": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "blue"}, "name": "Board walk", "property_cost":400, "house_price":200, "house_placement": {"axis": "", "left":[808, 822, 837, 852, 829]}, "rent":[50, 200, 600, 1400, 1700, 2000], "placement": {"0":[848, 802], "1":[872, 802], "2":[896, 802], "3":[920, 802]}}
+    "40": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "blue"}, "name": "Boardwalk", "property_cost":400, "house_price":200, "house_placement": {"axis": "", "left":[808, 822, 837, 852, 829]}, "rent":[50, 200, 600, 1400, 1700, 2000], "placement": {"0":[848, 802], "1":[872, 802], "2":[896, 802], "3":[920, 802]}}
 }
 // Different Property Names for different modes
 const propertyNames = {
@@ -62,16 +62,16 @@ const propertyNames = {
 const cardsData = {
     "Base": {
         "Community Chest": {
-            "advance_boardwalk": {"location_id": 40, "description": " Advance's to boardwalk"},
+            "advance_boardwalk": {"location_id": 40, "description": " Advance's to Boardwalk"},
             "advance_railroad_1": {"location_id": 6, "description": " Advance's to Reading Railroad"},
             "advance_go": {"location_id": 1, "description": " Advance's to Go"},
-            "out_of_jail_Community Chest": {"description": " Allows the player to get out of jail for free"}
+            "out_of_jail_Community Chest": {"description": " Gained a Get of Jail Free Card"}
         },
         "Chance": {
             "advance_railroad_4": {"location_id": 36, "description": " Advance's to Short Line Railroad"},
-            "out_of_jail_Chance": {"description": " Allows the player to get out of jail for free"},
+            "out_of_jail_Chance": {"description": " Gained a Get of Jail Free Card"},
             "pay_tax": {"tax_amount": 100, "description": " Has to pay $100 in tax"},
-            "pay_prop_tax": {"house": 15, "hotels": 115, "description": " has to Pay for each house ($15 per) and hotel ($115 per)"},
+            "pay_prop_tax": {"house": 15, "hotels": 115, "description": " Has to Pay for each house ($15 per) and hotel ($115 per)"},
             "pay_to_all": {"amount": 50, "description": " Has to Pay all players $50"}
         }
     },
@@ -79,8 +79,8 @@ const cardsData = {
 
     }   
 }
+
 // Game Variables
-var changeLog_data;
 var playerAmount = 4;
 var player_list = [];
 var current_turn = 0
@@ -172,15 +172,15 @@ class Player {
     }
     // Sets the players money
     set_player_money(amount) {
-        this.money = amount
+        this.money = parseInt(amount)
     }
     // Adds to the players' money amount
     add_player_money(amount) {
-        this.money += amount
+        this.money += parseInt(amount)
     }
     // Removes from the players' money amount
     remove_player_money(amount) {
-        this.money -= amount
+        this.money -= parseInt(amount)
     }
 
     // Returns the Players' Jailed Status
@@ -201,7 +201,7 @@ class Player {
         this.properties[property_id] = {"name": propData[property_id]['name'], "houses": 0, "mortgage": false}
     }
     add_player_properties_manual(property_id, name, houses, mortgage) {
-        this.properties[property_id] = {"name": name,  "houses": houses, "mortgage": mortgage}
+        this.properties[property_id] = {"name": name,  "houses": parseInt(houses), "mortgage": mortgage}
     }
     // Removes to the players' properties
     remove_player_properties(property_id) {
@@ -303,7 +303,7 @@ class Player {
 // Main Game Functions \\
 // Shuffles given arrays
 // Link: https://stackoveflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-function shuffle(array) {
+export function shuffle(array) {
     let currentIndex = array.length,  randomIndex;
   
     // While there remain elements to shuffle.
@@ -325,7 +325,7 @@ function shuffle(array) {
 const valid_letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*(){}:\"<>?,./;'[]+_=-\|` "
 
 // This Encrypts the given String
-function encrypt(string = "") {
+export function encrypt(string = "") {
     // If the user does not give a String it will throw an error
     if (string == "") {console.error(`You must specify a String as "${string}" is not valid`); return}
     var new_data = ``
@@ -347,7 +347,7 @@ function encrypt(string = "") {
 }
 
 // This Decrypts the given String
-function decrypt(string = ``) {
+export function decrypt(string = ``) {
     // If the user does not give a String it will throw an error
     if (string == ``) {console.error(`You must specify a String as " " is not valid`); return}
     var new_data = ``
@@ -379,7 +379,7 @@ export function send_notification(message) {
 }
 
 // Finds the given Cookie
-function getCookie(name) {
+export function getCookie(name) {
     var nameEQ = `${name}=`;
     var allCookies = document.cookie.split(';');
     for(var i=0;i < allCookies.length;i++) {
@@ -402,7 +402,7 @@ function getCookie(name) {
 } 
 
 // Makes / Deletes the named cookie 
-function setCookie(cname, cvalue, exdays) {
+export function setCookie(cname, cvalue, exdays) {
     const d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     let expires = `expires=`+ d.toUTCString();
@@ -410,7 +410,7 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 // This saves the players name
-function save_current_game(name) {
+export function save_current_game(name, returnData) {
     var player_data = []
     // Gets all the player data into a list
     for (var i=0; i < player_list.length; i++) {
@@ -429,32 +429,41 @@ function save_current_game(name) {
         "freeParking": freeParking_cash,
         "turn": current_turn
     }
-    // This will try to find a open save slot
-    let slot = 0
-    if (saveSlot == `null`) { // If the save Slot equals null then continue
-        while (true) {
-            if (getCookie(`saveSlot${slot}`) == null) { // If the founded cookie is available
-                break
+    if (returnData !== true) {
+        // This will try to find a open save slot
+        let slot = 0
+        if (saveSlot == `null`) { // If the save Slot equals null then continue
+            while (true) {
+                if (getCookie(`saveSlot${slot}`) == null) { // If the founded cookie is available
+                    break
+                }
+                slot++
             }
-            slot++
+        } else { // If the save was loaded
+            slot = parseInt(saveSlot.replace(`saveSlot`, ``))
         }
-    } else { // If the save was loaded
-        slot = parseInt(saveSlot.replace(`saveSlot`, ``))
+        // Save the data into the saveSlot
+        setCookie(`saveSlot${slot}`, JSON.stringify(savingData).toString(), 775)
+        send_notification(`The Game has been successfully saved as: ${name}`)
+        // After 1.5 seconds it will reload the page
+        setTimeout(function() {
+            location.reload();
+        }, 1500)
+        return
     }
-    // Save the data into the saveSlot
-    setCookie(`saveSlot${slot}`, JSON.stringify(savingData).toString(), 775)
-    send_notification(`The Game has been successfully saved as: ${name}`)
-    // After 1.5 seconds it will reload the page
-    setTimeout(function() {
-        location.reload();
-    }, 1500)
+    // This will return all data that can be used to transfer or store
+    return JSON.stringify(savingData)
 }
 
 // This will load the game when called
-function load_saved_game() {
+export function load_saved_game(loadClient, data) {
     // This will rewrite the data
-    var playerData = getCookie(saveSelector.value)
-    saveSlot = saveSelector.value
+    if (loadClient !== true) { // If data does not need to be sent just stored
+        var playerData = getCookie(saveSelector.value)
+        saveSlot = saveSelector.value
+    } else { // This will allow the process of loading the data sent from another client
+        var playerData = JSON.parse(data)
+    }
     //console.log(playerData)
     // Sets up every tag
     houses = playerData[`houses`]
@@ -473,6 +482,7 @@ function load_saved_game() {
     var player_props = []
     var player_ooj = []
     var player_bank = []
+    // Sets all the values in the correct variable
     for (var play=0; play < playerAmount; play++) {
         player_names.push(playerData[`players`][play][0])
         player_colors.push(playerData[`players`][play][1])
@@ -506,7 +516,7 @@ function load_saved_game() {
 
 // Other Menus \\
 // This will open up the trading menu
-function open_trade(player) {
+export function open_trade(player) {
     game_board.style.display = `none` // hides the board
     trade_menu.style.display = `block` // Shows the trade menu
 
@@ -999,7 +1009,7 @@ function open_trade(player) {
 }
 
 // This will open the managing property Menu
-function open_manager(player) {
+export function open_manager(player) {
     game_board.style.display = `none` // Hides the board
     manage_menu.style.display = `block` // Shows the manage prop menu
     // This will add all div and props
@@ -1109,7 +1119,7 @@ function open_manager(player) {
 }
 
 // This will open the auction house if a player auctions a property or if the player goes bankrupt on their own it will auction their items
-function open_auction_house(items, type) {
+export function open_auction_house(items, type) {
     game_board.style.display = `none` // Hides the Game board
     auction_menu.style.display = `block` // Shows the auction house
     // Auction Action buttons
@@ -1262,11 +1272,12 @@ function open_auction_house(items, type) {
 
 // Game Functions \\
 // Changes the current turn
-function change_turn() {
+export function change_turn() {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
         player2.send("change_turn")
     }
+    // Sets up the next players turn
     dice1_img.style.display = `none`
     dice2_img.style.display = `none`
     current_turn += 1; // Adds 1 to the turn
@@ -1275,6 +1286,7 @@ function change_turn() {
     } catch ({name, message}) {
         current_turn = 0
     }
+    console.log(current_turn)
     if (player_list[current_turn].get_player_bankrupt() == true) { // Checks if the player is bankrupt if so it will go to the next turn
         change_turn()
         return
@@ -1294,13 +1306,11 @@ function change_turn() {
     // Sets the Player turn text to the new player
     turn_text.innerHTML = `Current Turn:<br> ${player_list[current_turn].get_player_name()}`
     doubles = 0 // This sets rolled doubles to 0
-    roll_btn.onclick = `` // This is so that they don't unhide the roll and hit it again
     set_roll()
 }
 
 // This will add what is happening on the board through the on screen textbox
-function message_text_box(message, classType) {
-    // If the player has a multiplayer connection then send them the data too
+export function message_text_box(message, classType) {
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
         player2.send(`message_text_box|${message}, ${classType}`)
     }
@@ -1316,7 +1326,7 @@ function message_text_box(message, classType) {
 }
 
 // Updates all the money display labels
-function update_money_display() {
+export function update_money_display() {
     // Sets the money containers to the right color and text
     for (var i=0; i < playerAmount; i++) {
         var setMoneyContainer = document.getElementById(`player${(i+1)}_money`)
@@ -1325,14 +1335,14 @@ function update_money_display() {
 }
 
 // Updates all game information text
-function update_game_text() {
+export function update_game_text() {
     document.getElementById(`house_text`).innerHTML = `Houses Left:<br>${houses}`
     document.getElementById(`hotel_text`).innerHTML = `Hotels Left:<br>${hotels}`
     document.getElementById(`freeParking_text`).innerHTML = `Cash In Free Parking: $${freeParking_cash}` 
 }
 
 // Updates all property tags 
-function update_all_prop_tags() {
+export function update_all_prop_tags() {
     var prop_keys = Object.keys(propData)
     for (var i=0; i < prop_keys.length; i++) {
         if (propData[i][`property_data`][`by`] !== null) { // Checks if the property is buyable
@@ -1343,26 +1353,49 @@ function update_all_prop_tags() {
     }
 }
 
-// Fixes player positions
-function fix_all_positions() {
-    // Goes through all players and fixes the position
-    for (var i=0; i < player_list.length; i++) { 
-        if (player_list[i].get_player_bankrupt() == false) { // If the player is not bankrupts
-            var player_elm = document.getElementById(player_list[i].get_player_id())
-            player_elm.style.left =`${propData[player_list[i].get_player_spot_id()][`placement`][propData[player_list[i].get_player_spot_id()][`property_data`][`players_on`].indexOf(i)][0]}px`
-            player_elm.style.top =`${propData[player_list[i].get_player_spot_id()][`placement`][propData[player_list[i].get_player_spot_id()][`property_data`][`players_on`].indexOf(i)][1]}px`
-        }
-    }
+// Updates the players boarder when landing on certain properties
+export function update_player_board(player) {
     // Changes the players border
-    if ([6,16,26,36].includes(player_list[current_turn].get_player_spot_id())) { // If the player is on railroads
-        document.getElementById(player_list[current_turn].get_player_id()).style.border = `1px solid white` // Changes the border to white
+    if ([6,16,26,36].includes(player_list[player].get_player_spot_id())) { // If the player is on railroads
+        document.getElementById(player_list[player].get_player_id()).style.border = `1px solid white` // Changes the border to white
         return
     }
     document.getElementById(player_list[current_turn].get_player_id()).style.border = `1px solid black` // Changes the border to white
 }
 
+// Fixes player positions
+export function fix_all_positions() {
+    // At the end of everyones turn it will remove the player from any property execpt the one they are on
+    var prop_keys = Object.keys(propData)
+    for (var i=1; i < prop_keys.length; i++) {
+        var playerIndex = propData[i]["property_data"]["players_on"].indexOf(current_turn)
+        if (playerIndex !== -1) {
+            if (player_list[current_turn].get_player_spot_id() !== parseInt(prop_keys[i])) {
+                propData[i]["property_data"]["players_on"].splice(playerIndex, 1)
+            }
+        }
+    }
+    // Goes through all players and fixes the position
+    for (var i=0; i < player_list.length; i++) {
+        if (player_list[i].get_player_bankrupt() == false) { // If the player is not bankrupts
+            try {
+                var current_spot = player_list[parseInt(i)].get_player_spot_id()
+                var spot_placement = (propData[current_spot]['property_data']['players_on'].indexOf(i)).toString()
+                console.log(` ${propData[current_spot]["name"]} | ${spot_placement}`)
+                // Gets the player and sets their position
+                player = document.getElementById(`player${(parseInt(i)+1)}`)
+                player.style.top = `${propData[current_spot]['placement'][spot_placement][1]}px`
+                player.style.left = `${propData[current_spot]['placement'][spot_placement][0]}px`
+            } catch (err) {
+                console.error(err)
+            }
+        }
+    }
+    update_player_board(current_turn)
+}
+
 // When the player is bankrupt
-function bankrupt_player(type, data, to_player) {
+export function bankrupt_player(type, data, to_player) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
         player2.send(`after_roll|${type}, ${data}, ${to_player}`)
@@ -1427,10 +1460,10 @@ function bankrupt_player(type, data, to_player) {
 }
 
 // The last part of a players' turn
-function after_roll(end_jail, player, auctioned) {
+export function after_roll(end_jail, player, auctioned) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
-        player2.send(`after_roll |${end_jail}, ${player}, ${auctioned}`)
+        player2.send(`after_roll|${end_jail}, ${player}, ${auctioned}`)
     }
     update_all_prop_tags()
     if (end_jail == `out`) { // If the player got out so it will disable all buttons except roll
@@ -1447,28 +1480,19 @@ function after_roll(end_jail, player, auctioned) {
     } else if ((player_list[current_turn].get_player_isJailed() == true) && (end_jail == null)) { // If the player is jailed during this turn
         player_jailed(current_turn, `old`)        
     } else { // If the player did not roll a double
-        roll_btn.className = `action_btn`
-        roll_btn.textContent = `End Turn`
-        roll_btn.onclick = ``
-        trade_btn.onclick = ``
-        pay_btn.onclick = ``; pay_btn.className = `action_btn_disabled`
-        any_btn.onclick = ``
+        roll_btn.className = `action_btn`; roll_btn.textContent = `End Turn`
+        pay_btn.className = `action_btn_disabled`
         // This will get rid of the buy/auction button feature if the player auctioned the property
         if (auctioned !== undefined) {
             buy_btn.className = `action_btn_disabled`
             sell_btn.className = `action_btn_disabled`
         }
+        // Button actions
+        roll_btn.onclick = change_turn
+        trade_btn.onclick = function() {open_trade(current_turn)}
+        any_btn.onclick = function() {open_manager(current_turn)}
 
-        roll_btn.onclick = function() {
-            change_turn()
-        }
-        trade_btn.onclick = function() {
-            open_trade(current_turn)
-        }
-        any_btn.onclick = function() {
-            open_manager(current_turn)
-        }
-        any_btn.textContent=`Manage`
+        any_btn.textContent = `Manage`
         trade_btn.className = `action_btn`
         if (Object.keys(player_list[current_turn].get_player_properties()).length > 0) {any_btn.className = `action_btn`} // If the player has any properties it will open the management menu
         bankrupt_btn.onclick = function() { // if the player decides to bankrupt themselfs
@@ -1478,14 +1502,14 @@ function after_roll(end_jail, player, auctioned) {
 }
 
 // When the player passes go
-function passed_go() {
+export function passed_go() {
     player_list[current_turn].add_player_money(200)
     message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> has passed/landed on Go, They are awarded $200`)
     update_money_display()
 }
 
 // Buys the item
-function buy_item(location, type, player) {
+export function buy_item(location, type, player) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
         player2.send(`buy_item|${location}, ${type}, ${player}`)
@@ -1497,7 +1521,7 @@ function buy_item(location, type, player) {
             player_list[parseInt(player)].add_player_properties(location)
             player_list[parseInt(player)].remove_player_money(propData[location]['property_cost'])
             // Lets the players know
-            message_text_box(`<b>${player_list[parseInt(player)].get_player_name()}</b> bought `+propData[location]['name'])
+            message_text_box(`<b>${player_list[parseInt(player)].get_player_name()}</b> bought ${propData[location]['name']}`)
             // Updates the cell tag to be the color of the player
             var cell_tag = document.getElementById(`cell_${location}_tag`)
             cell_tag.style.backgroundColor = player_list[parseInt(player)].get_player_color()
@@ -1585,7 +1609,7 @@ function buy_item(location, type, player) {
 }
 
 // Sells the item
-function sell_item(location, type, player) {
+export function sell_item(location, type, player) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
         player2.send(`sell_item|${location}, ${type}, ${player}`)
@@ -1637,7 +1661,7 @@ function sell_item(location, type, player) {
 }
 
 // If the player has to pay something
-function player_pays(amount, to_who) {
+export function player_pays(amount, to_who) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
         player2.send(`player_pays|${player}, ${to_who}`)
@@ -1657,7 +1681,7 @@ function player_pays(amount, to_who) {
 }
 
 // Sends the player to jail
-function player_jailed(player, type) {
+export function player_jailed(player, type) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
         player2.send(`player_jailed|${player}, ${type}`)
@@ -1728,7 +1752,7 @@ function player_jailed(player, type) {
 }
 
 // Plays the picked card
-function c_cards(card_type) { 
+export function c_cards(card_type) { 
     // Checks what card to pull 
     if (card_type == `Community Chest`) { // If the Player Lands on Community Chest
         var played_card = chest_deck[0] // Gets the first card from the deck
@@ -1807,23 +1831,31 @@ function c_cards(card_type) {
     } else if (played_card.includes(`pay_to_all`)) { // player pays all players the amount
         pay_btn.className = `action_btn`
         pay_btn.innerHTML = `Pay All Players $${cardsData[`Base`][card_type][played_card][`amount`]}`
+        trade_btn.style.className = `action_btn`
+        any_btn.onclick = function() {open_manager(current_turn)}
         var amount = 0
         // Occurs when the player clicks the pay_btn
         pay_btn.onclick = function() {
-            for (var i=0; i < player_list.length; i++) {
-                if (player_list[i].get_player_bankrupt() == false) { // Checks if they are bankrupt
-                    if (player_list[i].get_player_id() !== player_list[current_turn].get_player_id()) { // Checks if the player is not the current player
-                        player_pays(cardsData[`Base`][card_type][played_card][`amount`], i)
+            // Checks if the player has enough money
+            if (player_list[current_turn].get_player_money() >= cardsData[`Base`][card_type][played_card][`amount`]*(player_list.length-1)) {
+                for (var i=0; i < player_list.length; i++) {
+                    if (player_list[i].get_player_bankrupt() == false) { // Checks if they are bankrupt
+                        if (player_list[i].get_player_id() !== player_list[current_turn].get_player_id()) { // Checks if the player is not the current player
+                            player_pays(cardsData[`Base`][card_type][played_card][`amount`], i)
+                        }
                     }
                 }
+                after_roll()
+                return
             }
-
+            // If the player does not have enough money then say so
+            message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> does not have <b class="cash">${cardsData[`Base`][card_type][played_card][`amount`]*(player_list.length-1)}</b>`)
         }
     }
 }
 
 // When the player lands on a property this will check to see what to do
-function check_landed_property() {
+export function check_landed_property() {
     var location = player_list[current_turn].get_player_spot_id(); // Location of the player
     var owned_id = propData[location][`property_data`]['by'] // The ID of the player who owns the property
     // Removes the event listener
@@ -2039,31 +2071,35 @@ function check_landed_property() {
 }
 
 // Moves the player 
-function move_player(given_player, player_movement) {
+export function move_player(given_player, player_movement) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
         player2.send(`move_player|${given_player}, ${player_movement}`)
     }
     // Moves the player spot to spot
     var i = 0
+    console.log(propData)
     var spot_by_spot = setInterval(() => {
         player_list[parseInt(given_player)].add_player_spot_id(1) // Every 250 milliseconds the player will move
-        // Removes given player from their previous location
-        propData[player_list[parseInt(given_player)].get_player_spot_id()-1]["property_data"]["players_on"].splice(propData[player_list[parseInt(given_player)].get_player_spot_id()-1]["property_data"]["players_on"].indexOf(given_player), 1)
         // Checks if the player is passing go ( if so then sets there spot to 1)
         if (player_list[parseInt(given_player)].get_player_spot_id() > 40) {
             player_list[parseInt(given_player)].set_player_spot_id(1)
             passed_go()
         }
-        propData[player_list[parseInt(given_player)].get_player_spot_id()]["property_data"]["players_on"].push(parseInt(given_player))
+        // Removes given player from their previous location
+        console.log(player_list[parseInt(given_player)].get_player_spot_id())
+        console.log(`${player_list[parseInt(given_player)].get_player_name()} Removed from ${propData[player_list[parseInt(given_player)].get_player_spot_id()-1]["name"]}`)
+        
+        propData[player_list[parseInt(given_player)].get_player_spot_id()]["property_data"]["players_on"].push(parseInt(given_player)); 
+        console.log(`${player_list[parseInt(given_player)].get_player_name()} Added from ${propData[player_list[parseInt(given_player)].get_player_spot_id()]["name"]}`)
+        console.log(propData[player_list[parseInt(given_player)].get_player_spot_id()])
         var current_spot = player_list[parseInt(given_player)].get_player_spot_id()
-        var spot_placement = propData[current_spot]['property_data']['players_on'].length
+        var spot_placement = propData[current_spot]['property_data']['players_on'].length-1
         // Gets the player and sets their position
         player = document.getElementById(`player${(parseInt(given_player)+1)}`)
         player.style.top = `${propData[current_spot]['placement'][spot_placement][1]}px`
         player.style.left = `${propData[current_spot]['placement'][spot_placement][0]}px`
-        fix_all_positions() // This will fix any positioning issues
-        // Stops the interval if the player moved the correct amount of times
+        update_player_board(current_turn)
         i++
         // Stops the loop if the player lands on the spot they rolled to
         if (i > player_movement-1) {
@@ -2075,7 +2111,7 @@ function move_player(given_player, player_movement) {
 }
 
 // Updates the dice Imgs
-function update_dice_img(dice1, dice2) {
+export function update_dice_img(dice1, dice2) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
         player2.send(`update_dice_img|${dice1}, ${dice2}`)
@@ -2088,8 +2124,53 @@ function update_dice_img(dice1, dice2) {
     dice2_img.src = `./diceImg/roll_${dice2}.png` // Sets image for dice2
 }
 
+// Rolls the dice
+export function rollPlayer_dice() {
+    // Variables for dice animation
+    var roll_speed = 250 // The speed the dice rolls
+    // Animates the dice roll
+    var animate_dice_roll = setInterval(() => { 
+        dice1 = Math.floor(Math.random()*6)+1; // Rolls `dice1` Between 1-6
+        dice2 = Math.floor(Math.random()*6)+1; // Rolls `dice2` Beteen 1-6
+        update_dice_img(dice1, dice2)
+        roll_speed += 250
+        // Stops the animation once the roll_speed hits 2500
+        if (roll_speed >= 2500) {
+            clearInterval(animate_dice_roll)
+            movement = dice1 + dice2; // Adds both dice to see how far the player moves
+            message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> has rolled a ${dice1} and a ${dice2}`)
+            // If the player rolls a double
+            if (dice1 == dice2) { 
+                doubles += 1
+                if (doubles == 3) { // Checks if the player has rolled 3 doubles
+                    message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> Rolled 3 Doubles and has been sent to jail`)
+                    setTimeout(function() { // This just makes the player not move instantly
+                        player_jailed(current_turn, `new`)
+                        dice1 = -1; dice2 = -2
+                        after_roll(`no`, current_turn)
+                        return
+                    }, 2000)
+                }
+            }
+            // Moves the player 
+            move_player(current_turn, movement)
+        }
+    }, roll_speed);
+}
+
+// This is just so that the roll btn will be disabled on both clients
+export function rollbtn_click() {
+    saveGame_btn.className = `action_btn_disabled` // Hides the save btn        
+    // Disables the roll Button
+    roll_btn.className = `action_btn_disabled`
+    if ((client_connection_to_game == true) && (current_turn == this_client_id)) {
+        player2.send(`rollbtn_click`)
+        rollPlayer_dice()
+    } else if (client_connection_to_game == false) {rollPlayer_dice()}
+}
+
 // Sets the roll btn
-function set_roll() {
+export function set_roll() {
     // Checks if the player is in jail
     if (player_list[current_turn].get_player_isJailed() == true) {
         player_jailed(current_turn, `old`)
@@ -2105,62 +2186,22 @@ function set_roll() {
     }
 
     // Removes and disables all other buttons
-    buy_btn.onclick = ``; buy_btn.className = `action_btn_disabled`
-    sell_btn.onclick = ``; sell_btn.className = `action_btn_disabled`
-    pay_btn.onclick = ``; pay_btn.className = `action_btn_disabled`
-    trade_btn.onclick = ``; trade_btn.className = `action_btn_disabled`
+    buy_btn.className = `action_btn_disabled`
+    sell_btn.className = `action_btn_disabled`
+    pay_btn.className = `action_btn_disabled`
+    trade_btn.className = `action_btn_disabled`
     // Allows the save btn to be interactable
     saveGame_btn.onclick = function() { // Allows for save name input
         var sName = prompt(`What should the name of the save be?`)
         if (sName !== null) {save_current_game(sName)} // If the player did not input a name
     }
     // Makes the roll function
-    roll_btn.onclick = function() {
-        saveGame_btn.className = `action_btn_disabled` // Hides the save btn
-        // Variables for dice animation
-        var roll_speed = 250 // The speed the dice rolls
-        // Disables the roll Button
-        roll_btn.className = `action_btn_disabled`
-        // Animates the dice roll
-        var animate_dice_roll = setInterval(() => { 
-            dice1 = Math.floor(Math.random()*6)+1; // Rolls `dice1` Between 1-6
-            dice2 = Math.floor(Math.random()*6)+1; // Rolls `dice2` Beteen 1-6
-            update_dice_img(dice1, dice2)
-            roll_speed += 250
-            // Stops the animation once the roll_speed hits 2500
-            if (roll_speed >= 2500) {
-                clearInterval(animate_dice_roll)
-                movement = dice1 + dice2; // Adds both dice to see how far the player moves
-                message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> has rolled a ${dice1} and a ${dice2}`)
-                // If the player rolls a double
-                if (dice1 == dice2) { 
-                    doubles += 1
-                    if (doubles == 3) { // Checks if the player has rolled 3 doubles
-                        message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> Rolled 3 Doubles and is now being sent to jail`)
-                        setTimeout(function() { // This just makes the player not move instantly
-                            player_jailed(current_turn, `new`)
-                            dice1 = -1; dice2 = -2
-                            after_roll(`no`, current_turn)
-                            return
-                        }, 2000)
-                    }
-                }
-                // Moves the player 
-                move_player(current_turn, movement)
-            }
-        }, roll_speed);
-    }
+    roll_btn.onclick = rollbtn_click
 }
 
 // Sets up everything that will be used in the game
 //name, color, spot, id, money, jailed, props, ooj, bankrupt
-function set_up_game(player_names, player_colors, playerSpot, playerId, starting_cash, playerJailed, playerProps, playerOoj, bankrupt) {
-    // If the player has a multiplayer connection then send them the data too
-    if ((client_connection_to_game == true) && (this_client_id == 0)) {
-        player2.send(`set_up_game|${player_names}, ${player_colors}, ${playerSpot}, ${playerId}, ${starting_cash}, ${playerJailed}, ${playerProps}, ${playerOoj}, ${bankrupt}`)
-        console.log(client_connection_to_game)
-    }
-
+export function set_up_game(player_names, player_colors, playerSpot, playerId, starting_cash, playerJailed, playerProps, playerOoj, bankrupt) {
     // Sets up displays and variables
     main_menu.style.display = `none` // Hides the main menu
     connectedScreen.style.display = `none`
@@ -2190,7 +2231,9 @@ function set_up_game(player_names, player_colors, playerSpot, playerId, starting
         // Adds the player tooltip to the board
         playerContainer.appendChild(newPlayer)
         // Adds the player to the player list
-        player_list.push(new Player(player_names[i], player_colors[i], playerSpot[i], playerId[i], starting_cash[i], playerJailed[i], playerProps[i], playerOoj[i], bankrupt[i]))
+        player_list.push(new Player(player_names[i], player_colors[i], parseInt(playerSpot[i]), playerId[i], parseInt(starting_cash[i]), playerJailed[i], playerProps[i], playerOoj[i], Boolean(bankrupt[i])))
+        // Adds the player to propData players_on
+        if (saveSlot == "null") {propData[playerSpot[i]]["property_data"]["players_on"].push(i)}
         // Sets the money containers to the right color and text
         var setMoneyContainer = document.getElementById(`player${(i+1)}_money`)
         setMoneyContainer.style = `border: 3px solid `+player_colors[i]+`;background-color: white;text-align: center;`
@@ -2245,8 +2288,16 @@ function set_up_game(player_names, player_colors, playerSpot, playerId, starting
     // if the client allows saving
     if (savingStatus == true) { saveGame_btn.className = `myBtn` }
     update_money_display() // This will fix the big cash number
-    fix_all_positions()
+    if (saveSlot !== `null`) {fix_all_positions()} // If statement fixes a problem when not loading from a save
     update_game_text()
+    // This multiplayer data is different since it will save the game ( Not actually save the data just to transfer it ) and the other clietn will load that data
+    // If the player has a multiplayer connection then send them the data too
+    if ((client_connection_to_game == true) && (this_client_id == 0)) {
+        var gameData = save_current_game("client", true) // Returns all data needed to be sent
+        console.log(gameData)
+        player2.send(`load_saved_game|${true}, ${gameData}`)
+        console.log("Sent")
+    }
 }
 
 // Sets the screen of the player to the connectiong screen when they connect to another client
@@ -2256,7 +2307,7 @@ export function set_connected() {
 }
 
 // This will setup the main menu after the JSON file data from changeLogs are readable
-function set_menu(changeLog) {
+export function set_menu() {
     cookie_menu.style.display = `none`
     main_menu.style.display = `block`
     // Allows the enable buttons to be interactable
@@ -2336,10 +2387,7 @@ function set_menu(changeLog) {
             error_count = true
         }
         // Starts the game
-        if (error_count == false) {
-            set_up_game(input_names, input_colors, player_spot, player_ids, player_money, player_jailed, player_props, player_ooj, player_bank)
-
-        }
+        if (error_count == false) {set_up_game(input_names, input_colors, player_spot, player_ids, player_money, player_jailed, player_props, player_ooj, player_bank)}
     }
     // If saveSelector is value is changed
     saveSelector.onchange = function() {
@@ -2424,7 +2472,7 @@ function set_menu(changeLog) {
             // Adds all the items from the list of `future updates`
             for (var i=0; i < changeLog[select_version.value].length; i++) {
                 let futUpd = document.createElement(`div`) // futUpd = Future Update
-                futUpd.innerHTML = `&#x2022; `+changeLog[select_version.value][i]
+                futUpd.innerHTML = `- `+changeLog[select_version.value][i]
                 changeLog_txt.appendChild(futUpd)
             }
         } else if (select_version.value !== `nothing`) { // If anything else except `null` was selected
@@ -2445,7 +2493,7 @@ function set_menu(changeLog) {
                 changeLog_txt.appendChild(add_title)
                 for (var i=0; i < add_items.length; i++) {
                     let ver_add = document.createElement(`div`)
-                    ver_add.innerHTML = `&#x2022; `+add_items[i]
+                    ver_add.innerHTML = `+ `+add_items[i]
                     changeLog_txt.appendChild(ver_add)
                 }
             }
@@ -2459,7 +2507,7 @@ function set_menu(changeLog) {
                 changeLog_txt.appendChild(bug_title)
                 for (var i=0; i < bug_items.length; i++) {
                     let ver_bug = document.createElement(`div`)
-                    ver_bug.innerHTML = `&#x2022; `+bug_items[i]
+                    ver_bug.innerHTML = `+ `+bug_items[i]
                     changeLog_txt.appendChild(ver_bug)
                 }
             }
@@ -2473,7 +2521,7 @@ function set_menu(changeLog) {
                 changeLog_txt.appendChild(sub_title)
                 for (var i=0; i < sub_items.length; i++) {
                     let ver_sub = document.createElement(`div`)
-                    ver_sub.innerHTML = `&#x2022; `+sub_items[i]
+                    ver_sub.innerHTML = `- `+sub_items[i]
                     changeLog_txt.appendChild(ver_sub)
                 }
             }
@@ -2487,7 +2535,7 @@ function set_menu(changeLog) {
                 changeLog_txt.appendChild(change_title)
                 for (var i=0; i < change_items.length; i++) {
                     let ver_change = document.createElement(`div`)
-                    ver_change.innerHTML = `&#x2022; `+change_items[i]
+                    ver_change.innerHTML = `+ `+change_items[i]
                     changeLog_txt.appendChild(ver_change)
                 }
             }
@@ -2496,27 +2544,16 @@ function set_menu(changeLog) {
 }
 
 // Sets up the cookie Warning
-function set_cookie_menu(data) {
-    // Sets the change log data
-    changeLog_data = data
-    // This will allow the cookie btns to work
-    const acceptBtn = document.getElementById(`cookieAccept`)
-    const declineBtn = document.getElementById(`cookieDecline`)
-    var hasCookie=getCookie(`saveData0`);
+export function set_cookie_menu() {
     // If the acceptBtn was clicked
-    acceptBtn.onclick = function() {
+    document.getElementById(`cookieAccept`).onclick = function() {
         savingStatus = true
-        set_menu(data)
-    }
-    // Checks if the client already has a cookie 
-    if (hasCookie !== null) { // Uf the have a cookie then just continue
-        savingStatus = true
-        set_menu(data)
+        set_menu()
     }
     // If the acceptBtn was clicked
-    declineBtn.onclick = function() {
+    document.getElementById(`cookieDecline`).onclick = function() {
         savingStatus = false
-        set_menu(data)
+        set_menu()
     }
 }
 
