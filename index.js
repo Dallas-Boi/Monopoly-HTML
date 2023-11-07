@@ -85,7 +85,8 @@ const all_player_icons = [
     {"name": "House", "img": "./playerImg/player_house.png"},
     {"name": "Smiley Face", "img": "./playerImg/player_smile_face.png"},
     {"name": "Top Hat", "img": "./playerImg/player_top_hat.png"},
-    {"name": "Tree", "img": "./playerImg/player_tree.png"}
+    {"name": "Tree", "img": "./playerImg/player_tree.png"},
+    {"name": "Shoe", "img": "./playerImg/player_shoe.png"}
 ]
 
 // Game Variables
