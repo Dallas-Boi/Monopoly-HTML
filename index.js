@@ -80,6 +80,14 @@ const cardsData = {
     }   
 }
 
+// Player Icons
+const all_player_icons = [
+    {"name": "House", "img": "./playerImg/player_house.png"},
+    {"name": "Smiley Face", "img": "./playerImg/player_smile_face.png"},
+    {"name": "Top Hat", "img": "./playerImg/player_top_hat.png"},
+    {"name": "Tree", "img": "./playerImg/player_tree.png"}
+]
+
 // Game Variables
 var playerAmount = 4;
 var player_list = [];
@@ -126,7 +134,7 @@ const dice1_img = document.getElementById(`dice1`)
 const dice2_img = document.getElementById(`dice2`)
 // The player class
 class Player {
-    constructor(name, color, spot, id, money, jailed, props, ooj, bankrupt) {
+    constructor(name, color, spot, id, money, jailed, props, ooj, bankrupt, icon) {
         this.name = name
         this.color = color
         this.spot_id = spot
@@ -136,6 +144,7 @@ class Player {
         this.properties = props
         this.out_of_jail_cards = ooj
         this.bankrupt = bankrupt
+        this.icon = icon
     }
 
     // Returns the name of the player
@@ -293,10 +302,15 @@ class Player {
         this.bankrupt = status
     }
     
+    // Gets the players icon
+    get_player_icon() {
+        return this.icon
+    }
+
     // Returns this players data into a list
     toString() {
         //name, color, spot, id, money, jailed, props, ooj, bankrupt
-        return [this.name, this.color, this.spot_id, this.player_id, this.money, this.isJailed, this.properties, this.out_of_jail_cards, this.bankrupt]
+        return [this.name, this.color, this.spot_id, this.player_id, this.money, this.isJailed, this.properties, this.out_of_jail_cards, this.bankrupt, this.icon]
     }
 }
 
@@ -482,6 +496,7 @@ export function load_saved_game(loadClient, data) {
     var player_props = []
     var player_ooj = []
     var player_bank = []
+    var player_icon = []
     // Sets all the values in the correct variable
     for (var play=0; play < playerAmount; play++) {
         player_names.push(playerData[`players`][play][0])
@@ -498,10 +513,11 @@ export function load_saved_game(loadClient, data) {
         }
         player_ooj.push(playerData[`players`][play][7])
         player_bank.push(playerData[`players`][play][8])
+        player_icon.push(playerData[`players`][play][9])
     }
     // Starts the game
-    set_up_game(player_names, player_colors, player_spot, player_id, player_money, player_jail, player_props, player_ooj, player_bank)
-    // Overwrites Data
+    set_up_game(player_names, player_colors, player_spot, player_id, player_money, player_jail, player_props, player_ooj, player_bank, player_icon)
+    // Overwrites Card Data
     chest_deck = playerData[`cards`][`chest`]
     chance_deck = playerData[`cards`][`chance`]
     update_all_prop_tags()
@@ -1380,12 +1396,19 @@ export function fix_all_positions() {
         if (player_list[i].get_player_bankrupt() == false) { // If the player is not bankrupts
             try {
                 var current_spot = player_list[parseInt(i)].get_player_spot_id()
-                var spot_placement = (propData[current_spot]['property_data']['players_on'].indexOf(i)).toString()
-                console.log(` ${propData[current_spot]["name"]} | ${spot_placement}`)
-                // Gets the player and sets their position
-                player = document.getElementById(`player${(parseInt(i)+1)}`)
-                player.style.top = `${propData[current_spot]['placement'][spot_placement][1]}px`
-                player.style.left = `${propData[current_spot]['placement'][spot_placement][0]}px`
+                var player = document.getElementById(`player${(parseInt(i)+1)}`)
+                if (current_spot !== 1) { 
+                    var spot_placement = (propData[current_spot]['property_data']['players_on'].indexOf(i)).toString()
+                    console.log(` ${propData[current_spot]["name"]} | ${spot_placement}`)
+                    // Sets this players position
+                    player.style.top = `${propData[current_spot]['placement'][spot_placement][1]}px`
+                    player.style.left = `${propData[current_spot]['placement'][spot_placement][0]}px`
+                } else {
+                    var firstPlacement = document.querySelector("#row11 > td:nth-child(11)").getClientRects()
+                    var playerLeft = firstPlacement[0].left+(2+(i*25))
+                    player.style.left = `left:${playerLeft}px;`
+                    player.style.top = `top:884px;`
+                }
             } catch (err) {
                 console.error(err)
             }
@@ -2078,7 +2101,7 @@ export function move_player(given_player, player_movement) {
     }
     // Moves the player spot to spot
     var i = 0
-    console.log(propData)
+    //console.log(propData)
     var spot_by_spot = setInterval(() => {
         player_list[parseInt(given_player)].add_player_spot_id(1) // Every 250 milliseconds the player will move
         // Checks if the player is passing go ( if so then sets there spot to 1)
@@ -2087,12 +2110,12 @@ export function move_player(given_player, player_movement) {
             passed_go()
         }
         // Removes given player from their previous location
-        console.log(player_list[parseInt(given_player)].get_player_spot_id())
-        console.log(`${player_list[parseInt(given_player)].get_player_name()} Removed from ${propData[player_list[parseInt(given_player)].get_player_spot_id()-1]["name"]}`)
+        //console.log(player_list[parseInt(given_player)].get_player_spot_id())
+        //console.log(`${player_list[parseInt(given_player)].get_player_name()} Removed from ${propData[player_list[parseInt(given_player)].get_player_spot_id()-1]["name"]}`)
         
         propData[player_list[parseInt(given_player)].get_player_spot_id()]["property_data"]["players_on"].push(parseInt(given_player)); 
-        console.log(`${player_list[parseInt(given_player)].get_player_name()} Added from ${propData[player_list[parseInt(given_player)].get_player_spot_id()]["name"]}`)
-        console.log(propData[player_list[parseInt(given_player)].get_player_spot_id()])
+        //console.log(`${player_list[parseInt(given_player)].get_player_name()} Added from ${propData[player_list[parseInt(given_player)].get_player_spot_id()]["name"]}`)
+        //console.log(propData[player_list[parseInt(given_player)].get_player_spot_id()])
         var current_spot = player_list[parseInt(given_player)].get_player_spot_id()
         var spot_placement = propData[current_spot]['property_data']['players_on'].length-1
         // Gets the player and sets their position
@@ -2201,10 +2224,11 @@ export function set_roll() {
 
 // Sets up everything that will be used in the game
 //name, color, spot, id, money, jailed, props, ooj, bankrupt
-export function set_up_game(player_names, player_colors, playerSpot, playerId, starting_cash, playerJailed, playerProps, playerOoj, bankrupt) {
+export function set_up_game(player_names, player_colors, playerSpot, playerId, starting_cash, playerJailed, playerProps, playerOoj, bankrupt, player_icons) {
+    console.log(player_names, player_colors, playerSpot, playerId, starting_cash, playerJailed, playerProps, playerOoj, bankrupt, player_icons)
     // Sets up displays and variables
     main_menu.style.display = `none` // Hides the main menu
-    connectedScreen.style.display = `none`
+    connectedScreen.style.display = `none` // Hides the Connected Menu ( Multiplayer Only )
     game_board.style.display = `block` // Shows the game
     playerAmount = player_names.length // The amount of players
     // Sets up players elements
@@ -2223,6 +2247,11 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
         newPlayer.id = `player${(i+1)}`
         newPlayer.className = `player`
         newPlayer.style = `background-color: ${player_colors[i]};top:884px;left:${playerLeft}px;`
+        // If this player has a player Icon
+        if (player_icons[i] !== 'null') {
+            newPlayer.style.backgroundImage = `url('${all_player_icons[player_icons[i]]["img"]}')`
+            newPlayer.style.backgroundColor = ""
+        }
         // When the players mouse is over a player it will show the name of that player
         newPlayer.onmouseover = function() { playerToolTip.style.display = `block` }
         // When the players mouse is not over a player it will hide that players name
@@ -2231,7 +2260,7 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
         // Adds the player tooltip to the board
         playerContainer.appendChild(newPlayer)
         // Adds the player to the player list
-        player_list.push(new Player(player_names[i], player_colors[i], parseInt(playerSpot[i]), playerId[i], parseInt(starting_cash[i]), playerJailed[i], playerProps[i], playerOoj[i], Boolean(bankrupt[i])))
+        player_list.push(new Player(player_names[i], player_colors[i], parseInt(playerSpot[i]), playerId[i], parseInt(starting_cash[i]), playerJailed[i], playerProps[i], playerOoj[i], Boolean(bankrupt[i]), player_icons[i]))
         // Adds the player to propData players_on
         if (saveSlot == "null") {propData[playerSpot[i]]["property_data"]["players_on"].push(i)}
         // Sets the money containers to the right color and text
@@ -2272,17 +2301,18 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
         } else if ([32,33,35,36,38,40].includes(i)) {
             cellTag_tip.className = `cell_tip_right`
         }
+        // Adds a white border around railroad properties
+        if ([6,16,26,36].includes(i)) { cellTag_tip.style.border = "1px solid white" }
+
         cellTag_tip.textContent = `Owner: Bank`
         // Makes the hover part
-        cellTag.onmouseover = function() { // Mouse is over
-            cellTag_tip.style.display = `block`
-        }
-        cellTag.onmouseout = function() { // Mouse is not over
-            cellTag_tip.style.display = `none`
-        }
+        // Mouse is over
+        cellTag.onmouseover = function() {cellTag_tip.style.display = `block`}
+        // Mouse is not over
+        cellTag.onmouseout = function() {cellTag_tip.style.display = `none`}
         cellTag.appendChild(cellTag_tip) // Appends the tag to the cell
     }
-    // Randomizes the chance/chest cards
+    // Randomizes the chance/chest card
     chest_deck = shuffle(Object.keys(cardsData[`Base`][`Community Chest`])) // Randomize Chest
     chance_deck = shuffle(Object.keys(cardsData[`Base`][`Chance`])) // Randomize Chest
     // if the client allows saving
@@ -2306,15 +2336,51 @@ export function set_connected() {
     connectedScreen.style.display = "block"
 }
 
+// Updates the icon dropdown so players do not have the same icon
+function update_player_icon_select(hide, value) {
+    if (value !== "null") {
+        // This will hide all the options that have this className
+        var elms = document.getElementsByClassName(all_player_icons[value]["name"])
+        for (var i=0; i < elms.length; i++) {elms[i].style.display = hide}
+    }
+}
+
 // This will setup the main menu after the JSON file data from changeLogs are readable
 export function set_menu() {
     cookie_menu.style.display = `none`
     main_menu.style.display = `block`
+    // Sets up all the options for the player icons and change events
+    for (var i=0; i < 4; i++) {
+        const icon_selector = document.getElementById(`player${i+1}_icon_select`)
+        // Creates all the elements
+        for (var icon=0; icon < all_player_icons.length; icon++) {
+            let icon_opt = document.createElement("option")
+            icon_opt.textContent = all_player_icons[icon]["name"]
+            icon_opt.value = icon
+            icon_opt.className = all_player_icons[icon]["name"]
+            icon_selector.appendChild(icon_opt)
+        }
+        // Will set up the onchange function
+        icon_selector.onchange = function() {
+            console.log("icon_selector")
+            // Shows all the values
+            for (var icon=0; icon < all_player_icons.length; icon++) {
+                update_player_icon_select("block", icon)
+            }
+            // Hides all selected values
+            for (var i=0; i < 4; i++) {
+                var icon_selector = document.getElementById(`player${i+1}_icon_select`)
+                update_player_icon_select("none", icon_selector.value)
+            }
+        }
+
+    }
     // Allows the enable buttons to be interactable
     for (let j=2; j < 4; j++) {
         const enable_btn = document.getElementById(`player${(j+1)}_enable`)
         const name_input = document.getElementById(`player${(j+1)}_name`)
         const color_input = document.getElementById(`player${(j+1)}_color`)
+        const icon_input = document.getElementById(`player${(j+1)}_icon_select`)
         enable_btn.onclick = function() {
             if (enable_btn.checked == false) { // if the enable button is player3
                 if (j+1 == 3) { // If player3 was unchecked
@@ -2323,19 +2389,23 @@ export function set_menu() {
                     document.getElementById(`player4_name`).value = ``
                     document.getElementById(`player4_name`).disabled = `disabled`
                     document.getElementById(`player4_color`).disabled = `disabled`
+                    document.getElementById(`player4_icon_select`).disabled = `disabled`
                 }
                 name_input.value = ``
                 name_input.disabled = `disabled`
                 color_input.disabled = `disabled`
+                icon_input.disabled = `disabled`
             } else if (enable_btn.checked == true) {
                 if (j+1 == 4) { // If player4 was checked
                     document.getElementById(`player3_enable`).checked = true
                     document.getElementById(`player3_name`).disabled = ``
                     document.getElementById(`player3_color`).disabled = ``
+                    document.getElementById(`player3_icon_select`).disabled = ``
                 }
                 name_input.value = ``
                 name_input.disabled = ``
                 color_input.disabled = ``
+                icon_input.disabled = ``
             }
         }
     }
@@ -2351,13 +2421,14 @@ export function set_menu() {
         var player_props = []
         var player_ooj = []
         var player_bank = []
+        var player_icon = []
         var error_count = false
         // Gets all the values
         for (let i=0; i < 4; i++) {
             const enable_box = document.getElementById(`player${i+1}_enable`)
             const name_input = document.getElementById(`player${i+1}_name`)
             const color_input = document.getElementById(`player${i+1}_color`)
-            
+            const icon_input = document.getElementById(`player${i+1}_icon_select`)
             if (i+1 >= 3) { // Checks if `i` is on 3
                 if (enable_box.checked == false) { // Checks to see if that player was enabled
                     continue
@@ -2375,6 +2446,7 @@ export function set_menu() {
                     player_props.push({})
                     player_ooj.push([])
                     player_bank.push(false)
+                    player_icon.push(icon_input.value)
                     error_count = false
                     continue
                 } else {
@@ -2387,7 +2459,7 @@ export function set_menu() {
             error_count = true
         }
         // Starts the game
-        if (error_count == false) {set_up_game(input_names, input_colors, player_spot, player_ids, player_money, player_jailed, player_props, player_ooj, player_bank)}
+        if (error_count == false) {set_up_game(input_names, input_colors, player_spot, player_ids, player_money, player_jailed, player_props, player_ooj, player_bank, player_icon)}
     }
     // If saveSelector is value is changed
     saveSelector.onchange = function() {

@@ -107,7 +107,8 @@
             "Added | A way to stop other host players playing with other host players ( This causes problems )",
             "Added | A way to disable the connect btn without the proper text ( This will Cause problems if button was clicked without text )",
             "Added | After every turn it will remove any players in the property tag that is not on the property anymore ( Mostly Backend )",
-            "Added | Custom Player Icons ( Not the best looking but better than just a colored box )"
+            "Added | Custom Player Icons ( Not the best looking but better than just a colored box )",
+            "Added | A white border when hovering over railroad properties ( Checking the properties owner )"
         ],
         "bug_fix": [
             "Fixed | Property Tag Offset",
@@ -124,7 +125,8 @@
             "Changed | The text when a player rolls 3 doubles",
             "Changed | The Out of Jail Free card Description",
             "Changed | Capitalized the Advance to Boardwalk Description",
-            "Changed | How the change log is displayed on screen"
+            "Changed | How the change log is displayed on screen",
+            "Changed | The location of loading a Save"
         ]
     }
 }
