@@ -604,7 +604,7 @@ export function open_trade(player) {
     // Button Functions for LEFT side
     var trader_prop_add_funct = function() { // Property Adding btn
         if ((left_items[`properties`].includes(trader_prop_input.value) == false) && (trader_prop_input.value !== `null`)) { // Checks if the selected property isn't the default value
-            document.getElementById(`property_opt_`+trader_prop_input.value).style.font.color = `green`
+            document.getElementById(`property_opt_`+trader_prop_input.value).style.color = `green`
             left_items[`properties`].push(trader_prop_input.value)
             // Creates the prop element for the list of removed props
             var prop_container = document.createElement(`div`)
@@ -1097,11 +1097,11 @@ export function open_manager(player) {
             new_text.style = `top:${(30*prop_amount)}px;`
             const new_buy = document.createElement(`button`)
             const new_sell = document.createElement(`button`)
-            new_buy.id=`buy_${(30*prop_amount)}`
-            new_sell.id=`sell_${(30*prop_amount)}`
+            new_buy.id=`buy_${prop_keys[i]}`
+            new_sell.id=`sell_${prop_keys[i]}`
             
             // This will add interaction and puts the elements on screen
-            let prop_id = prop_keys[i]
+            var prop_id = prop_keys[i]
             // Buy btn
             new_buy.onclick = function() {
                 buy_item(prop_id, `house`, player)
@@ -2346,17 +2346,6 @@ function update_player_icon_select(hide, value) {
     }
 }
 
-// Updates the player example with the given id
-function update_player_example_display(id, icon) {
-    var playerExample = document.getElementById(id)
-    playerExample.style = `background-color: ${player_colors[i]};`
-    // If this player has a player Icon
-    if (icon !== 'null') {
-        playerExample.style.backgroundImage = `url('${all_player_icons[icon]["img"]}')`
-        playerExample.style.backgroundColor = ""
-    }
-}
-
 // This will setup the main menu after the JSON file data from changeLogs are readable
 export function set_menu() {
     cookie_menu.style.display = `none`
@@ -2557,13 +2546,11 @@ export function set_menu() {
         // Shows all the elements
         var children = select_version.children;
         for (var i = 0; i < children.length; i++) {
-            if (children[i].value !== `nothing`) {
-                children[i].style.display = `block`
-            }
+            children[i].style = "background-color: white; color:black;"
         }
         // Hide the selected element
         let curSelect = document.getElementById(select_version.value)
-        curSelect.style.display = `none`
+        curSelect.style = "background-color: black; color:white;"
         // Removes the old text
         while(changeLog_txt.firstChild) {
             changeLog_txt.removeChild(changeLog_txt.firstChild)
@@ -2668,6 +2655,15 @@ export function set_cookie_menu() {
         savingStatus = false
         set_menu()
     }
+    // Checks if the client has any cookies
+    var cookies = document.cookie.split(';')
+    if (cookies[0] !== "") {
+        savingStatus = true
+        set_menu()
+        send_notification("Welcome back to Monopoly")
+        return
+    }
+    send_notification("Welcome to Monopoly")
 }
 
 // If the client selected another tab or minimized the tab
@@ -2689,6 +2685,5 @@ window.addEventListener("load", () => {
         set_menu(changeLog)
         return
     }
-    send_notification("Welcome to Monopoly")
     set_cookie_menu(changeLog)
 })

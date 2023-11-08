@@ -1,11 +1,9 @@
 {
     "Future Updates": [
         "3D houses / hotels",
-        "Chooseable Player Pieces",
         "Changing the Name of the game and the properties to comply with legal terms (Trademark and Copyright by Hasbro Entertainmemt",
         "Adding a Real Time Poll for Ideas on the Main Menu",
         "Making the other tabs pop up on a small menu instead of replacing the screen",
-        "Making the auction house have a brick background and a house shape with all the text inside",
         "Error System so that players know if something breaks and they can either report it or it will automatically report it",
         "Remake the rolling dice animation using a 3D object using Three.js",
         "More than 2 Player Multiplayer"
@@ -109,14 +107,15 @@
             "Added | After every turn it will remove any players in the property tag that is not on the property anymore ( Mostly Backend )",
             "Added | Custom Player Icons ( Not the best looking but better than just a colored box )",
             "Added | A white border when hovering over railroad properties ( Checking the properties owner )",
-            "Added | A Example of what your player will look like when creating them"
+            "Added | A Example of what your player will look like when creating them",
+            "Added | When selecting an item in a drop down it will highlight the one you selected and not hide it ( Unless others can not use it )"
         ],
         "bug_fix": [
             "Fixed | Property Tag Offset",
-            "Fixed | Player Positioning on the side properties",
             "Fixed | Issue where selecting the \"Enable\" Button on Player 4 it sets Player 3's Name to Nothing",
             "Fixed | An Issue When placing the player it will place them if there were 2 players on that spot before fix all player positions was called",
-            "Fixed | An issue with the \"Pay all Players\" card not allowing the player to continue when the pay all the players | This card will also continue even if you have no money"
+            "Fixed | An issue with the \"Pay all Players\" card not allowing the player to continue when the pay all the players | This card will also continue even if you have no money",
+            "Fixed | An Issue with the trade and manage menus" 
         ],
         "removed": [],
         "changed": [
@@ -127,7 +126,9 @@
             "Changed | The Out of Jail Free card Description",
             "Changed | Capitalized the Advance to Boardwalk Description",
             "Changed | How the change log is displayed on screen",
-            "Changed | The location of loading a Save"
+            "Changed | The location of loading a Save",
+            "Changed | Player Positioning on the side properties",
+            "Changed | The size of the player color selector"
         ]
     }
 }

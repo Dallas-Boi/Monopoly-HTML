@@ -212,7 +212,7 @@ table {
 	align-self: center;
 	text-align: center;
 	vertical-align: center;
-	margin-top:6%;
+	margin-top: 4.5%;
 }
 
 .divider {
@@ -238,7 +238,9 @@ table {
 
 #saveSelect {
 	margin-top:5px;
-	margin-left:11px;
+	margin-left:10px;
+	width: 105px;
+	max-width: 100%;
 }
 
 .loadNsave .myBtn {
@@ -340,6 +342,35 @@ table {
 	margin-top: 20px;
 	text-align: center;
 }
+/* Settings Elements */
+.settings_edit {
+	margin-left: 1200px;
+	width: 200px;
+	height: 250px;
+	max-width: 100%;
+	max-height: 100%;
+	border: 1px solid black;
+	z-index: 3;
+}
+
+.settings_title {
+	font-size: 20px;
+	margin-top: 15px;
+	text-align: center;
+}
+
+.settings_opt_container {
+	margin-top: 15px;
+	border-top: 1px dotted black;
+	place-items: center;
+	justify-content: center;
+	display: flex;
+}
+
+.settings_opt {
+	margin-top: 10px;
+}
+
 /* All auction styles */
 .center_auction {
 	justify-content: center;

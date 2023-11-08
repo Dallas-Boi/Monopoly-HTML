@@ -39,7 +39,7 @@
                     <div class="player_input_container">
                         <label for="player1_name" style="margin-left:24px">Player 1's Name:</label>
                         <input id="player1_name">
-                        <input type="color" id="player1_color" class="pointer">
+                        <input type="color" id="player1_color" style="height: 20px; margin-top:15px" class="pointer">
                         <select id="player1_icon_select">
                             <option value="null">Select Icon...</option>
                         </select>
@@ -47,7 +47,7 @@
                         <br>
                         <label for="player2_name" style="margin-left:24px">Player 2's Name:</label>
                         <input id="player2_name">
-                        <input type="color" id="player2_color" class="pointer" value="#FF0000">
+                        <input type="color" id="player2_color" class="pointer" style="height: 20px; margin-top:5px" value="#FF0000">
                         <select id="player2_icon_select">
                             <option value="null">Select Icon...</option>
                         </select>
@@ -56,7 +56,7 @@
                         <input type="checkbox" id="player3_enable" class="pointer">
                         <label for="player3_name">Player 3's Name:</label>
                         <input id="player3_name" disabled="disabled">
-                        <input type="color" id="player3_color" class="pointer" value="#00FF00" disabled="disabled">
+                        <input type="color" id="player3_color" class="pointer" style="height: 20px; margin-top:5px" value="#00FF00" disabled="disabled">
                         <select id="player3_icon_select" disabled="disabled">
                             <option value="null">Select Icon...</option>
                         </select>
@@ -65,7 +65,7 @@
                         <input type="checkbox" id="player4_enable" class="pointer">
                         <label for="player4_name">Player 4's Name:</label>
                         <input id="player4_name" disabled="disabled">
-                        <input type="color" id="player4_color" class="pointer" value="#0000FF" disabled="disabled">
+                        <input type="color" id="player4_color" class="pointer" style="height: 20px; margin-top:5px" value="#0000FF" disabled="disabled">
                         <select id="player4_icon_select" disabled="disabled">
                             <option value="null">Select Icon...</option>
                         </select>
@@ -103,6 +103,15 @@
                     <div class="loadNsave">
                         <button id="loadSave_btn" class="myBtn" style="background-color: green;">Load</button>
                         <button id="deleteSave_btn" class="myBtn" style="background-color: red;">Delete</button>
+                    </div>
+                </div>
+                <div class="settings_edit">
+                    <div class="settings_title">Settings</div>
+                    <div class="settings_opt_container">
+                        <label for="settings_notification" style="margin-top:5px">Send Notifications? </label>
+                        <input id="settings_notification" type="checkbox" class="settings_opt">
+                        <label for="settings_notification" style="margin-top:5px">Send Notifications? </label>
+                        <input id="settings_notification" type="checkbox" class="settings_opt">
                     </div>
                 </div>
             </div>
