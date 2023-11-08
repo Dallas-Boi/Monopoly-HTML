@@ -108,7 +108,8 @@
             "Added | A way to disable the connect btn without the proper text ( This will Cause problems if button was clicked without text )",
             "Added | After every turn it will remove any players in the property tag that is not on the property anymore ( Mostly Backend )",
             "Added | Custom Player Icons ( Not the best looking but better than just a colored box )",
-            "Added | A white border when hovering over railroad properties ( Checking the properties owner )"
+            "Added | A white border when hovering over railroad properties ( Checking the properties owner )",
+            "Added | A Example of what your player will look like when creating them"
         ],
         "bug_fix": [
             "Fixed | Property Tag Offset",

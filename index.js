@@ -2226,7 +2226,7 @@ export function set_roll() {
 // Sets up everything that will be used in the game
 //name, color, spot, id, money, jailed, props, ooj, bankrupt
 export function set_up_game(player_names, player_colors, playerSpot, playerId, starting_cash, playerJailed, playerProps, playerOoj, bankrupt, player_icons) {
-    console.log(player_names, player_colors, playerSpot, playerId, starting_cash, playerJailed, playerProps, playerOoj, bankrupt, player_icons)
+    //console.log(player_names, player_colors, playerSpot, playerId, starting_cash, playerJailed, playerProps, playerOoj, bankrupt, player_icons)
     // Sets up displays and variables
     main_menu.style.display = `none` // Hides the main menu
     connectedScreen.style.display = `none` // Hides the Connected Menu ( Multiplayer Only )
@@ -2346,6 +2346,17 @@ function update_player_icon_select(hide, value) {
     }
 }
 
+// Updates the player example with the given id
+function update_player_example_display(id, icon) {
+    var playerExample = document.getElementById(id)
+    playerExample.style = `background-color: ${player_colors[i]};`
+    // If this player has a player Icon
+    if (icon !== 'null') {
+        playerExample.style.backgroundImage = `url('${all_player_icons[icon]["img"]}')`
+        playerExample.style.backgroundColor = ""
+    }
+}
+
 // This will setup the main menu after the JSON file data from changeLogs are readable
 export function set_menu() {
     cookie_menu.style.display = `none`
@@ -2353,6 +2364,7 @@ export function set_menu() {
     // Sets up all the options for the player icons and change events
     for (var i=0; i < 4; i++) {
         const icon_selector = document.getElementById(`player${i+1}_icon_select`)
+        let curPlayer = i+1
         // Creates all the elements
         for (var icon=0; icon < all_player_icons.length; icon++) {
             let icon_opt = document.createElement("option")
@@ -2361,20 +2373,43 @@ export function set_menu() {
             icon_opt.className = all_player_icons[icon]["name"]
             icon_selector.appendChild(icon_opt)
         }
-        // Will set up the onchange function
-        icon_selector.onchange = function() {
-            console.log("icon_selector")
+        
+        // Sets up the change events to update the display of the player
+        var name_input = document.getElementById(`player${(i+1)}_name`)
+        var color_input = document.getElementById(`player${(i+1)}_color`)
+        var icon_input = document.getElementById(`player${(i+1)}_icon_select`)
+        // When the color input is changed it will update the player example
+        color_input.onchange = function() {
+            var playerExample = document.getElementById(`player${curPlayer}_example`)
+            playerExample.style.backgroundColor = document.getElementById(`player${curPlayer}_color`).value
+        }
+        // if the icon Input is changed then it will update the player example
+        icon_input.onchange = function() {
+            var playerExample = document.getElementById(`player${curPlayer}_example`)
+            var icon = document.getElementById(`player${curPlayer}_icon_select`)
+            // Will set up the onchange function
             // Shows all the values
-            for (var icon=0; icon < all_player_icons.length; icon++) {
-                update_player_icon_select("block", icon)
+            for (var i=0; i < all_player_icons.length; i++) {
+                update_player_icon_select("block", i)
             }
             // Hides all selected values
             for (var i=0; i < 4; i++) {
                 var icon_selector = document.getElementById(`player${i+1}_icon_select`)
                 update_player_icon_select("none", icon_selector.value)
             }
+            // ------------------------------- \\
+            // Handles all the player examples
+            // If the value of the input is not null
+            if (icon.value !== 'null') {
+                // If this player has a player Icon
+                playerExample.style.backgroundImage = `url('${all_player_icons[icon.value]["img"]}')`
+                playerExample.style.backgroundColor = ""
+                return
+            }   
+            // If the value is 'null' then set the background image to nothing
+            playerExample.style.backgroundImage = ''
+            playerExample.style.backgroundColor = document.getElementById(`player${curPlayer}_color`).value
         }
-
     }
     // Allows the enable buttons to be interactable
     for (let j=2; j < 4; j++) {
@@ -2382,6 +2417,7 @@ export function set_menu() {
         const name_input = document.getElementById(`player${(j+1)}_name`)
         const color_input = document.getElementById(`player${(j+1)}_color`)
         const icon_input = document.getElementById(`player${(j+1)}_icon_select`)
+        const example_dis = document.getElementById(`player${(j+1)}_example`)
         enable_btn.onclick = function() {
             if (enable_btn.checked == false) { // if the enable button is player3
                 if (j+1 == 3) { // If player3 was unchecked
@@ -2391,22 +2427,26 @@ export function set_menu() {
                     document.getElementById(`player4_name`).disabled = `disabled`
                     document.getElementById(`player4_color`).disabled = `disabled`
                     document.getElementById(`player4_icon_select`).disabled = `disabled`
+                    document.getElementById(`player4_example`).hidden = `hidden`
                 }
                 name_input.value = ``
                 name_input.disabled = `disabled`
                 color_input.disabled = `disabled`
                 icon_input.disabled = `disabled`
+                example_dis.hidden = `hidden`
             } else if (enable_btn.checked == true) {
                 if (j+1 == 4) { // If player4 was checked
                     document.getElementById(`player3_enable`).checked = true
                     document.getElementById(`player3_name`).disabled = ``
                     document.getElementById(`player3_color`).disabled = ``
                     document.getElementById(`player3_icon_select`).disabled = ``
+                    document.getElementById(`player3_example`).hidden = ``
                 }
                 name_input.value = ``
                 name_input.disabled = ``
                 color_input.disabled = ``
                 icon_input.disabled = ``
+                example_dis.hidden = ``
             }
         }
     }

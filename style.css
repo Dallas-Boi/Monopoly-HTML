@@ -166,8 +166,21 @@ table {
 
 .player_input_container {
 	position: absolute;
-	left: 18.5px;
 	top: 5px;
+	width: 550px;
+}
+
+.player1_container {
+	display: flex;
+	position: absolute;
+	justify-content: center;
+	left:50%;
+	transform: translate(-50%)
+}
+
+.playerExample {
+	width: 15px;
+	height: 15px;
 }
 
 .start_action {
@@ -175,7 +188,7 @@ table {
 	place-items: center;
 	position: absolute;
 	justify-content: center;
-	width: 450.5px;
+	width: 550px;
 	height:30px;
 	top:140px;
 }
@@ -225,7 +238,7 @@ table {
 
 #saveSelect {
 	margin-top:5px;
-	margin-left:8px;
+	margin-left:11px;
 }
 
 .loadNsave .myBtn {
