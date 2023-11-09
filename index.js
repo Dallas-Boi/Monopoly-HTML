@@ -1668,10 +1668,10 @@ export function sell_item(location, type, player) {
             player_list[parseInt(player)].add_player_money(propData[location]['property_cost']/2)
             message_text_box(`<b>${player_list[parseInt(player)].get_player_name()}</b> has mortgage ${propData[location]['name']} and recived <b class="cash">$${(propData[location]['property_cost']/2)}</b>`)
             // This will create the mortgage line
-            var red_line = document.createElement(`canvas`)
             var cells = document.getElementById(`cell_tags`)
             var cell_tag = document.getElementById(`cell_${location}_tag`)
-            red_line.id = `cell_${location}_tag`
+            var red_line = document.createElement(`canvas`)
+            red_line.id = `cell_${location}_mortgage`
             // Checks if the property is on the side or in the middle
             if ([2,3,4,5,6,7,8,9,10,22,23,24,25,26,27,28,29,30].includes(parseInt(location))) { // Middle
                 red_line.className = `cell_mortgage_mid`
@@ -1922,7 +1922,7 @@ export function check_landed_property(updateManage) {
         sell_btn.textContent = `Auction`
         // Makes the props background color
         var backColor = ``
-        if (["white"].includes(propData[location][`property_data`]['color'])) {backColor = "black"}
+        if (["white", "yellow"].includes(propData[location][`property_data`]['color'])) {backColor = "black"}
         // Sends the message for the property
         message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> Would you like to buy <b style="background-color:${backColor};color: ${propData[location]['property_data']['color']}">${propData[location]['name']}</b> for <b class="cash">$${propData[location]['property_cost']}</b>`)
         // Allows the buy to be interacted with

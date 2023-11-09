@@ -120,8 +120,9 @@
             "Fixed | An issue with the \"Pay all Players\" card not allowing the player to continue when the pay all the players | This card will also continue even if you have no money",
             "Fixed | An Issue with the trade and manage menus",
             "Fixed | An Issue with the \"Advance\" Cards where it will just go to boardwalk and stop",
-            "Fixed | An Issue when rolling 3 doubles it will move the player spot to spot and then will move them to jail",
-            "Fixed | When going into the manage property screen and then exiting it will make the player pay again if they do not own the property"
+            "Fixed | An Issue when rolling 3 doubles it will move the player spot to spot and then it will move them to jail",
+            "Fixed | When going into the manage property screen and then exiting it will make the player pay again if they do not own the property",
+            "Fixed | When Un-mortgaging a property and removing the red line"
         ],
         "removed": [],
         "changed": [
