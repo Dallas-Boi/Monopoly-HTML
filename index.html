@@ -72,7 +72,7 @@
                         <input id="player4_example" class="playerExample" style="background-color: #0000FF;" disabled="disabled" hidden>
                     </div>
                     <div class="start_action">
-                        <button id="start_game" class="myBtn">Start the game</button>
+                        <button id="start_game" class="myBtn">Start Game</button>
                     </div>
                     <div id="error_box" class="error">
                         <div id="error_txt"></div>
@@ -108,10 +108,12 @@
                 <div class="settings_edit">
                     <div class="settings_title">Settings</div>
                     <div class="settings_opt_container">
-                        <label for="settings_notification" style="margin-top:5px">Send Notifications? </label>
+                        <label for="settings_notification" class="settings_opt" style="margin-top:5px">Send Notifications? </label>
                         <input id="settings_notification" type="checkbox" class="settings_opt">
-                        <label for="settings_notification" style="margin-top:5px">Send Notifications? </label>
-                        <input id="settings_notification" type="checkbox" class="settings_opt">
+                        <br>
+                        <label for="settings_hidden_mode" class="settings_opt" style="margin-top:5px">Enable Hidden? </label>
+                        <input type="checkbox" id="settings_hidden_mode" class="settings_opt">
+                        <button id="settings_btn" class="myBtn">Save</button>
                     </div>
                 </div>
             </div>

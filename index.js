@@ -62,17 +62,17 @@ const propertyNames = {
 const cardsData = {
     "Base": {
         "Community Chest": {
-            "advance_boardwalk": {"location_id": 40, "description": " Advance's to Boardwalk"},
-            "advance_railroad_1": {"location_id": 6, "description": " Advance's to Reading Railroad"},
+            "advance_boardwalk": {"location_id": 40, "description": " Advance's to <b style=\"color: blue\">Boardwalk</b>"},
+            "advance_railroad_1": {"location_id": 6, "description": " Advance's to <b style=\"color: black\">Reading Railroad</b>"},
             "advance_go": {"location_id": 1, "description": " Advance's to Go"},
             "out_of_jail_Community Chest": {"description": " Gained a Get of Jail Free Card"}
         },
         "Chance": {
-            "advance_railroad_4": {"location_id": 36, "description": " Advance's to Short Line Railroad"},
+            "advance_railroad_4": {"location_id": 36, "description": " Advance's to <b style=\"color: black\">Short Line Railroad</b>"},
             "out_of_jail_Chance": {"description": " Gained a Get of Jail Free Card"},
-            "pay_tax": {"tax_amount": 100, "description": " Has to pay $100 in tax"},
-            "pay_prop_tax": {"house": 15, "hotels": 115, "description": " Has to Pay for each house ($15 per) and hotel ($115 per)"},
-            "pay_to_all": {"amount": 50, "description": " Has to Pay all players $50"}
+            "pay_tax": {"tax_amount": 100, "description": " Has to pay <b class=\"cash\">$100</b> in tax"},
+            "pay_prop_tax": {"house": 15, "hotels": 115, "description": " Has to Pay for each house (<b class=\"cash\">$15</b> per) and hotel (<b class=\"cash\">$115</b> per)"},
+            "pay_to_all": {"amount": 50, "description": " Has to Pay all players <b class=\"cash\">$50</b>"}
         }
     },
     "AHS": {
@@ -101,6 +101,9 @@ var dice1, dice2, player, movement
 var chest_deck, chance_deck
 var saveSlot = `null`
 var savingStatus = false
+// Settings Variables
+var enable_notifications = true
+var enable_hidden_mode = true
 // Elements
 // Menus
 const cookie_menu = document.getElementById(`cookie_menu`)
@@ -117,6 +120,9 @@ const error_txt = document.getElementById(`error_txt`)
 const select_version = document.getElementById(`version_menu`)
 const changeLog_txt = document.getElementById(`changeLog_main`)
 const saveSelector = document.getElementById(`saveSelect`)
+const notification_elm = document.getElementById("settings_notification")
+const hidden_mode_elm = document.getElementById("settings_hidden_mode")
+const settings_btn = document.getElementById("settings_btn")
 // Buttons for game board
 const roll_btn = document.getElementById('roll_action')
 const trade_btn = document.getElementById(`trade_action`)
@@ -385,12 +391,14 @@ export function decrypt(string = ``) {
 
 // When called the notifi element will show the notification and then fade away
 export function send_notification(message) {
-    document.getElementById("notification").innerHTML = message
-    $("#notification").fadeIn()
-    setTimeout(function() {
-        $("#notification").fadeOut()
-    }, 2500)
-    
+    // Checks if notifications are enable
+    if (enable_notifications == true) {
+        document.getElementById("notification").innerHTML = message
+        $("#notification").fadeIn()
+        setTimeout(function() {
+            $("#notification").fadeOut()
+        }, 2500)
+    }
 }
 
 // Finds the given Cookie
@@ -423,6 +431,31 @@ export function setCookie(cname, cvalue, exdays) {
     let expires = `expires=`+ d.toUTCString();
     document.cookie = cname + `=` + cvalue + `;` + expires + `;path=/`;
 }
+
+// Saves the settings the user saved
+function save_client_settings() {
+    // Saves the items into a cookie
+    var setting_items = {
+        "notification": notification_elm.checked,
+        "hidden_mode": hidden_mode_elm.checked
+    }
+    setCookie("settings", JSON.stringify(setting_items), 1000)
+    load_client_settings()
+}
+
+// Loads the saved client settings
+function load_client_settings() {
+    // Gets the settings Data
+    var client_settings = getCookie("settings")
+    // Checks the items
+    notification_elm.checked = client_settings["notification"]
+    hidden_mode_elm.checked = client_settings["hidden_mode"]
+    // Changes the variables
+    enable_notifications = client_settings["notification"]
+    enable_hidden_mode = client_settings["hidden_mode"]
+
+    send_notification("Testing")
+}   
 
 // This saves the players name
 export function save_current_game(name, returnData) {
@@ -554,6 +587,7 @@ export function open_trade(player) {
     // Functions that both sides will use
     // Updates both total_values
     var update_totals = function() {
+        console.log(left_items, right_items)
         trader_total_text.textContent = `Total Value: $${left_items[`cash`]+left_items[`prop_cash`]}`
         other_total_text.textContent = `Total Value: $${right_items[`cash`]+right_items[`prop_cash`]}`
     }
@@ -571,7 +605,7 @@ export function open_trade(player) {
     if (prop_keys.length > 0) { // Checks if the player has any properties
         for (var i=0; i < prop_keys.length; i++) { // Adds all the properties to LEFT side
             var prop_opt = document.createElement(`option`)
-            prop_opt.id = `property_opt_`+prop_keys[i]
+            prop_opt.id = `property_opt_${prop_keys[i]}`
             prop_opt.value = prop_keys[i]
             prop_opt.textContent = propData[prop_keys[i]][`name`]
             trader_prop_input.appendChild(prop_opt)
@@ -587,7 +621,7 @@ export function open_trade(player) {
     if (left_ooj.length > 0) {
         for (var i=0; i < left_ooj.length; i++) {
             var ooj_opt = document.createElement(`option`)
-            ooj_opt.id = `ooj_left_`+left_ooj[i]
+            ooj_opt.id = `ooj_left_${left_ooj[i]}`
             ooj_opt.value = left_ooj[i]
             ooj_opt.textContent = left_ooj[i]
             trader_ooj_input.appendChild(ooj_opt)
@@ -604,28 +638,28 @@ export function open_trade(player) {
     // Button Functions for LEFT side
     var trader_prop_add_funct = function() { // Property Adding btn
         if ((left_items[`properties`].includes(trader_prop_input.value) == false) && (trader_prop_input.value !== `null`)) { // Checks if the selected property isn't the default value
-            document.getElementById(`property_opt_`+trader_prop_input.value).style.color = `green`
+            document.getElementById(`property_opt_${trader_prop_input.value}`).style.color = `green`
             left_items[`properties`].push(trader_prop_input.value)
             // Creates the prop element for the list of removed props
             var prop_container = document.createElement(`div`)
-            prop_container.id = `prop_`+(trader_prop_input.value).toString()
+            prop_container.id = `prop_${trader_prop_input.value}`
             prop_container.className = `info_prop`
             trader_giving_props.appendChild(prop_container)
             // Creates the prop color box
-            prop_container = document.getElementById(`prop_`+(trader_prop_input.value).toString())
+            prop_container = document.getElementById(`prop_${trader_prop_input.value}`)
             var prop_color = document.createElement(`canvas`)
-            prop_color.id = `prop_color_`+trader_prop_input.value
+            prop_color.id = `prop_color_${trader_prop_input.value}`
             prop_color.className = `prop_color`
             prop_color.width = `20`
             prop_color.height = `20`
-            prop_color.style = `background-color:`+propData[trader_prop_input.value][`property_data`][`color`]+`;top:`+((left_items[`properties`].length-1)*30)+`px;`
+            prop_color.style = `background-color:${propData[trader_prop_input.value][`property_data`][`color`]};top:${((left_items[`properties`].length-1)*30)}px;`
             prop_container.appendChild(prop_color)
             // Makes the Prop Name
             var prop_name = document.createElement(`div`)
-            prop_name.id = `prop_name_`+trader_prop_input.value
+            prop_name.id = `prop_name_${trader_prop_input.value}`
             prop_name.className = `prop_name`
             prop_name.textContent = `- `+propData[trader_prop_input.value][`name`]
-            prop_name.style = `top:`+((left_items[`properties`].length-1)*30)+`px;`
+            prop_name.style = `top:${((left_items[`properties`].length-1)*30)}px;`
             prop_container.appendChild(prop_name)
             left_items[`prop_cash`] += propData[trader_prop_input.value][`property_cost`]
             update_totals()
@@ -633,17 +667,17 @@ export function open_trade(player) {
     }
     var trader_prop_sub_funct = function() { // Property Removing btn
         if (left_items[`properties`].includes(trader_prop_input.value)) { // If the property has been added to the trade
-            document.getElementById(`property_opt_`+trader_prop_input.value).style.font.color = `black`
+            document.getElementById(`property_opt_${trader_prop_input.value}`).style.color = `black`
             // Removes The property
-            document.getElementById(`prop_`+trader_prop_input.value).remove()
+            document.getElementById(`prop_${trader_prop_input.value}`).remove()
             left_items[`prop_cash`] -= propData[trader_prop_input.value][`property_cost`]
             left_items[`properties`].splice(left_items[`properties`].indexOf(trader_prop_input.value), 1) // Removes the 
             // Updates the list
             for (var i=0; i < left_items[`properties`].length; i++) {
-                var canvas_elm = document.getElementById(`prop_color_`+left_items[`properties`][i])
-                canvas_elm.style = `background-color:`+propData[left_items[`properties`][i]][`property_data`][`color`]+`;top:`+((i)*30).toString()+`px;`
-                var name_elm = document.getElementById(`prop_name_`+left_items[`properties`][i])
-                name_elm.style = `top:`+((i)*30).toString()+`px;`
+                var canvas_elm = document.getElementById(`prop_color_${left_items[`properties`][i]}`)
+                canvas_elm.style = `background-color:${propData[left_items[`properties`][i]][`property_data`][`color`]};top:${((i)*30)}px;`
+                var name_elm = document.getElementById(`prop_name_${left_items[`properties`][i]}`)
+                name_elm.style = `top:${((i)*30)}px;`
             }
         }
         update_totals()
@@ -677,7 +711,7 @@ export function open_trade(player) {
         if (left_items[`ooj`].includes(trader_ooj_input.value)) { // Checks if the player hasn't added the chance/chest cards
             left_items[`ooj`].splice(left_items[`ooj`].indexOf(trader_ooj_input.value), 1)
             left_ooj.push(trader_ooj_input.value)
-            document.getElementById(`left_`+trader_ooj_input.value).checked = false
+            document.getElementById(`left_${trader_ooj_input.value}`).checked = false
             left_items[`prop_cash`] -= 50
         }
         update_totals()
@@ -704,12 +738,95 @@ export function open_trade(player) {
     var other_giving_props = document.getElementById(`player_giving_props_right`)
     var other_total_text = document.getElementById(`total_value_right`)
     var right_items = {"properties": [], "prop_cash": 0,"cash": 0, "ooj": []}
-
+    var right_cash = 0
     // Creates the Select Player.... Option
     var sel_opt = document.createElement(`option`)
     sel_opt.value=`null`
     sel_opt.textContent = `Select Player....`
     other_name.appendChild(sel_opt)
+
+    // Makes the other buttons interactable
+    other_prop_add_btn.onclick = function() { // Property Adding btn
+        if ((right_items[`properties`].includes(other_prop_input.value) == false) && (other_prop_input.value !== `null`)) { // Checks if the selected property isn't the default value
+            document.getElementById(`property_opt_${other_prop_input.value}`).style.color = `green`
+            right_items[`properties`].push(other_prop_input.value)
+            // Creates the prop element for the list of added props
+            var prop_container = document.createElement(`div`)
+            prop_container.id = `prop_${other_prop_input.value}`
+            prop_container.className = `info_prop`
+            other_giving_props.appendChild(prop_container)
+            // Creates the prop color box
+            prop_container = document.getElementById(`prop_${other_prop_input.value}`)
+            var prop_color = document.createElement(`canvas`)
+            prop_color.id = `prop_color_${other_prop_input.value}`
+            prop_color.className = `prop_color`
+            prop_color.width = `20`
+            prop_color.height = `20`
+            prop_color.style = `background-color:${propData[other_prop_input.value][`property_data`][`color`]};top:${((right_items[`properties`].length-1)*30)}px;`
+            prop_container.appendChild(prop_color)
+            // Makes the Prop Name
+            var prop_name = document.createElement(`div`)
+            prop_name.id = `prop_name_${other_prop_input.value}`
+            prop_name.className = `prop_name`
+            prop_name.textContent = `- ${propData[other_prop_input.value][`name`]}`
+            prop_name.style = `top:${((right_items[`properties`].length-1)*30)}px;`
+            prop_container.appendChild(prop_name)
+            right_items[`prop_cash`] += propData[other_prop_input.value][`property_cost`]
+            update_totals()
+        }
+    }
+    other_prop_sub_btn.onclick = function() { // Property Removing btn
+        if (right_items[`properties`].includes(other_prop_input.value)) { // If the property has been added to the trade
+            document.getElementById(`property_opt_${other_prop_input.value}`).style.color = `black`
+            // Removes The property
+            document.getElementById(`prop_${other_prop_input.value}`).remove()
+            right_items[`prop_cash`] -= propData[other_prop_input.value][`property_cost`]
+            right_items[`properties`].splice(right_items[`properties`].indexOf(other_prop_input.value), 1) // Removes the 
+            // Updates the list
+            for (var i=0; i < right_items[`properties`].length; i++) {
+                var canvas_elm = document.getElementById(`prop_color_${right_items[`properties`][i]}`)
+                canvas_elm.style = `background-color:${propData[right_items[`properties`][i]][`property_data`][`color`]};top:${((i)*30)}px;`
+                var name_elm = document.getElementById(`prop_name_${right_items[`properties`][i]}`)
+                name_elm.style = `top:${((i)*30)}px;`
+            }
+        }
+        update_totals()
+    }
+    other_cash_add_btn.onclick = function() { // Cash Adding btn
+        if ((other_cash_input.value >= 0) && (other_cash_input.value <= player_list[other_name.value].get_player_money())) { 
+            console.log("added")
+            right_items[`cash`] += parseInt(other_cash_input.value) // Adds the cash to the right_items
+            player_list[other_name.value].remove_player_money(other_cash_input.value)  // Removes the cash from the right players actual cash amount
+        }
+        other_cash_input.value = 0
+        update_totals()
+    }
+    other_cash_sub_btn.onclick = function() { // Cash Removing btn
+        if ((other_cash_input.value >= 0) && (other_cash_input.value <= right_items[`cash`])) { // Checks if the cash input can be added
+            right_items[`cash`] -= parseInt(other_cash_input.value) // Removes the cash from the right_items
+            player_list[other_name.value].add_player_money(other_cash_input.value) // Adds the cash back to the right players actual cash amount
+        }
+        other_cash_input.value = 0
+        update_totals()
+    }
+    other_ooj_add_btn.onclick = function() { // Ooj Adding btn
+        if (right_items[`ooj`].includes(other_ooj_input.value) == false) { // Checks if the player hasn't added the chance/chest cards
+            right_ooj.splice(right_ooj.indexOf(other_ooj_input.value), 1)
+            right_items[`ooj`].push(other_ooj_input.value)
+            document.getElementById(`right_${other_ooj_input.value}`).checked = true
+            right_items[`prop_cash`] += 50
+        }
+        update_totals()
+    }
+    other_ooj_sub_btn.onclick = function() { // Ooj Removing btn
+        if (right_items[`ooj`].includes(other_ooj_input.value)) { // Checks if the player hasn't added the chance/chest cards
+            right_items[`ooj`].splice(right_items[`ooj`].indexOf(other_ooj_input.value), 1)
+            right_ooj.push(other_ooj_input.value)
+            document.getElementById(`right_${other_ooj_input.value}`).checked = false
+            right_items[`prop_cash`] -= 50
+        }
+        update_totals()
+    }
 
     // Adds all the player names to the right Select
     for (var i=0; i < player_list.length; i++) {
@@ -720,102 +837,7 @@ export function open_trade(player) {
             other_name.appendChild(player_opt)
         }
     }
-    // Removes the eventlisteners to stop problems
-    other_prop_add_btn.removeEventListener(`click`, other_prop_add_funct)
-    other_prop_sub_btn.removeEventListener(`click`, other_prop_sub_funct)
-    other_cash_add_btn.removeEventListener(`click`, other_cash_add_funct)
-    other_cash_sub_btn.removeEventListener(`click`, other_cash_sub_funct)
-    other_ooj_add_btn.removeEventListener(`click`, other_ooj_add_funct)
-    other_ooj_sub_btn.removeEventListener(`click`, other_ooj_sub_funct)
-        
-    // Button Functions for right side
-    var other_prop_add_funct = function() { // Property Adding btn
-        if ((right_items[`properties`].includes(other_prop_input.value) == false) && (other_prop_input.value !== `null`)) { // Checks if the selected property isn't the default value
-            document.getElementById(`property_opt_`+other_prop_input.value).style.font.color = `green`
-            right_items[`properties`].push(other_prop_input.value)
-            // Creates the prop element for the list of added props
-            var prop_container = document.createElement(`div`)
-            prop_container.id = `prop_`+(other_prop_input.value).toString()
-            prop_container.className = `info_prop`
-            other_giving_props.appendChild(prop_container)
-            // Creates the prop color box
-            prop_container = document.getElementById(`prop_`+(other_prop_input.value).toString())
-            var prop_color = document.createElement(`canvas`)
-            prop_color.id = `prop_color_`+other_prop_input.value
-            prop_color.className = `prop_color`
-            prop_color.width = `20`
-            prop_color.height = `20`
-            prop_color.style = `background-color:`+propData[other_prop_input.value][`property_data`][`color`]+`;top:`+((right_items[`properties`].length-1)*30)+`px;`
-            prop_container.appendChild(prop_color)
-            // Makes the Prop Name
-            var prop_name = document.createElement(`div`)
-            prop_name.id = `prop_name_`+other_prop_input.value
-            prop_name.className = `prop_name`
-            prop_name.textContent = `- `+propData[other_prop_input.value][`name`]
-            prop_name.style = `top:`+((right_items[`properties`].length-1)*30)+`px;`
-            prop_container.appendChild(prop_name)
-            right_items[`prop_cash`] += propData[other_prop_input.value][`property_cost`]
-            update_totals()
-        }
-    }
-    var other_prop_sub_funct = function() { // Property Removing btn
-        if (right_items[`properties`].includes(other_prop_input.value)) { // If the property has been added to the trade
-            document.getElementById(`property_opt_`+other_prop_input.value).style.font.color = `black`
-            // Removes The property
-            document.getElementById(`prop_`+other_prop_input.value).remove()
-            right_items[`prop_cash`] -= propData[other_prop_input.value][`property_cost`]
-            right_items[`properties`].splice(right_items[`properties`].indexOf(other_prop_input.value), 1) // Removes the 
-            // Updates the list
-            for (var i=0; i < right_items[`properties`].length; i++) {
-                var canvas_elm = document.getElementById(`prop_color_`+right_items[`properties`][i])
-                canvas_elm.style = `background-color:`+propData[right_items[`properties`][i]][`property_data`][`color`]+`;top:`+((i)*30).toString()+`px;`
-                var name_elm = document.getElementById(`prop_name_`+right_items[`properties`][i])
-                name_elm.style = `top:`+((i)*30).toString()+`px;`
-            }
-        }
-        update_totals()
-    }
-    var other_cash_add_funct = function() { // Cash Adding btn
-        if ((other_cash_input.value >= 0) && (other_cash_input.value <= right_cash)) { // Checks if the cash input can be added
-            right_items[`cash`] += parseInt(other_cash_input.value)
-            right_cash -= parseInt(other_cash_input.value)
-        }
-        other_cash_input.value = 0
-        update_totals()
-    }
-    var other_cash_sub_funct = function() { // Cash Removing btn
-        if ((other_cash_input.value >= 0) && (other_cash_input.value <= right_items[`cash`])) { // Checks if the cash input can be added
-            right_items[`cash`] -= parseInt(other_cash_input.value)
-            right_cash += parseInt(other_cash_input.value)
-        }
-        other_cash_input.value = 0
-        update_totals()
-    }
-    var other_ooj_add_funct = function() { // ooj Adding btn
-        if (right_items[`ooj`].includes(other_ooj_input.value) == false) { // Checks if the player hasn't added the chance/chest cards
-            right_ooj.splice(right_ooj.indexOf(other_ooj_input.value), 1)
-            right_items[`ooj`].push(other_ooj_input.value)
-            document.getElementById(`right_`+other_ooj_input.value).checked = true
-            right_items[`prop_cash`] += 50
-        }
-        update_totals()
-    }
-    var other_ooj_sub_funct = function() { // ooj Removing btn
-        if (right_items[`ooj`].includes(other_ooj_input.value)) { // Checks if the player hasn't added the chance/chest cards
-            right_items[`ooj`].splice(right_items[`ooj`].indexOf(other_ooj_input.value), 1)
-            right_ooj.push(other_ooj_input.value)
-            document.getElementById(`right_`+other_ooj_input.value).checked = false
-            right_items[`prop_cash`] -= 50
-        }
-        update_totals()
-    } 
-    // Makes the other buttons interactable
-    other_prop_add_btn.addEventListener(`click`, other_prop_add_funct)
-    other_prop_sub_btn.addEventListener(`click`, other_prop_sub_funct)
-    other_cash_add_btn.addEventListener(`click`, other_cash_add_funct)
-    other_cash_sub_btn.addEventListener(`click`, other_cash_sub_funct)
-    other_ooj_add_btn.addEventListener(`click`, other_ooj_add_funct)
-    other_ooj_sub_btn.addEventListener(`click`, other_ooj_sub_funct)
+
     // Confirm and cancel buttons
     var left_confirm = document.getElementById(`left_player_confirm`)
     var cancel_btn = document.getElementById(`cancel_trade`)
@@ -889,7 +911,7 @@ export function open_trade(player) {
         }
     }
     // left_confirm btn
-    left_confirm.textContent = player_list[parseInt(player)].get_player_name()+` Confirm`
+    left_confirm.textContent = `${player_list[parseInt(player)].get_player_name()} Confirm`
     var left_con_funct = function() { // if the player confirms
         trader_prop_input.disabled = `disabled`
         trader_prop_add_btn.disabled = `disabled`
@@ -935,7 +957,7 @@ export function open_trade(player) {
         right_confirm.removeEventListener(`click`, right_con_funct)
         right_confirm.addEventListener(`click`, right_uncon_funct)
         if (other_name.value !== `null`) {
-            right_confirm.textContent = player_list[other_name.value].get_player_name()+` Un-Confirm`
+            right_confirm.textContent = `${player_list[other_name.value].get_player_name()} Un-Confirm`
             right_confirm_bool = true
             check_confirm_bool()
         }
@@ -976,9 +998,9 @@ export function open_trade(player) {
             right_confirm.textContent = player_list[(other_name.value).toString()].get_player_name()+` Confirm`
             // RIGHT side variables
             right_items = {"properties": [], "prop_cash": 0,"cash": 0, "ooj": []}
-            right_property = player_list[other_name.value].get_player_properties()
-            right_cash = player_list[other_name.value].get_player_money()
-            right_ooj = player_list[other_name.value].get_player_ooj()
+            var right_property = player_list[other_name.value].get_player_properties()
+            var right_cash = player_list[other_name.value].get_player_money()
+            var right_ooj = player_list[other_name.value].get_player_ooj()
 
             // Adds all the properties for the right side 
             var right_keys = Object.keys(right_property)
@@ -1065,8 +1087,8 @@ export function open_manager(player) {
             new_sell.disabled = ``
         }
     }
-
-    for (var i=0; i < prop_keys.length; i++) { // Goes through all the players properties and places them on the board
+    // Goes through all the players properties and places them on the board
+    for (var i=0; i < prop_keys.length; i++) { 
         if (propData_keys.includes(prop_keys[i])) { 
             var propGroup_amount = manage_menu.getElementsByClassName(`prop_container`).length // Amount of prop groups
             var elm = document.getElementById(propData[prop_keys[i]][`property_data`][`color`])
@@ -1117,20 +1139,20 @@ export function open_manager(player) {
             cell_contain.appendChild(new_text)
             elm.appendChild(cell_contain)
             update_text(prop_id)
-            // This enables the Exit Button
-            let exit_to_game = document.getElementById(`exit_back`)
-            exit_to_game.onclick = function() {
-                game_board.style.display = `block`
-                manage_menu.style.display = `none`
-                // Resets the manage menu
-                while (all_prop.firstChild) { 
-                    all_prop.removeChild(all_prop.firstChild)
-                }
-                // Updates texts and btns
-                if (player_list[parseInt(player)].get_player_spot_id() !== 21) { // This fixes the a glitch with free
-                    check_landed_property()
-                }
-            }
+        }
+    }
+    // This enables the Exit Button
+    let exit_to_game = document.getElementById(`exit_back`)
+    exit_to_game.onclick = function() {
+        game_board.style.display = `block`
+        manage_menu.style.display = `none`
+        // Resets the manage menu
+        while (all_prop.firstChild) { 
+            all_prop.removeChild(all_prop.firstChild)
+        }
+        // Updates texts and btns
+        if (player_list[parseInt(player)].get_player_spot_id() !== 21) { // This fixes the a glitch with free
+            check_landed_property(true)
         }
     }
 }
@@ -1224,7 +1246,7 @@ export function open_auction_house(items, type) {
             console.log(auction_value)
             player_list[parseInt(players_in[0])].remove_player_money(auction_value)
             update_money_display()
-            message_text_box(`<b>${player_list[parseInt(players_in[0])].get_player_name()}</b> Aquired ${propData[items[0]][`name`]} for <b class="cash">$${auction_value}</b>`) 
+            message_text_box(`<b>${player_list[parseInt(players_in[0])].get_player_name()}</b> Aquired <b style="color: ${propData[items[0]]['property_data']['color']}">${propData[items[0]][`name`]}</b> for <b class="cash">$${auction_value}</b>`) 
             // Sets up the new property for the player
             propData[items[0]][`property_data`][`by`] = parseInt(players_in[0])
             var cell_tag = document.getElementById(`cell_${items[0]}_tag`)
@@ -1303,7 +1325,6 @@ export function change_turn() {
     } catch ({name, message}) {
         current_turn = 0
     }
-    console.log(current_turn)
     if (player_list[current_turn].get_player_bankrupt() == true) { // Checks if the player is bankrupt if so it will go to the next turn
         change_turn()
         return
@@ -1400,7 +1421,6 @@ export function fix_all_positions() {
                 var player = document.getElementById(`player${(parseInt(i)+1)}`)
                 if (current_spot !== 1) { 
                     var spot_placement = (propData[current_spot]['property_data']['players_on'].indexOf(i)).toString()
-                    console.log(` ${propData[current_spot]["name"]} | ${spot_placement}`)
                     // Sets this players position
                     player.style.top = `${propData[current_spot]['placement'][spot_placement][1]}px`
                     player.style.left = `${propData[current_spot]['placement'][spot_placement][0]}px`
@@ -1489,6 +1509,7 @@ export function after_roll(end_jail, player, auctioned) {
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
         player2.send(`after_roll|${end_jail}, ${player}, ${auctioned}`)
     }
+    any_btn.disabled = ''
     update_all_prop_tags()
     if (end_jail == `out`) { // If the player got out so it will disable all buttons except roll
         buy_btn.onclick = ``;buy_btn.className = `action_btn_disabled`
@@ -1528,7 +1549,7 @@ export function after_roll(end_jail, player, auctioned) {
 // When the player passes go
 export function passed_go() {
     player_list[current_turn].add_player_money(200)
-    message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> has passed/landed on Go, They are awarded $200`)
+    message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> has passed/landed on Go, They are awarded <b class="cash">$200</b>`)
     update_money_display()
 }
 
@@ -1545,7 +1566,7 @@ export function buy_item(location, type, player) {
             player_list[parseInt(player)].add_player_properties(location)
             player_list[parseInt(player)].remove_player_money(propData[location]['property_cost'])
             // Lets the players know
-            message_text_box(`<b>${player_list[parseInt(player)].get_player_name()}</b> bought ${propData[location]['name']}`)
+            message_text_box(`<b>${player_list[parseInt(player)].get_player_name()}</b> bought <b style="color: ${propData[location]['property_data']['color']}">${propData[location]['name']}</b>`)
             // Updates the cell tag to be the color of the player
             var cell_tag = document.getElementById(`cell_${location}_tag`)
             cell_tag.style.backgroundColor = player_list[parseInt(player)].get_player_color()
@@ -1746,10 +1767,10 @@ export function player_jailed(player, type) {
         }
         // Pay Button
         pay_btn.className = `action_btn`
-        pay_btn.innerHTML = `Pay $50`
+        pay_btn.innerHTML = `Pay <b class="cash">$50</b>`
         pay_btn.onclick = function() {
             if (player_list[parseInt(player)].get_player_money() >= 50) {
-                message_text_box(`<b>${player_list[parseInt(player)].get_player_name()}</b> Paid $50 to get out of jail`)
+                message_text_box(`<b>${player_list[parseInt(player)].get_player_name()}</b> Paid <b class="cash">$50</b> to get out of jail`)
                 player_list[parseInt(player)].set_player_isJailed(false)
                 player_list[parseInt(player)].remove_player_money(50)
                 dice1 = 0; dice2 = 0; // This is so that they can roll
@@ -1761,16 +1782,17 @@ export function player_jailed(player, type) {
         }
         // Player uses card
         any_btn.className = `action_btn`
-        any_btn.textContent = `Use Get Out Jail card`
-        any_btn.onclick = function() { // When the player clicks the button
-            if (player_list[parseInt(player)].get_player_ooj().length > 0) { // if the player has any ooj cards
+        any_btn.textContent = `Use Card`
+        any_btn.disabled = ''
+        if (player_list[parseInt(player)].get_player_ooj().length > 0) { // if the player has any ooj cards
+            any_btn.onclick = function() { // When the player clicks the button
                 message_text_box(`<b>${player_list[parseInt(player)].get_player_name()}</b> Used a get out of jail free card`)
                 player_list[parseInt(player)].remove_player_ooj()
                 player_list[parseInt(player)].set_player_isJailed(false)
                 after_roll(`out`, player)
-            } else {
-                message_text_box(`<b>${player_list[parseInt(player)].get_player_name()}</b> does not have a get out of jail free card`)
             }
+        } else {
+            any_btn.disabled = 'disabled'
         }
     }
 }
@@ -1797,13 +1819,19 @@ export function c_cards(card_type) {
         if (player_index !== -1) {
             propData[player_list[current_turn].get_player_spot_id()][`property_data`][`players_on`].splice(player_index, 1)
         }
+        var player_movement = (40-player_list[current_turn].get_player_spot_id())+cardsData[`Base`][card_type][played_card][`location_id`]
+        // Checks if the location_id of the card is not behind the player then it will not go around the board
+        if (player_list[current_turn].get_player_spot_id() < cardsData[`Base`][card_type][played_card][`location_id`]) { 
+            player_movement = cardsData[`Base`][card_type][played_card][`location_id`] - player_list[current_turn].get_player_spot_id()
+        }
         // Moves player
         setTimeout(function() { // After 1.5 seconds it will move the player
-            move_player(current_turn, 40-player_list[current_turn].get_player_spot_id())
+            move_player(current_turn, player_movement) // Moves the player to boardwalk
+            
         }, 1500)
     } else if (played_card.includes(`pay_tax`)) { // If the player pays a tax
         pay_btn.className = `action_btn`
-        pay_btn.innerHTML = `Pay $${cardsData[`Base`][card_type][played_card][`tax_amount`]}`
+        pay_btn.innerHTML = `Pay <b class="cash">$${cardsData[`Base`][card_type][played_card][`tax_amount`]}</b>`
         pay_btn.onclick = function() {
             if (player_list[current_turn].get_player_money() >= cardsData[`Base`][card_type][played_card][`tax_amount`]) {
                 player_pays(cardsData[`Base`][card_type][played_card][`tax_amount`], `parking`)
@@ -1854,7 +1882,7 @@ export function c_cards(card_type) {
         after_roll()
     } else if (played_card.includes(`pay_to_all`)) { // player pays all players the amount
         pay_btn.className = `action_btn`
-        pay_btn.innerHTML = `Pay All Players $${cardsData[`Base`][card_type][played_card][`amount`]}`
+        pay_btn.innerHTML = `Pay <b class=\"cash\">$${cardsData[`Base`][card_type][played_card][`amount`]}</b>`
         trade_btn.style.className = `action_btn`
         any_btn.onclick = function() {open_manager(current_turn)}
         var amount = 0
@@ -1879,14 +1907,9 @@ export function c_cards(card_type) {
 }
 
 // When the player lands on a property this will check to see what to do
-export function check_landed_property() {
+export function check_landed_property(updateManage) {
     var location = player_list[current_turn].get_player_spot_id(); // Location of the player
     var owned_id = propData[location][`property_data`]['by'] // The ID of the player who owns the property
-    // Removes the event listener
-    buy_btn.onclick = ``
-    sell_btn.onclick = ``
-    pay_btn.onclick = ``
-
     // If the location is buyable and if the property is unowned
     if ((propData[location]['buyable'] == true) && (owned_id == null)) {
         // Enables the buy action 
@@ -1897,8 +1920,11 @@ export function check_landed_property() {
         sell_btn.className = `action_btn`
         sell_btn.disabled = false
         sell_btn.textContent = `Auction`
+        // Makes the props background color
+        var backColor = ``
+        if (["white"].includes(propData[location][`property_data`]['color'])) {backColor = "black"}
         // Sends the message for the property
-        message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> Would you like to buy ${propData[location]['name']} for <b class="cash">$${propData[location]['property_cost']}</b>`)
+        message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> Would you like to buy <b style="background-color:${backColor};color: ${propData[location]['property_data']['color']}">${propData[location]['name']}</b> for <b class="cash">$${propData[location]['property_cost']}</b>`)
         // Allows the buy to be interacted with
         buy_btn.onclick = function() { // Buys the property
             if (player_list[current_turn].get_player_money() >= propData[location]['property_cost']) {
@@ -1959,87 +1985,58 @@ export function check_landed_property() {
             sell_btn.className = `action_btn_disabled`
         }
         after_roll()
-    } else if ((propData[location]['buyable'] == true) && (owned_id != current_turn) && (propData[location][`property_data`]['color'] == `black`)) { // This is if the player lands on a railroad they do not own
-        if (player_list[owned_id].get_player_properties()[location]['mortgage'] == false) {
-            // Checks if the player owned property has other railroads
-            var railroad_ids = [6,16,26,36]
-            var amount = 0
-            for (var i=0; i < railroad_ids.length; i++) {
-                if (propData[railroad_ids[i].toString()][`property_data`][`by`] == owned_id) {
-                    amount = propData[location]['rent'][i]
+
+    } else if ((propData[location]['buyable'] == true) && (owned_id != current_turn)) { // If the property is buyable and if the property is owned by another player
+        if (updateManage == true) {return}
+        if (player_list[owned_id].get_player_properties()[location][`mortgage`] == false) { // Checks if the property is mortgage
+            if (propData[location][`property_data`]['color'] == `black`) {
+                // Checks if the player owned property has other railroads
+                var railroad_ids = [6,16,26,36]
+                var amount = 0
+                var times = -1
+                for (var i=0; i < railroad_ids.length; i++) {
+                    if (propData[railroad_ids[i].toString()][`property_data`][`by`] == owned_id) {
+                        times++
+                        amount = propData[location]['rent'][times]
+                    }
                 }
+            } else if (([13,29].includes(location) == false)) { // If the property is not Electric Company or Water Works
+                var amount = propData[location]['rent'][player_list[owned_id].get_player_properties()[location]['houses']] // Amount the player owes
+            } else { // If the property is Electric Company or Water Works
+                var roll_props = [13, 29]
+                var times = 0
+                var amount = -1
+                // Checks how many roll_props they own
+                for (var i=0; i < roll_props.length; i++) {
+                    if (propData[roll_props[i].toString()][`property_data`][`by`] == owned_id) {
+                        amount++
+                        times = propData[roll_props[i]]["rent"][amount]
+                    }
+                }
+                // Does the messaging and math
+                amount = (dice1+dice2)*times
             }
-            // Sends message
             message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> owes <b>${player_list[owned_id].get_player_name()}</b> <b class="cash">$${amount}</b>`)
+            // pay_btn setup
+            pay_btn.className = `action_btn`
+            pay_btn.innerHTML = `Pay <b class="cash">$${amount}</b>`
             pay_btn.onclick = function() {
                 // Checks if the player has enough to pay
                 if (player_list[current_turn].get_player_money() >= amount) {
                     player_pays(amount, owned_id)
                     after_roll()
-                } else {
-                    message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> does not have <b class="cash">$${amount}</b>`)
+                    return
                 }
+                message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> does not have <b class="cash">$${amount}</b>`)
             }
-            // pay_btn setup
-            pay_btn.className = `action_btn`
-            pay_btn.innerHTML = `Pay <b class="cash">$${amount}</b>`
-        } else {
-            message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> does not have to pay since this property is mortgage`)
-            after_roll()
-        }
-    } else if ((propData[location]['buyable'] == true) && (owned_id != current_turn)) { // If the property is buyable and if the property is owned by another player
-        if (player_list[owned_id].get_player_properties()[location][`mortgage`] == false) { // Checks if the property is mortgage
-            if (([13,29].includes(location) == false)) { // If the property is not Electric Company or Water Works
-                var amount = propData[location]['rent'][player_list[owned_id].get_player_properties()[location]['houses']] // Amount the player owes
-                message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> owes <b>${player_list[owned_id].get_player_name()}</b> <b class="cash">$${amount}</b>`)
-                // Checks if the player has enough to pay if so then it will pay the next player
-                pay_btn.onclick = function() {
-                    if (player_list[current_turn].get_player_money() >= amount) {
-                        player_pays(amount, owned_id)
-                        after_roll()
-                    } else {
-                        message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> does not have <b class="cash">$${amount}</b>`)
-                    }
-                }
-                // pay_btn setup
-                pay_btn.className = `action_btn`
-                pay_btn.innerHTML = `Pay <b class="cash">$${amount}</b>`
-                bankrupt_btn.className = `myBtn`
-                bankrupt_btn.onclick = function() {
-                    bankrupt_player(`by_player`, location, owned_id)
-                }
-            } else { // If the property is Electric Company or Water Works
-                var roll_props = [13, 19]
-                var times = 0
-                // Checks how many roll_props they own
-                for (var i=0; i < roll_props.length; i++) {
-                    if (Object.keys(player_list[owned_id].get_player_properties()).includes(roll_props[i].toString())) {
-                        times = propData[location]['rent'][i]
-                    }
-                }
-                // Does the messaging and math
-                var amount = (dice1+dice2)*times
-                message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> owes ${player_list[owned_id].get_player_name()} <b class="cash">$${amount}</b>`)
-                pay_btn.onclick = function() {
-                    if (player_list[current_turn].get_player_money() >= amount) {
-                        player_pays(amount, owned_id)
-                        after_roll()
-                    } else {
-                        message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> does not have <b class="cash">$${amount}</b>`)
-                    }
-                }
-                // pay_btn setup
-                pay_btn.className = `action_btn`
-                pay_btn.innerHTML = `Pay <b class="cash">$${amount}</b>`
-                bankrupt_btn.className = `myBtn`
-                bankrupt_btn.onclick = function() {
-                    bankrupt_player(`by_player`, location, owned_id)
-                }
-            }
+            // bankrupt_btn setup
+            bankrupt_btn.className = `myBtn`
+            bankrupt_btn.onclick = function() { bankrupt_player(`by_player`, location, owned_id) }
         } else { // If the property is mortgage
-            message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> does not have to pay since this property is mortgage`)
+            message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> this property is mortgage`)
             after_roll()
         }
+        
     } else if (propData[location]['buyable'] == false) { // if the location is not buyable
         buy_btn.className = `action_btn_disabled`
         sell_btn.className = `action_btn_disabled`
@@ -2086,9 +2083,11 @@ export function check_landed_property() {
             update_game_text()
             after_roll()
         } else if (location == 31) { // If the player lands on Go to Jail
-            player_jailed(current_turn, `new`)
-            dice1 = -1; dice2 = -2
-            after_roll(`no`, current_turn)
+            setTimeout(function() {
+                player_jailed(current_turn, `new`)
+                dice1 = -1; dice2 = -2
+                after_roll(`no`, current_turn)
+            }, 1500)
             return
         }
     }
@@ -2172,8 +2171,8 @@ export function rollPlayer_dice() {
                         player_jailed(current_turn, `new`)
                         dice1 = -1; dice2 = -2
                         after_roll(`no`, current_turn)
-                        return
                     }, 2000)
+                    return
                 }
             }
             // Moves the player 
@@ -2517,6 +2516,8 @@ export function set_menu() {
             document.getElementById(saveSelector.value).remove()
         }
     }
+    // Allows the client to save their notifications
+    settings_btn.onclick = save_client_settings
     // This will add all the versions to the dropdown menu
     var version_keys = Object.keys(changeLog)
     for (var i=0; i < version_keys.length; i++) {
@@ -2645,6 +2646,7 @@ export function set_menu() {
 
 // Sets up the cookie Warning
 export function set_cookie_menu() {
+    load_client_settings()
     // If the acceptBtn was clicked
     document.getElementById(`cookieAccept`).onclick = function() {
         savingStatus = true
@@ -2668,14 +2670,17 @@ export function set_cookie_menu() {
 
 // If the client selected another tab or minimized the tab
 document.addEventListener(`visibilitychange`, () => {
-    var webicon = document.querySelector(`head > link:nth-child(3)`)
-    if (document.hidden) { // if document is hidden, change the title and icon
-        webicon.href = `https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico`
-        document.title = `Dashboard`
-        return
+    // If "hidden_mode" is enabled
+    if (enable_hidden_mode == true) {
+        var webicon = document.querySelector(`head > link:nth-child(3)`)
+        if (document.hidden) { // if document is hidden, change the title and icon
+            webicon.href = `https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico`
+            document.title = `Dashboard`
+            return
+        }
+        document.title = `Monopoly 2.0` // If the document is not hidden (hidden meaning if the client is looking at the page or not)
+        webicon.href = `./favicon.png`
     }
-    document.title = `Monopoly 2.0` // If the document is not hidden (hidden meaning if the client is looking at the page or not)
-    webicon.href = `./favicon.png`
 });
 
 // Once the document loads and the location hash is #host

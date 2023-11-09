@@ -1,6 +1,5 @@
 // Made October 24th, 2023
 // This handles all multiplayer stuff
-import changeLog from './changeLog.json' assert { type: 'json' };
 import * as mainFile from './index.js'
 
 export var player2
