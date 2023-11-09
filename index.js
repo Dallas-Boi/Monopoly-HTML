@@ -445,16 +445,16 @@ function save_client_settings() {
 
 // Loads the saved client settings
 function load_client_settings() {
-    // Gets the settings Data
-    var client_settings = getCookie("settings")
-    // Checks the items
-    notification_elm.checked = client_settings["notification"]
-    hidden_mode_elm.checked = client_settings["hidden_mode"]
-    // Changes the variables
-    enable_notifications = client_settings["notification"]
-    enable_hidden_mode = client_settings["hidden_mode"]
-
-    send_notification("Testing")
+    try {
+        // Gets the settings Data
+        var client_settings = getCookie("settings")
+        // Checks the items
+        notification_elm.checked = client_settings["notification"]
+        hidden_mode_elm.checked = client_settings["hidden_mode"]
+        // Changes the variables
+        enable_notifications = client_settings["notification"]
+        enable_hidden_mode = client_settings["hidden_mode"]
+    } catch {}
 }   
 
 // This saves the players name
