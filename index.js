@@ -434,13 +434,27 @@ export function setCookie(cname, cvalue, exdays) {
 
 // Saves the settings the user saved
 function save_client_settings() {
-    // Saves the items into a cookie
-    var setting_items = {
-        "notification": notification_elm.checked,
-        "hidden_mode": hidden_mode_elm.checked
+    var settings_txt = document.getElementById("settings_save_txt")
+    try {
+        // Saves the items into a cookie
+        var setting_items = {
+            "notification": notification_elm.checked,
+            "hidden_mode": hidden_mode_elm.checked
+        }
+        setCookie("settings", JSON.stringify(setting_items), 1000)
+        load_client_settings()
+        settings_txt.textContent = "Successfully Saved"
+        settings_txt.style.color = "lime"
+        // Fades the save_txt in and out
+        $("#settings_save_txt").fadeIn()
+        setTimeout(function() {
+            $("#settings_save_txt").fadeOut()
+        }, 2500)
+    } catch (err) {
+        console.log(err)
+        settings_txt.textContent = "Hmmm... Something Went Wrong"
+        settings_txt.style.color = "red"
     }
-    setCookie("settings", JSON.stringify(setting_items), 1000)
-    load_client_settings()
 }
 
 // Loads the saved client settings
@@ -1565,8 +1579,11 @@ export function buy_item(location, type, player) {
             propData[location][`property_data`]['by'] = player
             player_list[parseInt(player)].add_player_properties(location)
             player_list[parseInt(player)].remove_player_money(propData[location]['property_cost'])
+            // Makes the props background color
+        var backColor = ``
+        if (["white", "yellow"].includes(propData[location][`property_data`]['color'])) {backColor = "black"}
             // Lets the players know
-            message_text_box(`<b>${player_list[parseInt(player)].get_player_name()}</b> bought <b style="color: ${propData[location]['property_data']['color']}">${propData[location]['name']}</b>`)
+            message_text_box(`<b>${player_list[parseInt(player)].get_player_name()}</b> bought <b style="background-color: ${backColor};color: ${propData[location]['property_data']['color']}">${propData[location]['name']}</b>`)
             // Updates the cell tag to be the color of the player
             var cell_tag = document.getElementById(`cell_${location}_tag`)
             cell_tag.style.backgroundColor = player_list[parseInt(player)].get_player_color()
@@ -1673,13 +1690,12 @@ export function sell_item(location, type, player) {
             var red_line = document.createElement(`canvas`)
             red_line.id = `cell_${location}_mortgage`
             // Checks if the property is on the side or in the middle
+            red_line.className = `cell_mortgage_mid`
             if ([2,3,4,5,6,7,8,9,10,22,23,24,25,26,27,28,29,30].includes(parseInt(location))) { // Middle
-                red_line.className = `cell_mortgage_mid`
                 var top_px = cell_tag.style.top
                 red_line.style.top = `${(parseInt(top_px.replace(`px`))+5)}px`
                 red_line.style.left = cell_tag.style.left
             } else if ([12,13,14,15,16,17,18,19,20,32,33,34,35,36,37,38,39,40].includes(parseInt(location))) { // Side
-                red_line.className = `cell_mortgage_side`
                 var left_px = cell_tag.style.left
                 red_line.style.left = `${(parseInt(left_px.replace(`px`))+5)}px`
                 red_line.style.top = cell_tag.style.top

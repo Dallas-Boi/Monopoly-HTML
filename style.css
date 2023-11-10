@@ -373,6 +373,10 @@ table {
 	margin-top: 10px;
 }
 
+#settings_save_txt {
+	margin-top:20px;
+}
+
 #settings_btn {
 	background-color: green;
 	font-size: 20px;
