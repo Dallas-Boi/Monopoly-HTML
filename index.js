@@ -1119,7 +1119,6 @@ export function open_manager(player) {
 
     // This will update the buy/sell btn
     var update_btn = function(id) { 
-        
         prop_text.textContent = propData[id]["name"]
         prop_text.style.color = propData[id]["property_data"]["color"]
         // Allows the Buy/Sell buttons to be interactable
@@ -1150,6 +1149,11 @@ export function open_manager(player) {
     exit_to_game.onclick = function() {
         manage_menu.style.display = `none` // Hides manage menu
         check_landed_property(true) // Updates texts and btns
+        // Removes the interactable props
+        for (var i=0; i < prop_keys.length; i++) { 
+            // If the player owns the prop
+            if (propData_keys.includes(prop_keys[i])) { document.getElementById(`cell_${prop_keys[i]}`).onclick = `` }
+        }
     }
 }
 

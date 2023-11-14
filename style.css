@@ -719,7 +719,6 @@ table {
 
 .cell_tag_mid {
 	position: absolute;
-	z-index: 3;
 	width: 70px;
 	height: 20px;
 	max-width: 100%;
