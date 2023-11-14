@@ -1,6 +1,6 @@
 {
     "Future Updates": [
-        "3D houses / hotels",
+        "3D Houses / Hotels",
         "Changing the Name of the game and the properties to comply with legal terms (Trademark and Copyright by Hasbro Entertainmemt",
         "Adding a Real Time Poll for Ideas on the Main Menu",
         "Making the other tabs pop up on a small menu instead of replacing the screen",
@@ -121,7 +121,6 @@
             "Fixed | An Issue with the trade and manage menus",
             "Fixed | An Issue with the \"Advance\" Cards where it will just go to boardwalk and stop",
             "Fixed | An Issue when rolling 3 doubles it will move the player spot to spot and then it will move them to jail",
-            "Fixed | When going into the manage property screen and then exiting it will make the player pay again if they do not own the property",
             "Fixed | When Un-mortgaging a property and removing the red line"
         ],
         "removed": [],
@@ -136,6 +135,24 @@
             "Changed | The location of loading a Save",
             "Changed | Player Positioning on the side properties",
             "Changed | The size of the player color selector"
+        ]
+    },
+    "V 2.1": {
+        "date": "November 17th, 2023",
+        "title": "Game Redesign",
+        "added": [
+        ],
+        "bug_fix": [
+            "Fixed | An Issue with housing not being in the correct location for Park Place and Boardwalk",
+            "Fixed | Houses Not showing up when loading a save",
+            "Fixed | A Major issue where the management menu will buy a house for the most recent property",
+            "Fixed | When going into the manage property screen and then exiting it will make the player pay again if they do not own the property",
+            "Fixed | An Issue with Mortgaging Lines not being set correctly"
+        ],
+        "removed": [],
+        "changed": [
+            "Changed | The Auction House Menu",
+            "Changed | The Management Menu"
         ]
     }
 }

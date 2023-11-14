@@ -369,9 +369,7 @@ table {
 	width: 200px;
 }
 
-.settings_opt {
-	margin-top: 10px;
-}
+.settings_opt {margin-top: 10px;}
 
 #settings_save_txt {
 	margin-top:20px;
@@ -387,39 +385,44 @@ table {
 	margin-left: -5px;
 }
 
-/* All auction styles */
-.center_auction {
-	justify-content: center;
-	align-content: center;
-	display: flex;
-}
-
-.auction_title {
+/* Auction Menu */
+.popup_window {
+	left:190px;
+	top:400px;
+	z-index: 5;
+	background-color:grey;
 	position: absolute;
-	font-size: 25px;
-	top:10px;
-}
-
-.auction_actions {
 	border: 1px solid black;
-	position: absolute;
-	width: 500px;
-	height: 600px;
+	width: 600px;
 	max-width: 100%;
+	height:401px;
 	max-height: 100%;
-	justify-content: center;
-	align-content: center;
-	display: flex;
+	border-radius: 15%;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
-.auction_text {
+#auction_title {
+	margin-top:20px;
+	font-weight: bold;
+	font-size: 30px;
+	justify-content: center;
+	display:flex;
+	align-items: center;
+}
+
+#auction_container {
+	justify-content: center;
+	display:flex;
+	align-items: center;
+}
+
+#auction_output {
 	position: absolute;
-	max-width: 275px;
+	max-width: 400px;
 	width: 100%;
-	max-height: 200px;
+	max-height: 125px;
 	height: 100%;
-    top: 50px; /* Adjust the top position as needed to overlay the button where you want it */
-    z-index: 2; /* Ensure the button is above the table (higher z-index) */
+    top: 70px; /* Adjust the top position as needed to overlay the button where you want it */
 	border: 1px solid black;
 	background-color: white;
 	display: flex;
@@ -427,87 +430,72 @@ table {
 	overflow: auto;
 }
 
-.auction_btn {
-	position: absolute;
-	top:270px;
+#auction_container .myBtn {
+	margin-top: 240px;
+	margin-left: 5px;
+	width: 110px;
 }
 
-.auction_btn .myBtn {
-	font-size: 15px;
-	width: 80px;
-	height: 25px;
-	margin-left: 1px;
-	margin-top: 0px;
-}
-
-.auction_info_txt {
-	position: absolute;
-	top: 305px;
-	text-align: center;
+.auction_prop_info {
+	position:absolute;
 	font-size: 25px;
-}
-
-.auction_player_cash_container {
-	font-size: 20px;
+	top:225px;
 	text-align: center;
 }
 
-.auct_player_money {
-	border: 1px solid black;
-	background-color: white;
-	position: absolute;
-	width: 200px;
-	height: 115px;
-	max-width: 100%;
-	max-height: 100%;
-	left: 135px;
-}
+#auction_prop { left:100px; }
 
-#auct_player1_money {
-	top: 10px;
-}
-#auct_player2_money {
-	top: 150px;
-}
-#auct_player3_money {
-	top: 290px;
-}
-#auct_player4_money {
-	top: 430px;
+#auction_prop_value { left: 335px; }
+
+#auction_turn_txt {
+	left:50%;
+	transform: translate(-50%);
+	top:360px;
 }
 
 /* All management styles */
-.action {
-	position: absolute;
-	left: 500px;
-	top:10px;
-	width: 400px;
-	height: 93px;
-	max-width: 100%;
-	max-height: 100%;
+#manage_title {
+	font-size: 30px;
+	margin-left: 50%;
+	margin-top:10px;
+	transform: translate(-50%);
+	text-align: center;
 }
 
-.prop_container {
-	border: 1px solid black;
+#manage_select_prop {
 	position: absolute;
-	width: 400px;
-	height: 93px;
-	max-width: 100%;
-	max-height: 100%;
+	font-size: 25px;
+	left:50%;
+	top:65px;
+	transform: translate(-50%);
+	text-align: center;
 }
 
-.prop_container .prop_color {
-	border: 1px solid black;
+.manage_actions .myBtn {
 	position: absolute;
-	margin-top: 5px;
-	margin-left: 5px;
+	left:47%;
+	top:50px;
+	transform: translate(-50%);
 }
 
-.prop_container .prop_name {
-	position: absolute;
-	margin-top: 4px;
-	margin-left: 30px;
-	font-size: 20px;
+#exit_management { margin-top:280px}
+
+#manage_buy {
+	margin-left:-40px;
+	margin-top:100px;
+}
+
+#manage_sell {
+	margin-left:85px;
+	margin-top:100px;
+}
+
+#manage_help_txt {
+	font-size:25px;
+	margin-left: 50%;
+	margin-top:165px;
+	transform: translate(-50%);
+	text-align: center;
 }
 
 /* All trading styles */
@@ -699,10 +687,14 @@ table {
 }
 
 /* All gameboard styles */
+#gameboard {
+	z-index: 3;
+}
 .cell_name {
 	position: relative;
-	left: 0px;
+	left: -0.5px;
 	top: 20px;
+	transform: translate(-0px);
 	text-align: center;
 	width: 100%;
 	font-size: 14px;
@@ -727,6 +719,7 @@ table {
 
 .cell_tag_mid {
 	position: absolute;
+	z-index: 3;
 	width: 70px;
 	height: 20px;
 	max-width: 100%;

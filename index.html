@@ -148,7 +148,7 @@
             </div>
             <div id="cell_tags" class="cell_tag_container">
                 <div id="cell_houses"></div>
-                <div id="cell_2_tag" class="cell_tag_mid" style="top: 985px;left: 765px;"><div id="testing" class="cell_tip_bottom" style="display: none;">Testing</div></div>
+                <div id="cell_2_tag" class="cell_tag_mid" style="top: 985px;left: 765px;"></div>
                 <div id="cell_4_tag" class="cell_tag_mid" style="top: 985px;left: 606px;"></div>
                 <div id="cell_6_tag" class="cell_tag_mid" style="top: 985px;left: 451px;"></div>
                 <div id="cell_7_tag" class="cell_tag_mid" style="top: 985px;left: 373px;"></div>
@@ -163,7 +163,7 @@
                 <div id="cell_19_tag" class="cell_tag_side" style="top: 220px;left: 0px;"></div>
                 <div id="cell_20_tag" class="cell_tag_side" style="top: 137px;left: 0px;"></div>
                 <div id="cell_22_tag" class="cell_tag_mid" style="top: 0px;left: 140px;"></div>
-                <div id="cell_24_tag" class="cell_tag_mid" style="top: 0px;left: 295px;"><div id="testing1" class="cell_tip_top" style="display: none;">Testing</div></div>
+                <div id="cell_24_tag" class="cell_tag_mid" style="top: 0px;left: 295px;"></div>
                 <div id="cell_25_tag" class="cell_tag_mid" style="top: 0px;left: 373px;"></div>
                 <div id="cell_26_tag" class="cell_tag_mid" style="top: 0px;left: 451px;"></div>
                 <div id="cell_27_tag" class="cell_tag_mid" style="top: 0px;left: 525.5px;"></div>
@@ -408,36 +408,31 @@
                 <button id="right_player_confirm" class="myBtn" style="background-color: green;">Confirm</button>
             </div>
         </div>
-        <div id="manage_menu" style="display:none;">
-            <div id="all_prop"></div>
-            <div class="action">
-                <button id="exit_back" class="action_btn">Exit To Game</button>
+        <div id="manage_menu" class="popup_window" style="display:none;">
+            <div id="manage_title">Property Management</div>
+            <div id="manage_select_prop">Selected Property:<br><b id="manage_prop_name">No Property Selected</b></div>
+            <div class="manage_actions">
+                <button id="exit_management" class="myBtn">Exit</button><br>
+                <button id="manage_buy" class="myBtn">Buy House</button>
+                <button id="manage_sell" class="myBtn">Sell House</button>
             </div>
+            <div id="manage_help_txt">Click your own Property to<br><b style="color:green">Buy/Sell</b> a House<br><b style="color:red">Un/Mortgage</b> a Property</div>
         </div>
-        <div id="auction_menu" style="display:none;">
-            <div class="center_auction">
-                <div id="action_area" class="auction_actions">
-                    <div class="auction_title">Auction House</div>
-                    <div id="auction_text" class="auction_text"></div>
-                    <div class="auction_btn">
-                        <button id="auction_add_1" class="myBtn">Add $1</button>
-                        <button id="auction_add_10" class="myBtn">Add $10</button>
-                        <button id="auction_add_50" class="myBtn">Add $50</button>
-                        <button id="auction_add_100" class="myBtn">Add $100</button>
-                        <button id="auction_out" class="myBtn">I'm Out</button>
-                    </div>
-                    <div id="auction_prop_name" class="auction_info_txt">Item Name:<br>Placeholder a<hr></div><br>
-                    <div id="auction_prop_cost" class="auction_info_txt" style="top:375px;">Item Value:<br>Broken<hr></div><br>
-                    <div id="auction_value" class="auction_info_txt" style="top:445px;">Auction Value:<br>$0</div><br>
-                    <div id="auction_player_turn" class="auction_info_txt" style="top:510px;">Current Turn:<br>Placeholder</div>
-                </div>
-                <div id="auction_player_cash" class="auction_player_cash_container">
-                    <div id="auct_player1_money" class="auct_player_money" style="display:none;"></div>
-                    <div id="auct_player2_money" class="auct_player_money" style="display:none;"></div>
-                    <div id="auct_player3_money" class="auct_player_money" style="display:none;"></div>
-                    <div id="auct_player4_money" class="auct_player_money" style="display:none;"></div>
+        <div id="auction_menu" class="popup_window" style="display:none;">
+            <div class="auction_items">
+                <div id="auction_title">Auction House</div>
+                <div id="auction_container">
+                    <div id="auction_output"></div>
+                    <div id="auction_prop" class="auction_prop_info">Auctioned Property:<br>Boardwalk</div>
+                    <div id="auction_prop_value" class="auction_prop_info">Property Value:<br>$400</div>
+                    <button id="auction_add_1" class="myBtn">Add <b class="cash">$1</b></button>
+                    <button id="auction_add_10" class="myBtn">Add <b class="cash">$10</b></button>
+                    <button id="auction_add_50" class="myBtn">Add <b class="cash">$50</b></button>
+                    <button id="auction_add_100" class="myBtn">Add <b class="cash">$100</b></button>
+                    <button id="auction_player_out" class="myBtn">I'm Out</button>
                 </div>
             </div>
+            <div id="auction_turn_txt" class="auction_prop_info">Current Turn: Dallas</div>
         </div>
         <div id="winningScreen" style="display:none">
             <div id="cookie_warning" class="center"><div>Congratulations</div><b id="winningName"style="color:green">How are you seeing this?</b><br>For Winning The Game<br>
