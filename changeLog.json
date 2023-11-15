@@ -139,7 +139,7 @@
     },
     "V 2.1": {
         "date": "November 17th, 2023",
-        "title": "Game Redesign",
+        "title": "Game Re-design",
         "added": [
         ],
         "bug_fix": [
@@ -152,7 +152,8 @@
         "removed": [],
         "changed": [
             "Changed | The Auction House Menu",
-            "Changed | The Management Menu"
+            "Changed | The Management Menu",
+            "Changed | Everything With the Properties"
         ]
     }
 }

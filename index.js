@@ -35,15 +35,15 @@ export var propData = { // Placement is `left` px, `top` px
     "29": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "white"}, "name": "Water Works", "property_cost": 150, "rent": [4,10], "placement": {"0": [693, 42], "1": [715, 42], "2":[693, 65], "3": [715, 65]}},
     "30": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "yellow"}, "name": "Marvin Gardens", "property_cost": 280, "house_price":150, "house_placement": {"axis": 3, "left":[770, 785, 800, 814, 792]}, "rent":[24, 120, 360, 850, 1025, 1200], "placement": {"0": [775, 42], "1": [798, 42], "2":[775, 65], "3": [798, 65]}},
     "31": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0": [880, 65]}}, // To Jail
-    "32": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "green"}, "name": "Pacific Avenue", "property_cost": 300, "house_price":200, "house_placement": {"axis": 959, "left":[144, 158, 173, 188, 165]}, "rent":[26, 130, 390, 900, 1100, 1275], "placement": [[848, 140],[872, 140],[896, 140],[920, 140]]},
-    "33": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "green"}, "name": "North Carolina Avenue", "property_cost": 300, "house_price":200, "house_placement": {"axis": 959, "left":[227, 241, 256, 271, 248]}, "rent":[26, 130, 390, 900, 1100, 1275], "placement": {"0":[848, 222], "1":[872, 222], "2":[896, 222], "3":[920, 222]}},
+    "32": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "green"}, "name": "Pacific Avenue", "property_cost": 300, "house_price":200, "house_placement": {"axis": 60, "left":[144, 158, 173, 188, 165]}, "rent":[26, 130, 390, 900, 1100, 1275], "placement": [[848, 140],[872, 140],[896, 140],[920, 140]]},
+    "33": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "green"}, "name": "North Carolina Avenue", "property_cost": 300, "house_price":200, "house_placement": {"axis": 60, "left":[227, 241, 256, 271, 248]}, "rent":[26, 130, 390, 900, 1100, 1275], "placement": {"0":[848, 222], "1":[872, 222], "2":[896, 222], "3":[920, 222]}},
     "34": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0":[848, 305], "1":[872, 305], "2":[896, 305], "3":[920, 305]}},
-    "35": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "green"}, "name": "Pennsylvania Avenue", "property_cost": 320, "house_price":200, "house_placement": {"axis": 959, "left":[393, 407, 422, 437, 414]}, "rent":[28, 150, 450, 1000, 1200, 1400], "placement": {"0":[848, 388], "1":[872, 388], "2":[896, 388], "3":[920, 388]}},
+    "35": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "green"}, "name": "Pennsylvania Avenue", "property_cost": 320, "house_price":200, "house_placement": {"axis": 960, "left":[393, 407, 422, 437, 414]}, "rent":[28, 150, 450, 1000, 1200, 1400], "placement": {"0":[848, 388], "1":[872, 388], "2":[896, 388], "3":[920, 388]}},
     "36": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "black"}, "name": "Short Line Railroad", "property_cost": 200, "rent": [25, 50, 100, 200], "placement": {"0":[848, 473], "1":[872, 473], "2":[896, 473], "3":[920, 473]}},
     "37": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0":[848, 555], "1":[872, 555], "2":[896, 555], "3":[920, 555]}},
-    "38": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "blue"}, "name": "Park Place", "property_cost":350, "house_price":200, "house_placement": {"axis": 959, "left":[642, 656, 671, 686, 661]}, "rent":[35, 175, 500, 1100, 1300, 1500], "placement": {"0":[848, 637], "1":[872, 637], "2":[896, 637], "3":[920, 637]}},
+    "38": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "blue"}, "name": "Park Place", "property_cost":350, "house_price":200, "house_placement": {"axis": 960, "left":[642, 656, 671, 686, 661]}, "rent":[35, 175, 500, 1100, 1300, 1500], "placement": {"0":[848, 637], "1":[872, 637], "2":[896, 637], "3":[920, 637]}},
     "39": {"buyable":false, "property_data": {"by": null, "players_on": [], "color": null}, "placement": {"0":[848, 719], "1":[872, 719], "2":[896, 719], "3":[920, 719]}},
-    "40": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "blue"}, "name": "Boardwalk", "property_cost":400, "house_price":200, "house_placement": {"axis": 959, "left":[808, 822, 837, 852, 829]}, "rent":[50, 200, 600, 1400, 1700, 2000], "placement": {"0":[848, 802], "1":[872, 802], "2":[896, 802], "3":[920, 802]}}
+    "40": {"buyable":true, "property_data": {"by": null, "players_on": [], "color": "blue"}, "name": "Boardwalk", "property_cost":400, "house_price":200, "house_placement": {"axis": 960, "left":[806, 820, 835, 850, 827]}, "rent":[50, 200, 600, 1400, 1700, 2000], "placement": {"0":[848, 802], "1":[872, 802], "2":[896, 802], "3":[920, 802]}}
 }
 // Different Property Names for different modes
 const propertyNames = {
@@ -226,34 +226,17 @@ class Player {
 
     // This will add the icon for the house
     add_house_icon(property_id, house) {
-        let cell_container = document.getElementById(`cell_${property_id}_housing`)
-        if (cell_container == null) {
-            cell_container = document.createElement(`div`)
-            cell_container.id = `cell_${property_id}_housing`
-            cell_house.appendChild(cell_container)
+        let cell_container = document.getElementById(`cell_${property_id}_house_container`)
+        var new_house = document.createElement(`canvas`)
+        new_house.id=`cell_${property_id}_housing_${house}`
+        new_house.className = `house`
+        // Makes the className hotel if it has more than 4 properties
+        if (this.properties[property_id]['houses'] == 5) {
+            new_house.className = `hotel`
+            cell_container.innerHTML = "" // Removes all the other houses
         }
-        cell_container = document.getElementById(`cell_${property_id}_housing`)
-        // if the cell Container exist then it will just add to it
-        if (cell_container != null) {
-            var new_house = document.createElement(`canvas`)
-            new_house.id=`cell_${property_id}_housing_${(house)}`
-            // Checks if the axis is x or y
-            // Top and Bottom Axis
-            if ([2,4,7,8,10,22,24,25,27,28,30].includes(parseInt(property_id))) {
-                new_house.style = `top:${propData[property_id]['house_placement']['axis'].toString()}px;left:${propData[property_id]['house_placement']['left'][house]}px;`
-            } else if ([12,14,15,19,20,32,33,35,38,40].includes(parseInt(property_id))) { // Left and Right Axis
-                new_house.style = `left:${propData[property_id]['house_placement']['axis'].toString()}px;top:${propData[property_id]['house_placement']['left'][house]}px;`
-            }
-            // Makes the className hotel if it has more than 4 properties
-            if (this.properties[property_id]['houses'] == 5) {
-                new_house.className = `hotel`
-                cell_container.innerHTML = "" // Removes all the other houses
-            } else {
-                new_house.className = `house`
-            }
-            // Adds the house to the cell Container
-            cell_container.appendChild(new_house)
-        }
+        // Adds the house to the cell Container
+        cell_container.appendChild(new_house)
     }
     // Adds a house to the players property
     add_player_prop_house(property_id) {
@@ -265,12 +248,10 @@ class Player {
         // Removes the house
         this.properties[property_id]['houses'] -= 1
         // Everything with icons
-        let cell_container = document.getElementById(`cell_${property_id}_housing`)
+        let cell_container = document.getElementById(`cell_${property_id}_house_container`)
         cell_container.innerHTML = `` // Removes all cell icons
         // Adds The houses icon back
-        for (var i=0; i < this.properties[property_id]['houses']; i++) {
-            this.add_house_icon(property_id, i)
-        }
+        for (var i=0; i < this.properties[property_id]['houses']; i++) { this.add_house_icon(property_id, i) }
     }
     // Sets the property Mortgage
     set_property_mortgage(property_id, mortgage) {
@@ -340,53 +321,6 @@ export function shuffle(array) {
     }
   
     return array;
-}
-
-// Main Const (Non Changeables)
-const valid_letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*(){}:\"<>?,./;'[]+_=-\|` "
-
-// This Encrypts the given String
-export function encrypt(string = "") {
-    // If the user does not give a String it will throw an error
-    if (string == "") {console.error(`You must specify a String as "${string}" is not valid`); return}
-    var new_data = ``
-    for (var letter = 0; letter < string.length; letter++) {
-        for (var num = 0; num < valid_letters.length; num++) { // Loop for the `valid_letters`
-            if (String(string).slice(letter, letter+1) == valid_letters.slice(num, num+1)) {
-                if (letter+5 < valid_letters.length) {
-                    // If the list does not have to start at the beginning of `valid_letters`
-                    new_data += valid_letters.slice(num+5, num+6)
-                } else {
-                    // If the given letter does have to start at the beginning of `valid_letters`
-                    index = letter - len(valid_letters)
-                    new_data += valid_letters.slice(index+5, index+6) 
-                }
-            } 
-        }
-    }
-    return new_data
-}
-
-// This Decrypts the given String
-export function decrypt(string = ``) {
-    // If the user does not give a String it will throw an error
-    if (string == ``) {console.error(`You must specify a String as " " is not valid`); return}
-    var new_data = ``
-    for (var letter = 0; letter < string.length; letter++) {
-        for (var num = 0; num < valid_letters.length; num++) { // Loop for the `valid_letters`
-            if (String(string).slice(letter, letter+1) == valid_letters.slice(num, num+1)) {
-                if (letter+5 < valid_letters.length) {
-                    // If the list does not have to start at the beginning of `valid_letters`
-                    new_data += valid_letters.slice(num-5, num-4)
-                } else {
-                    // If the given letter does have to start at the beginning of `valid_letters`
-                    index = len(valid_letters) - letter
-                    new_data += valid_letters.slice(index-5, index-4) 
-                }
-            } 
-        }
-    }
-    return new_data
 }
 
 // When called the notifi element will show the notification and then fade away
@@ -1112,7 +1046,7 @@ export function open_manager(player) {
         }
 
         // Disables Buttons if the player has no money
-        if (player_list[parseInt(player)].get_player_money() >= propData[id][`house_price`]) {
+        if (player_list[parseInt(player)].get_player_money() < propData[id][`house_price`]) {
             new_buy.disabled = `disabled`
         }
     }
@@ -1123,12 +1057,10 @@ export function open_manager(player) {
         prop_text.style.color = propData[id]["property_data"]["color"]
         // Allows the Buy/Sell buttons to be interactable
         new_buy.onclick = function() {
-            console.log(`Buy ${id}`)
             buy_item(id, "house", current_turn)
             update_text(id)
         }
         new_sell.onclick = function() {
-            console.log(`Sell ${id}`)
             sell_item(id, "house", current_turn)
             update_text(id)
         }
@@ -1183,11 +1115,7 @@ export function open_auction_house(items, type) {
         auction_list.push(items)
     }
     // Adds all the players in the players_in list
-    for (var i=0; i < player_list.length; i++) {
-        if (player_list[i].get_player_bankrupt() !== true) {
-            players_in.push(i)
-        }
-    }
+    for (var i=0; i < player_list.length; i++) {if (player_list[i].get_player_bankrupt() !== true) { players_in.push(i) }}
 
     // This updates the text for the next item just incase there is more than one item being auctioned
     while (output_box.firstChild) { // Removes all text in the auction_message_box
@@ -1195,7 +1123,7 @@ export function open_auction_house(items, type) {
     }
     // Sets the name and cost of the item
     //var propCanvas = `<canvas id="auctionPropColor" class="prop_color" width="20" height="20" style="border: 1px solid black;background-color: ${propData[auction_list[0]]["property_data"]["color"]}; position: absolute; left: -30px; top:33px;"></canvas>`
-    name_txt.innerHTML = `<b>Auctioned Property:</b><br>${propData[auction_list[0]]["name"]}`
+    name_txt.innerHTML = `<b>Auctioned Property:</b><br><b style="color:${propData[auction_list[0]]["property_data"]["color"]}">${propData[auction_list[0]]["name"]}</b>`
     value_txt.innerHTML = `<b>Property Value:</b><br><b class="cash">$${propData[auction_list[0]]["property_cost"]}</b>`
     // Enables all the add btns
     add_1.disabled = ``
@@ -1230,10 +1158,8 @@ export function open_auction_house(items, type) {
         }
         // Checks how many players are left
         if (players_in.length == 1) { // if everyone is out
-            game_board.style.display = `block` // Shows the Game board
             auction_menu.style.display = `none` // Hides the auction house
             // Removes the money from the player
-            console.log(auction_value)
             player_list[parseInt(players_in[0])].remove_player_money(auction_value)
             update_money_display()
             message_text_box(`<b>${player_list[parseInt(players_in[0])].get_player_name()}</b> Aquired <b style="color: ${propData[items[0]]['property_data']['color']}">${propData[items[0]][`name`]}</b> for <b class="cash">$${auction_value}</b>`) 
@@ -1377,8 +1303,9 @@ export function update_all_prop_tags() {
     for (var i=0; i < prop_keys.length; i++) {
         if (propData[i][`property_data`][`by`] !== null) { // Checks if the property is buyable
             var cell_tag = document.getElementById(`cell_${i}_tag`)
+            var cell_tip = document.getElementById(`cell_${i}_tag_tip`)
             cell_tag.style.backgroundColor = player_list[propData[i][`property_data`][`by`]].get_player_color()
-            cell_tag.firstChild.innerHTML = `Owner: ${player_list[propData[i][`property_data`][`by`]].get_player_name()}`
+            cell_tip.innerHTML = `Owner: ${player_list[propData[i][`property_data`][`by`]].get_player_name()}`
         }
     }
 }
@@ -2087,7 +2014,7 @@ export function check_landed_property(updateManage) {
     }
 }
 
-// Moves the player                                                                                                                                                                                                                                                                                                                                                                                                                                                 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+// Moves the player
 export function move_player(given_player, player_movement) {
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == current_turn)) {
@@ -2279,42 +2206,72 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
     for (var i=0; i < propData_keys.length; i++) { // Goes through each property
         if (propData[propData_keys[i]][`property_data`][`color`] !== null) { // Checks if that property has a color
             let propCell = document.getElementById(`cell_${i}`) // The Property
+            let container = document.createElement("div")
+            let tag = document.createElement("div")
+            let tag_tip = document.createElement(`div`)
+            let house_container = document.createElement("div")
+            // Container
+            container.className = "cell_tag"
+            container.style = `width:${propCell.offsetWidth}px; height:${propCell.offsetHeight}px`           
+            // Tag_tip border Color
             let textColor = `black` // The property cell text color
-            // Checks prop location for text color
-            if ([`blue`, `black`, `brown`].includes(propData[propData_keys[i]][`property_data`][`color`])) { // If the prop Color is in the list it will set the text color to white
-                textColor = `white` // Sets text color to white
+            // If the prop Color is in the list it will set the text color to white
+            if ([`blue`, `black`, `brown`].includes(propData[propData_keys[i]][`property_data`][`color`])) { textColor = `white` }   
+            tag_tip.style.display = `none`
+            tag_tip.id = `cell_${i}_tag_tip`
+            // Checks the tag location
+            if ([2,4,6,7,8,10].includes(i)) { // if the prop is on the bottom
+                tag.className = "cell_tag_mid"
+                tag_tip.className = `cell_tip_bottom`
+                tag.style = `width:${propCell.offsetWidth-5}px; height:20px`
+            } else if ([12,13,14,15,16,17,19,20].includes(i)) { // if the prop is on the left
+                tag.className = "cell_tag_side"
+                tag_tip.className = `cell_tip_left`
+                tag.style = `width:20px; height:${propCell.offsetHeight-5}px;`
+                container.style.marginTop = "-50px"
+                container.style.marginLeft = "-75px"
+            } else if ([22,24,25,26,27,28,29,30].includes(i)) {
+                tag.className = "cell_tag_mid"
+                tag_tip.className = `cell_tip_top`
+                tag.style = `width:${propCell.offsetWidth-5}px; height:20px`
+                container.style.marginTop = "-135px"
+            } else if ([32,33,35,36,38,40].includes(i)) {
+                tag.className = "cell_tag_side"
+                tag_tip.className = `cell_tip_right`
+                tag.style = `width:20px; height:${propCell.offsetHeight-5}px`
+                container.style.marginTop = "-50px"
+                container.style.marginLeft = "70px"
             }
-            propCell.style = `color:${textColor};background-color:${propData[propData_keys[i]][`property_data`][`color`]};` // Sets the cell text color and Sets the propertys' color
-        }
-    }
-    // This will allow the player to hover over the property tag to sell who owns it
-    for (var i=0; i < propData_keys.length; i++) {
-        let cellTag = document.getElementById(`cell_${i}_tag`)
-        let cellTag_tip = document.createElement(`div`)
-        // If the cellTag is not a element
-        if (cellTag == null) { continue }
-        cellTag_tip.style.display = `none`
-        // Checks the tag location
-        if ([2,4,6,7,8,10].includes(i)) { // if the prop is on the bottom
-            cellTag_tip.className = `cell_tip_bottom`
-        } else if ([12,13,14,15,16,17,19,20].includes(i)) { // if the prop is on the left
-            cellTag_tip.className = `cell_tip_left`
-        } else if ([22,24,25,26,27,28,29,30].includes(i)) {
-            cellTag_tip.className = `cell_tip_top`
-        } else if ([32,33,35,36,38,40].includes(i)) {
-            cellTag_tip.className = `cell_tip_right`
-        }
-        // Adds a white border around railroad properties
-        if ([6,16,26,36].includes(i)) { cellTag_tip.style.border = "1px solid white" }
 
-        cellTag_tip.textContent = `Owner: Bank`
-        // Makes the hover part
-        // Mouse is over
-        cellTag.onmouseover = function() {cellTag_tip.style.display = `block`}
-        // Mouse is not over
-        cellTag.onmouseout = function() {cellTag_tip.style.display = `none`}
-        cellTag.appendChild(cellTag_tip) // Appends the tag to the cell
+            // Some property Tags are off so this will fix them
+            if ([13,16,19,20,33,35,36].includes(i)) { container.style.marginTop = "-58px" }
+            if ([29].includes(i)) { container.style.marginTop = "-126.5px"}
+            // Tag
+            tag.id = `cell_${i}_tag`
+            tag.style.backgroundColor = "grey"
+            tag.style.border = "1px solid black"
+            // House Container
+            house_container.id = `cell_${i}_house_container`
+            house_container.className = `house_container`
+            // Prop Cell
+            propCell.style.color = textColor // Sets the cell text color and Sets the propertys' color
+            propCell.style.backgroundColor = propData[propData_keys[i]][`property_data`][`color`]
+            // Adds a white border around railroad properties
+            
+            tag_tip.textContent = `Owner: Bank`
+            tag_tip.style.border = "1px solid white"
+            // Makes the hover part
+            tag.onmouseover = function() {tag_tip.style.display = `block`} // Mouse is over
+            tag.onmouseout = function() {tag_tip.style.display = `none`} // Mouse is not over
+            // Adds to the screen
+            tag.appendChild(tag_tip) // Appends the tag to the cell
+            tag.appendChild(house_container)
+            container.appendChild(tag)
+            propCell.appendChild(container)
+            
+        }
     }
+
     // Randomizes the chance/chest card
     chest_deck = shuffle(Object.keys(cardsData[`Base`][`Community Chest`])) // Randomize Chest
     chance_deck = shuffle(Object.keys(cardsData[`Base`][`Chance`])) // Randomize Chest
@@ -2332,12 +2289,8 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
             for (var p=0; p < playerProperties.length; p++) {
                 // Each property House
                 if (player_list[i].get_player_properties()[playerProperties[p]]["houses"] < 5) {
-                    for (var h=0; h < player_list[i].get_player_properties()[playerProperties[p]]["houses"]; h++) {
-                        player_list[i].add_house_icon(playerProperties[p], h)
-                    }   
-                } else {
-                    player_list[i].add_house_icon(playerProperties[p], 5)
-                }
+                    for (var h=0; h < player_list[i].get_player_properties()[playerProperties[p]]["houses"]; h++) { player_list[i].add_house_icon(playerProperties[p], h)}   
+                } else {player_list[i].add_house_icon(playerProperties[p], 5)}
             }
         }
     } 
@@ -2714,3 +2667,5 @@ window.addEventListener("load", () => {
     }
     set_cookie_menu(changeLog)
 })
+
+
