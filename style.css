@@ -3,12 +3,12 @@ body {
 }
 
 table {
+	position: absolute;
     border-collapse: collapse;
-    display: none;
 	border: 2px solid black;
 	border-spacing: 3px;
 	margin: 25px;
-	float: left;
+	float:center;
 }
 
 .menu {
@@ -398,6 +398,7 @@ table {
 	height:401px;
 	max-height: 100%;
 	border-radius: 15%;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 #auction_title {
@@ -688,15 +689,101 @@ table {
 /* All gameboard styles */
 #gameboard { z-index: 3; }
 
+
 .cell_name {
 	position: relative;
 	left: -0.5px;
-	top: 20px;
+	top: 25px;
 	transform: translate(-0px);
+	display: flex;
 	text-align: center;
+	justify-content: center;
+	align-items: center;
+	max-width:100%;
 	width: 100%;
+	height: 30px;
+	max-height: 100%;
 	font-size: 14px;
 }
+
+.cell_player_container {
+	position: relative;
+	width:100%;
+	max-width: 100%;
+	height: 30px;
+	display:flex;
+	place-items: center;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+
+}
+/* Hanndles The player Container for Player Placement */
+.cell_player_container_mid {
+	position: relative;
+	width:100%;
+	max-width: 100%;
+	height: 30px;
+	margin-top:-35px;
+	top:-20px;
+	left: -.45px;
+	display:flex;
+	place-items: center;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+/* Player Containers on the side of the board */
+.cell_player_container_side {
+	position: relative;
+	width:100%;
+	max-width: 100%;
+	height: 30px;
+	margin-top:-20px;
+	top:-20px;
+	display:flex;
+	place-items: center;
+	justify-content: center;
+	align-items: center;
+	flex-wrap:wrap;
+}
+
+/* Player Containers on the top of the board */
+.cell_player_container_top {
+	position: relative;
+	width:100%;
+	max-width: 100%;
+	height: 30px;
+	margin-top:-35px;
+	top: -20px;
+	display:flex;
+	place-items: center;
+	justify-content: center;
+	align-items: center;
+	flex-wrap:wrap;
+}
+
+/* Cells 5 and 9 offset fix */
+#cell_5_player_container, #cell_9_player_container { top: -22px; }
+
+/* Cells 13, 16, 18, 19, 33, 34, 35, and 36 offset fix */
+#cell_13_player_container, #cell_16_player_container, #cell_18_player_container, #cell_19_player_container, #cell_33_player_container, #cell_34_player_container, #cell_35_player_container, #cell_36_player_container {
+	top:-22px;
+}
+
+/* Cells 23 and 29 offset fix */
+#cell_23_player_container, #cell_29_player_container { top: -22px;}
+
+/* Cells 1, 11, 21, and 31 ( Corner Cells ) offset fix */
+#cell_1_player_container, #cell_11_player_container, #cell_21_player_container, #cell_31_player_container { top: -22px;}
+
+/* Makes cell 11 smaller for the jail */
+#cell_11_player_container { 
+	margin-top: -83.5px;
+	top:58px;
+	height: 25px;
+}
+/* Makes */
 
 .cell_tag {
 	position: absolute;
@@ -709,31 +796,6 @@ table {
 }
 
 .cell_tag div { box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19); }
-
-.spot_mid  {
-    border: 1px solid black;
-    width: 75px;
-}
-
-.spot_side {
-    border: 1px solid black;
-    height: 80px;
-	width: 100px;
-}
-
-.corner {
-    border: 1px solid black;
-    height: 95px;
-    width: 95px;
-}
-
-.cell_tag_mid {
-	max-width: 100%;
-	max-height: 100%;
-	background-color: grey;
-	border: 1px solid black;
-	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
 
 .cell_tip_bottom  {
 	position: absolute;
@@ -790,6 +852,23 @@ table {
 	margin-top:30px;
 	color: white;
 	word-spacing: 10000px;
+}
+
+.spot_mid  {
+    border: 1px solid black;
+    width: 75px;
+}
+
+.spot_side {
+    border: 1px solid black;
+    height: 80px;
+	width: 100px;
+}
+
+.corner {
+    border: 1px solid black;
+    height: 95px;
+    width: 95px;
 }
 
 .control {
@@ -911,30 +990,48 @@ table {
 	top:280px;
 }
 
-.cell_mortgage_side {
-	position: absolute;
-	background-color: red;
-	border: 1px solid black;
-	height: 70px;
-	width: 10px;
-}
-
 .cell_mortgage_mid {
-	position: absolute;
 	background-color: red;
 	border: 1px solid black;
 	height: 10px;
-	width: 70px;
+	width: 100%;
+	max-width: 100%;
+}
+
+.cell_mortgage_side {
+	background-color: red;
+	border: 1px solid black;
+	max-height: 100%;
+	height: 100%;
+	width: 9px;
+	margin-top: -1px;
 }
 
 .money_container {
-	position: absolute;
-	left: 133px;
-	top: 132px;
-	width: 710px;
+	position: relative;
+	z-index: 4;
+	margin-top:-248px;
+	left: 128px;
+	top: 372.5px;
+	width: 707px;
 	max-width: 100%;
 	height: 248px;
 	max-height: 100%;
+	display:flex;
+	place-items: center;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.player_money {
+	flex: 40%;
+	width: 100px;
+	height: 100px;
+	max-height:100%;
+	max-width: 100%;
+	margin-left: 30px;
+	margin-right: 30px;
 }
 
 .game_data_container {
@@ -969,19 +1066,27 @@ table {
 .jail_icon {
 	background-color:orange;
 	border: 1px solid black;
-	position: absolute;
-	top: 877px;
-	left: 66px;
+	position: relative;
+	float: right;
+	width:100%;
+	height:34px;
+	max-width: 100%;
+	max-height: 100%;
+	margin-top:-80px;
+	top:17.5px;
+	left:1.5px;
 }
 
 .player {
 	border: 1px solid black;
 	z-index: 2;
-	position: absolute;
 	width: 20px;
 	height: 20px;
 	max-width: 100%;
 	max-height: 100%;
+	margin-top:5px;
+	margin-left:5px;
+	margin: auto;
 }
 
 /* The tool tip for the player */
@@ -998,34 +1103,6 @@ table {
 	left: 50%;
 	margin-left: -60px;
 	z-index: 10;
-}
-
-.player_money {
-	position: absolute;
-	width: 200px;
-	height: 100px;
-	max-width: 100%;
-	max-height: 100%;
-}
-
-#player1_money {
-	left: 100px;
-	top: 10px;
-}
-
-#player2_money {
-	left: 400px;
-	top: 10px;
-}
-
-#player3_money {
-	left: 100px;
-	top: 130px;
-}
-
-#player4_money {
-	left: 400px;
-	top: 130px;
 }
 
 .house_container {

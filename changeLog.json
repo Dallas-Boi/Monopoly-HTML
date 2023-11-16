@@ -141,6 +141,8 @@
         "date": "November 17th, 2023",
         "title": "Game Re-design",
         "added": [
+            "Added | Colored text when buying a house on a property",
+            "Added | Disabled Buttons if the user does not meet the requirements"
         ],
         "bug_fix": [
             "Fixed | An Issue with housing not being in the correct location for Park Place and Boardwalk",
@@ -153,7 +155,11 @@
         "changed": [
             "Changed | The Auction House Menu",
             "Changed | The Management Menu",
-            "Changed | Everything With the Properties"
+            "Changed | Everything With the Properties",
+            "Changed | Mortgage Text",
+            "Changed | Player Placement System",
+            "Changed | Player System to account for the new player placements",
+            "Changed | Player Money Container"
         ]
     }
 }
