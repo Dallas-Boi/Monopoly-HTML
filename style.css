@@ -736,11 +736,12 @@ table {
 /* Player Containers on the side of the board */
 .cell_player_container_side {
 	position: relative;
-	width:100%;
-	max-width: 100%;
+	width:103%;
+	max-width: 103%;
 	height: 30px;
 	margin-top:-20px;
-	top:-20px;
+	top:-30px;
+	left:-2px;
 	display:flex;
 	place-items: center;
 	justify-content: center;
@@ -751,11 +752,12 @@ table {
 /* Player Containers on the top of the board */
 .cell_player_container_top {
 	position: relative;
-	width:100%;
-	max-width: 100%;
+	width:103%;
+	max-width: 103%;
 	height: 30px;
 	margin-top:-35px;
 	top: -20px;
+	left: -2px;
 	display:flex;
 	place-items: center;
 	justify-content: center;
@@ -763,19 +765,14 @@ table {
 	flex-wrap:wrap;
 }
 
-/* Cells 5 and 9 offset fix */
-#cell_5_player_container, #cell_9_player_container { top: -22px; }
-
-/* Cells 13, 16, 18, 19, 33, 34, 35, and 36 offset fix */
-#cell_13_player_container, #cell_16_player_container, #cell_18_player_container, #cell_19_player_container, #cell_33_player_container, #cell_34_player_container, #cell_35_player_container, #cell_36_player_container {
-	top:-22px;
+/* Cells 1, 5 9, 11, 13, 16, 18, 19, 21, 23, 29, 31, 33, 34, 35, and 36 offset fix */
+#cell_5_player_container, #cell_9_player_container, #cell_1_player_container, #cell_11_player_container, #cell_21_player_container, #cell_31_player_container, #cell_23_player_container, #cell_29_player_container { 
+	top: -20px; 
 }
 
-/* Cells 23 and 29 offset fix */
-#cell_23_player_container, #cell_29_player_container { top: -22px;}
-
-/* Cells 1, 11, 21, and 31 ( Corner Cells ) offset fix */
-#cell_1_player_container, #cell_11_player_container, #cell_21_player_container, #cell_31_player_container { top: -22px;}
+#cell_13_player_container, #cell_16_player_container, #cell_18_player_container, #cell_19_player_container,#cell_32_player_container, #cell_33_player_container, #cell_34_player_container, #cell_35_player_container, #cell_36_player_container {
+	top: -27px;
+}
 
 /* Makes cell 11 smaller for the jail */
 #cell_11_player_container { 
@@ -783,7 +780,6 @@ table {
 	top:58px;
 	height: 25px;
 }
-/* Makes */
 
 .cell_tag {
 	position: absolute;
@@ -1068,13 +1064,13 @@ table {
 	border: 1px solid black;
 	position: relative;
 	float: right;
-	width:100%;
-	height:34px;
-	max-width: 100%;
+	width:102.5%;
+	height:34.5px;
+	max-width: 102.5%;
 	max-height: 100%;
 	margin-top:-80px;
-	top:17.5px;
-	left:1.5px;
+	top:16px;
+	left:2px;
 }
 
 .player {
