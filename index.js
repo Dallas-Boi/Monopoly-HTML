@@ -105,6 +105,7 @@ var backColor = ''
 // Settings Variables
 var enable_notifications = true
 var enable_hidden_mode = true
+var enable_save_warning = true
 // Elements
 // Menus
 const cookie_menu = document.getElementById(`cookie_menu`)
@@ -123,6 +124,7 @@ const changeLog_txt = document.getElementById(`changeLog_main`)
 const saveSelector = document.getElementById(`saveSelect`)
 const notification_elm = document.getElementById("settings_notification")
 const hidden_mode_elm = document.getElementById("settings_hidden_mode")
+const save_warning_elm = document.getElementById("settings_save_warning")
 const settings_btn = document.getElementById("settings_btn")
 // Buttons for game board
 const roll_btn = document.getElementById('roll_action')
@@ -131,7 +133,6 @@ const any_btn = document.getElementById(`any_action`)
 const buy_btn = document.getElementById(`buy_action`)
 const sell_btn = document.getElementById(`sell_action`)
 const pay_btn = document.getElementById(`pay_action`)
-const cell_house = document.getElementById(`cell_houses`)
 const turn_text = document.getElementById(`player_turn`)
 const bankrupt_btn = document.getElementById(`bankrupt_btn`)
 const saveGame_btn = document.getElementById(`saveGame_btn`)
@@ -374,22 +375,23 @@ function save_client_settings() {
         // Saves the items into a cookie
         var setting_items = {
             "notification": notification_elm.checked,
-            "hidden_mode": hidden_mode_elm.checked
+            "hidden_mode": hidden_mode_elm.checked,
+            "save": save_warning_elm.checked
         }
         setCookie("settings", JSON.stringify(setting_items), 1000)
         load_client_settings()
         settings_txt.textContent = "Successfully Saved"
         settings_txt.style.color = "lime"
         // Fades the save_txt in and out
-        $("#settings_save_txt").fadeIn()
-        setTimeout(function() {
-            $("#settings_save_txt").fadeOut()
-        }, 2500)
     } catch (err) {
-        console.log(err)
         settings_txt.textContent = "Hmmm... Something Went Wrong"
         settings_txt.style.color = "red"
+        console.log(err)
     }
+    $("#settings_save_txt").fadeIn()
+    setTimeout(function() {
+         $("#settings_save_txt").fadeOut()
+    }, 2500)
 }
 
 // Loads the saved client settings
@@ -400,12 +402,12 @@ function load_client_settings() {
         // Checks the items
         notification_elm.checked = client_settings["notification"]
         hidden_mode_elm.checked = client_settings["hidden_mode"]
+        save_warning_elm.checked = client_settings["save"]
         // Changes the variables
         enable_notifications = client_settings["notification"]
         enable_hidden_mode = client_settings["hidden_mode"]
-    } catch (err) {
-        console.log(err)
-    }
+        enable_save_warning = client_settings["save"]
+    } catch (err) {}
 }   
 
 // This saves the players name
@@ -444,6 +446,7 @@ export function save_current_game(name, returnData) {
         // Save the data into the saveSlot
         setCookie(`saveSlot${slot}`, JSON.stringify(savingData).toString(), 775)
         send_notification(`The Game has been successfully saved as: ${name}`)
+        save_warning_elm = false // Disables Refresh warning since they saved their game
         // After 1.5 seconds it will reload the page
         setTimeout(function() {
             location.reload();
@@ -2243,6 +2246,10 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
         }
     } 
     update_game_text()
+    // Sets up a refresh warning
+    window.onbeforeunload = function() {
+        return "Data will be lost if you leave the page, are you sure?";
+    };
     // This multiplayer data is different since it will save the game ( Not actually save the data just to transfer it ) and the other clietn will load that data
     // If the player has a multiplayer connection then send them the data too
     if ((client_connection_to_game == true) && (this_client_id == 0)) {

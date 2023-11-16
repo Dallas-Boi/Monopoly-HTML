@@ -142,7 +142,8 @@
         "title": "Game Re-design",
         "added": [
             "Added | Colored text when buying a house on a property",
-            "Added | Disabled Buttons if the user does not meet the requirements"
+            "Added | Disabled Buttons if the user does not meet the requirements",
+            "Added | Refresh / Leaving Warnings"
         ],
         "bug_fix": [
             "Fixed | An Issue with housing not being in the correct location for Park Place and Boardwalk",
@@ -159,7 +160,8 @@
             "Changed | Mortgage Text",
             "Changed | Player Placement System",
             "Changed | Player System",
-            "Changed | Player Money Displays"
+            "Changed | Player Money Displays",
+            "Changed | Main Menu Warning Texts"
         ]
     }
 }
