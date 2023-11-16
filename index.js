@@ -1298,7 +1298,7 @@ export function update_money_display() {
 export function update_game_text() {
     document.getElementById(`house_text`).innerHTML = `Houses Left:<br>${houses}`
     document.getElementById(`hotel_text`).innerHTML = `Hotels Left:<br>${hotels}`
-    document.getElementById(`freeParking_text`).innerHTML = `Cash In Free Parking: $${freeParking_cash}` 
+    document.getElementById(`freeParking_text`).innerHTML = `Cash In Free Parking:<br><b class="cash">$${freeParking_cash}</b>` 
 }
 
 // Updates all property tags 
