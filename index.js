@@ -2103,6 +2103,9 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
     connectedScreen.style.display = `none` // Hides the Connected Menu ( Multiplayer Only )
     game_board.style.display = `block` // Shows the game
     playerAmount = player_names.length // The amount of players
+    // Hard coded elms
+    
+    var money_container = document.getElementById("player_money_container") // player Money Element Container
     // Handles the setup for the properties
     var propData_keys = Object.keys(propData)
     for (var i=0; i < propData_keys.length; i++) { // Goes through each property
@@ -2145,8 +2148,6 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
                 container.style.marginTop = "-50px"
                 container.style.marginLeft = "70px"
             }
-
-            // Some property Tags are off so this will fix them
             // Tag
             tag.id = `cell_${i}_tag`
             tag.style.backgroundColor = "grey"
@@ -2164,10 +2165,10 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
             tag.onmouseover = function() {tag_tip.style.display = `block`} // Mouse is over
             tag.onmouseout = function() {tag_tip.style.display = `none`} // Mouse is not over
             // Adds to the screen
-            tag.appendChild(tag_tip) // Appends the tag to the cell
+            tag.appendChild(tag_tip)
             tag.appendChild(house_container)
             container.appendChild(tag)
-            propCell.appendChild(container)
+            propCell.appendChild(container) // Appends the tag to the cel
         }
         // 0 is not a property so it will skip it
         // Player Container
@@ -2178,7 +2179,6 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
         if (i == 0) { player_container.className = "cell_player_container" }
         else if ([12,13,14,15,16,17,18,19,20,32,33,34,35,36,37,38,39,40].includes(i)) { player_container.className = "cell_player_container_side" }
         else if ([22,23,24,25,26,27,28,29,30].includes(i)) { player_container.className = "cell_player_container_top"}
-        console.log(player_container)
         propCell.appendChild(player_container)
     }
     // Sets up players elements
@@ -2211,8 +2211,11 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
         // Adds the player to propData players_on
         propData[playerSpot[i]]["property_data"]["players_on"].push(i)
         // Sets the money containers to the right color and text
-        var setMoneyContainer = document.getElementById(`player${(i+1)}_money`)
-        setMoneyContainer.style = `border: 3px solid ${player_colors[i]};background-color: white;text-align: center;`
+        let player_money_elm = document.createElement("div")
+        player_money_elm.id = `player${i+1}_money`
+        player_money_elm.className = "player_money"
+        player_money_elm.style = `border: 3px solid ${player_colors[i]};background-color: white;text-align: center;`
+        money_container.appendChild(player_money_elm)
     }
     // Sets up the roll btn
     set_roll()
