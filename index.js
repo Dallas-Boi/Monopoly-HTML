@@ -1795,7 +1795,8 @@ export function check_landed_property(updateManage) {
         sell_btn.className = `action_btn`
         sell_btn.disabled = false
         sell_btn.textContent = `Auction`
-        // Makes the props background colo
+        // Makes the props background color
+        backColor = ''
         if (["white", "yellow"].includes(propData[location][`property_data`]['color'])) {backColor = "black"}
         // Sends the message for the property
         message_text_box(`<b>${player_list[current_turn].get_player_name()}</b> Would you like to buy <b style="background-color:${backColor};color: ${propData[location]['property_data']['color']}">${propData[location]['name']}</b> for <b class="cash">$${propData[location]['property_cost']}</b>`)
