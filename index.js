@@ -2248,7 +2248,7 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
     update_game_text()
     // Sets up a refresh warning
     window.onbeforeunload = function() {
-        return "Data will be lost if you leave the page, are you sure?";
+        if (enable_save_warning == true) { return "Data will be lost if you leave the page, are you sure?";}
     };
     // This multiplayer data is different since it will save the game ( Not actually save the data just to transfer it ) and the other clietn will load that data
     // If the player has a multiplayer connection then send them the data too
