@@ -133,16 +133,16 @@
                 <button id="sell_action" class="action_btn_disabled">Sell</button>
                 <button id="pay_action" class="action_btn_disabled">Pay</button>
                 <div id="action_txt" class="action_txt" cols="40"></div>
-                <div id="player_turn" class="current_turn_text">Its Not Good If you can see this</div>
+                <div id="player_turn" class="current_turn_text">Current Turn:<br><b id="player_turn_name"></b></div>
             </div>
             <div id="diceImg" class="dice_container">
                 <img id="dice1" class="dice" src="./diceImg/roll_1.png" style="left:50.5px;display:none">
                 <img id="dice2" class="dice" src="./diceImg/roll_2.png" style="left:450px;display:none">
             </div>
             <div id="game_data" class="game_data_container">
-                <div id="house_text" style="color:darkgreen">Houses Left:<br>32</div>
-                <div id="freeParking_text">Cash In Free Parking:<br><b class="cash">$200</b></div>
-                <div id="hotel_text" style="color:darkred">Hotels Left:<br>12</div>
+                <div id="house_text">Houses Left:<br><b id="house_left" style="color:darkgreen">32</b></div>
+                <div id="freeParking_text">Cash In Free Parking:<br><b id="free_cash" class="cash">$200</b></div>
+                <div id="hotel_text">Hotels Left:<br><b id="hotel_left" style="color:darkred">12</b></div>
             </div>
             <div id="player_money_container" class="money_container"></div>
             <button id="bankrupt_btn" class="action_btn_disabled">Bankrupt</button>

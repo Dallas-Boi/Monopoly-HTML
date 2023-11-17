@@ -1047,7 +1047,6 @@ table {
 	max-height: 100%;
 	font-size: 20px;
 	text-align: center;
-	
 }
 
 .game_data_container > * {
@@ -1109,8 +1108,8 @@ table {
 	padding: 5px 0;
 	position: absolute;
 	z-index: 3;
-	bottom: 150%;
 	left: 50%;
+	top:-30px;
 	margin-left: -60px;
 	z-index: 10;
 }

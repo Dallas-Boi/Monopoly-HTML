@@ -133,7 +133,7 @@ const any_btn = document.getElementById(`any_action`)
 const buy_btn = document.getElementById(`buy_action`)
 const sell_btn = document.getElementById(`sell_action`)
 const pay_btn = document.getElementById(`pay_action`)
-const turn_text = document.getElementById(`player_turn`)
+const turn_text = document.getElementById(`player_turn_name`)
 const bankrupt_btn = document.getElementById(`bankrupt_btn`)
 const saveGame_btn = document.getElementById(`saveGame_btn`)
 const loadGame_btn = document.getElementById(`loadSave_btn`)
@@ -446,7 +446,7 @@ export function save_current_game(name, returnData) {
         // Save the data into the saveSlot
         setCookie(`saveSlot${slot}`, JSON.stringify(savingData).toString(), 775)
         send_notification(`The Game has been successfully saved as: ${name}`)
-        save_warning_elm = false // Disables Refresh warning since they saved their game
+        enable_save_warning = false // Disables Refresh warning since they saved their game
         // After 1.5 seconds it will reload the page
         setTimeout(function() {
             location.reload();
@@ -1264,7 +1264,8 @@ export function change_turn() {
         saveGame_btn.className = `myBtn`
     }
     // Sets the Player turn text to the new player
-    turn_text.innerHTML = `Current Turn:<br> ${player_list[current_turn].get_player_name()}`
+    turn_text.textContent = player_list[current_turn].get_player_name()
+    turn_text.style.color = player_list[current_turn].get_player_color()
     doubles = 0 // This sets rolled doubles to 0
     set_roll()
 }
@@ -1296,9 +1297,9 @@ export function update_money_display() {
 
 // Updates all game information text
 export function update_game_text() {
-    document.getElementById(`house_text`).innerHTML = `Houses Left:<br>${houses}`
-    document.getElementById(`hotel_text`).innerHTML = `Hotels Left:<br>${hotels}`
-    document.getElementById(`freeParking_text`).innerHTML = `Cash In Free Parking:<br><b class="cash">$${freeParking_cash}</b>` 
+    document.getElementById(`house_left`).textContent = houses
+    document.getElementById(`hotel_left`).textContent = hotels
+    document.getElementById(`free_cash`).textContent = `$${freeParking_cash}`
 }
 
 // Updates all property tags 
@@ -2108,7 +2109,6 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
     game_board.style.display = `block` // Shows the game
     playerAmount = player_names.length // The amount of players
     // Hard coded elms
-    
     var money_container = document.getElementById("player_money_container") // player Money Element Container
     // Handles the setup for the properties
     var propData_keys = Object.keys(propData)
@@ -2119,7 +2119,6 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
             let tag = document.createElement("div")
             let tag_tip = document.createElement(`div`)
             let house_container = document.createElement("div")
-            
             // Container
             container.className = "cell_tag"
             container.style = `width:${propCell.offsetWidth}px; height:${propCell.offsetHeight}px`           
@@ -2224,7 +2223,8 @@ export function set_up_game(player_names, player_colors, playerSpot, playerId, s
     // Sets up the roll btn
     set_roll()
     // Sets the Player turn text to the new player
-    turn_text.innerHTML = `Current Turn:<br> ${player_list[current_turn].get_player_name()}`
+    turn_text.textContent = player_list[current_turn].get_player_name()
+    turn_text.style.color = player_list[current_turn].get_player_color()
     // Randomizes the chance/chest card
     chest_deck = shuffle(Object.keys(cardsData[`Base`][`Community Chest`])) // Randomize Chest
     chance_deck = shuffle(Object.keys(cardsData[`Base`][`Chance`])) // Randomize Chest
@@ -2294,7 +2294,6 @@ export function set_menu() {
         }
         
         // Sets up the change events to update the display of the player
-        var name_input = document.getElementById(`player${(i+1)}_name`)
         var color_input = document.getElementById(`player${(i+1)}_color`)
         var icon_input = document.getElementById(`player${(i+1)}_icon_select`)
         // When the color input is changed it will update the player example

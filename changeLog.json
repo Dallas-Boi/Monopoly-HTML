@@ -143,7 +143,8 @@
         "added": [
             "Added | Colored text when buying a house on a property",
             "Added | Disabled Buttons if the user does not meet the requirements",
-            "Added | Refresh / Leaving Warnings"
+            "Added | Refresh / Leaving Warnings",
+            "Added | The name of the players current turn will be their color"
         ],
         "bug_fix": [
             "Fixed | An Issue with housing not being in the correct location for Park Place and Boardwalk",
